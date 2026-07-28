@@ -1,15 +1,15 @@
 /*
- * Market Street brand palette — NOT in Figma JSON.
- * These are storefront-theme primitives owned by the brand team; downstream
- * tokens may reference them, but Figma's design-system file does not define
- * them as variables.
+ * Brand palette primitives for Footwear.
+ * Storefront-theme primitives owned by the brand team; downstream tokens may
+ * reference them. The gray ramp is the neutral scale used across chrome and
+ * surfaces. Placeholder values pending the footwear brand pass.
  */
 :root {
     /* brand primary (e.g. Write a Review button) */
     --brand-primary: #000000;
     --brand-primary-hover: #333333;
 
-    /* Market Street Brand Colors */
+    /* Brand colors */
     --brand-black: #000000;
     --brand-black-off: #121212;
     --brand-black-charcoal: #242424;

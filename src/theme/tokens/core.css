@@ -1,32 +1,32 @@
 :root {
     /* core */
-    --background: #ffffff;
-    --foreground: #17171b;
+    --background: #FFFFFF;
+    --foreground: #17171B;
 
-    --card: #ffffff;
-    --card-foreground: #3f3f46;
+    --card: #FFFFFF;
+    --card-foreground: #3F3F46;
 
-    --popover: #ffffff;
-    --popover-foreground: #3f3f46;
+    --popover: #FFFFFF;
+    --popover-foreground: #3F3F46;
 
     /* Footwear brand — placeholder athletic palette (cobalt primary, warm
        orange tertiary). A full brand theme is out of scope for this scaffold;
        swap these for the real palette during the brand pass. */
-    --primary: #1e40af; /* cobalt (indigo-800) */
-    --primary-foreground: #ffffff; /* 8.4:1 on cobalt (AAA) */
+    --primary: #1E40AF;                 /* cobalt (indigo-800) */
+    --primary-foreground: #FFFFFF;      /* 8.4:1 on cobalt (AAA) */
 
-    --secondary: #f8f8f8;
-    --secondary-foreground: #33373d;
+    --secondary: #F8F8F8;
+    --secondary-foreground: #33373D;
 
-    --tertiary: #c2410c; /* warm orange (orange-700) */
-    --tertiary-foreground: #ffffff; /* 4.8:1 on orange (AA) */
+    --tertiary: #C2410C;                /* warm orange (orange-700) */
+    --tertiary-foreground: #FFFFFF;     /* 4.8:1 on orange (AA) */
 
-    --muted: #f9fafb;
-    --muted-foreground: #35353b;
+    --muted: #F9FAFB;
+    --muted-foreground: #35353B;
     /* not in Figma JSON */
     --muted-hover: #ebebeb;
 
-    --accent: #ececec;
+    --accent: #ECECEC;
     --accent-foreground: #373737;
 
     /*
@@ -37,28 +37,28 @@
      * sync these darker values back into Figma.
      */
     /* WCAG AA: 6.47:1 on white; 5.30:1 on --destructive-foreground; 5.45:1 on bg-destructive/10 */
-    --destructive: #b91c1c;
-    --destructive-foreground: #fee2e2;
+    --destructive: #B91C1C;
+    --destructive-foreground: #FEE2E2;
 
     /* WCAG AA: 7.13:1 on white; 5.53:1 on --success-foreground */
     --success: #166534;
-    --success-foreground: #cbead7;
+    --success-foreground: #CBEAD7;
 
     /* WCAG AA: 5.02:1 on white; 4.68:1 on --warning-foreground */
-    --warning: #b45309;
-    --warning-foreground: #fef9c3;
+    --warning: #B45309;
+    --warning-foreground: #FEF9C3;
 
     /* WCAG AA: 5.93:1 on white; 4.86:1 on --info-foreground */
-    --info: #0369a1;
-    --info-foreground: #dbeafe;
+    --info: #0369A1;
+    --info-foreground: #DBEAFE;
 
-    --border: #9ca3af;
-    --border-subtle: #d1d5db;
+    --border: #9CA3AF;
+    --border-subtle: #D1D5DB;
     /* not in Figma JSON for light mode (Figma only defines `input` in dark) */
     --input: #e8e8e8;
     /* 3.66:1 on #FFFFFF — meets WCAG SC 1.4.11 (3:1 for graphics); use for focus rings only,
        not as text color on white. */
-    --ring: #3b82f6;
+    --ring: #3B82F6;
 
     /* not in Figma JSON */
     --separator: rgba(0, 0, 0, 0.08);
@@ -93,7 +93,7 @@
     --ui-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     --ui-border-width: 1px;
 
-    [role='radio']:not([data-labeled]) {
+    [role="radio"]:not([data-labeled]) {
         min-width: var(--swatch-pill-size);
         min-height: var(--swatch-pill-size);
     }

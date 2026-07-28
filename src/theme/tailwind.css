@@ -5,7 +5,7 @@
     --font-mono: 'Sen', 'Courier New', monospace;
 
     /* Error page tokens */
-    --text-error-status: 12rem; /* Large status code display for error pages */
+    --text-error-status: 12rem;  /* Large status code display for error pages */
 
     /* -- shape tokens -- shadcn primitives use rounded-ui / shadow-ui so
        the corner radius and drop shadow re-skin per vertical without
@@ -131,7 +131,7 @@
     --color-filter-selected: var(--filter-selected);
     --color-filter-selected-border: var(--filter-selected-border);
 
-    /* -- market street brand colors -- */
+    /* -- brand colors -- */
     --color-brand-black: var(--brand-black);
     --color-brand-black-off: var(--brand-black-off);
     --color-brand-black-charcoal: var(--brand-black-charcoal);
@@ -154,3 +154,4 @@
     border-style: solid;
     border-width: var(--ui-border-width);
 }
+
