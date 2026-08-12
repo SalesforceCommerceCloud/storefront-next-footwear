@@ -24,7 +24,9 @@
         "hero": {
             "defaultTitle": "Find your stride",
             "defaultImageAlt": "Hero Image",
-            "defaultCtaText": "Shop the collection"
+            "defaultCtaText": "Shop the collection",
+            "emptyTitle": "Add your title here",
+            "emptyButton": "Button"
         },
         "previousImage": "Previous image",
         "nextImage": "Next image",
