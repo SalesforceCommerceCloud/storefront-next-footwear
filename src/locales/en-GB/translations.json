@@ -1424,6 +1424,11 @@
                     "imageAlt": "New arrivals collection"
                 }
             }
+        },
+        "activityDiscovery": {
+            "title": "Everyone's got a pair.",
+            "subtitle": "Find the shoes built for how you move.",
+            "viewAll": "View all activities →"
         }
     },
     "footer": {

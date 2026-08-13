@@ -13,6 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Footwear (Stride Street) home route overlay.
+ *
+ * A full replacement of the canonical `src/routes/_app._index.tsx` (route overlays REPLACE, they do
+ * not merge — the SDK swaps the whole module). It is byte-for-byte the canonical home EXCEPT the
+ * `main` region's empty/error fallback renders the shared <PopularCategories> as an ACTIVITY rail:
+ * it fetches the children of the `activity` parent category and presents them left-aligned with a
+ * "View all activities" shop-all link to the activity landing PLP. Because `<Region>` renders
+ * `errorElement` whenever the region has no authored components (see src/components/region/index.tsx),
+ * this activity rail is the Page Designer FALLBACK: it shows out-of-the-box / in dev / when no home
+ * content is authored, and a merchant-authored `main` region (or a datasets seed) takes over when
+ * present.
+ *
+ * Reuses the canonical curated-category component (a rail of category cards linking to
+ * `/category/:id`) rather than a bespoke footwear component — activities ARE categories, so the
+ * shared component fits. The only footwear-specific inputs are the `activity` parent id and the
+ * heading/CTA copy (footwear-only `home.activityDiscovery.*` keys, scoped to this overlay).
+ */
 import { Suspense } from 'react';
 import { Await, redirect, useAsyncError } from 'react-router';
 import type { Route } from './+types/_app._index';
@@ -41,6 +60,7 @@ import { SeoMeta } from '@/components/seo-meta';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { useTranslation } from 'react-i18next';
 import type { NormalizedApiError } from '@/lib/api/normalized-api-error';
+import { routes, routeHref } from '@/route-paths';
 
 export { shouldRevalidate } from '@/lib/revalidation/routes/home';
 
@@ -84,6 +104,7 @@ function FeaturedProductsError() {
 export type HomePageData = {
     page: ReturnType<typeof fetchPageWithComponentData>;
     searchResult: Promise<ShopperSearch.schemas['ProductSearchResult']>;
+    /** Children of the `activity` parent category — the activity discovery rail (PopularCategories). */
     categories: Promise<ShopperProducts.schemas['Category'][]>;
     pageUrl: string;
     ogImageUrl: string;
@@ -126,7 +147,10 @@ export function loader(args: Route.LoaderArgs): HomePageData {
             limit: config.pages.home.featuredProductsCount,
             currency: currency ?? undefined,
         }),
-        categories: fetchCategories(args.context, 'root', 1),
+        // Activity discovery rail — the children of the `activity` parent category (footwear browses
+        // by activity, not the `root` categories the canonical home uses). Non-critical (below the
+        // fold), so returned as an unresolved promise and resolved inside <PopularCategories>.
+        categories: fetchCategories(args.context, 'activity', 1),
         pageUrl,
         ogImageUrl: new URL(hero01, requestUrl.origin).href,
     };
@@ -250,8 +274,21 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                     regionId="main"
                     errorElement={
                         <>
-                            {/* Popular Categories - full-width section with its own gray bg and container */}
-                            <PopularCategories categoriesPromise={loaderData.categories} />
+                            {/* Activity discovery rail — the shared curated-category component, fed the
+                                children of the `activity` parent category. Left-aligned with a
+                                "View all activities" link to the activity landing PLP. This is the Page
+                                Designer fallback for the main region (canonical uses the same component
+                                with the `root` categories, centered and without a shop-all link).
+                                PopularCategories owns its own Suspense/Await around `categoriesPromise`. */}
+                            <PopularCategories
+                                categoriesPromise={loaderData.categories}
+                                titleAlign="left"
+                                labelPosition="below"
+                                title={t('activityDiscovery.title')}
+                                subtitle={t('activityDiscovery.subtitle')}
+                                shopAllText={t('activityDiscovery.viewAll')}
+                                shopAllUrl={routeHref(routes.category, { categoryId: 'activity' })}
+                            />
 
                             {/* Featured Content Cards - Static content */}
                             <div className="pt-16">
