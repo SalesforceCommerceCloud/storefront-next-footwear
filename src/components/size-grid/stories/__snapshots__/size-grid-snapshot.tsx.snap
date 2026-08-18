@@ -1,0 +1,374 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SizeGrid stories snapshot > AllUnavailable story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="size-grid-label-_r_3_"
+  >
+    Size
+  </div>
+  <div
+    aria-labelledby="size-grid-label-_r_3_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 8, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      8
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 8.5, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60 italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      8.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 9, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      9
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 9.5, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60 italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      9.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 10, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      10
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 10.5, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60 italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      10.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 11, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      11
+    </button>
+  </div>
+</div>
+`;
+
+exports[`SizeGrid stories snapshot > Default story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="size-grid-label-_r_0_"
+  >
+    Size
+  </div>
+  <div
+    aria-labelledby="size-grid-label-_r_0_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-label="Size 8, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      8
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Size 8.5, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      8.5
+    </button>
+    <button
+      aria-checked="true"
+      aria-label="Size 9, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      9
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Size 9.5, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      9.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Size 10, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      10
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 10.5, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60 italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      10.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 11, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      11
+    </button>
+  </div>
+</div>
+`;
+
+exports[`SizeGrid stories snapshot > KeyboardNavigation story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="size-grid-label-_r_1_"
+  >
+    Size
+  </div>
+  <div
+    aria-labelledby="size-grid-label-_r_1_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-label="Size 8, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      8
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Size 8.5, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      8.5
+    </button>
+    <button
+      aria-checked="true"
+      aria-label="Size 9, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      9
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Size 9.5, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      9.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Size 10, available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      10
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 10.5, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60 italic"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      10.5
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Size 11, not available"
+      class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      11
+    </button>
+  </div>
+</div>
+`;
+
+exports[`SizeGrid stories snapshot > NarrowViewport story renders and matches snapshot 1`] = `
+<div
+  style="width: 320px; overflow: hidden;"
+>
+  <div
+    class="space-y-2"
+  >
+    <div
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="size-grid-label-_r_2_"
+    >
+      Size
+    </div>
+    <div
+      aria-labelledby="size-grid-label-_r_2_"
+      class="flex flex-wrap gap-2 focus:outline-none"
+      role="radiogroup"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Size 8, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        8
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size 8.5, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer italic"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        8.5
+      </button>
+      <button
+        aria-checked="true"
+        aria-label="Size 9, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        9
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size 9.5, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer italic"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        9.5
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size 10, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        10
+      </button>
+      <button
+        aria-checked="false"
+        aria-disabled="true"
+        aria-label="Size 10.5, not available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60 italic"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        10.5
+      </button>
+      <button
+        aria-checked="false"
+        aria-disabled="true"
+        aria-label="Size 11, not available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        11
+      </button>
+    </div>
+  </div>
+</div>
+`;

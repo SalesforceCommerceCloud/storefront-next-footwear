@@ -79,3 +79,43 @@
    footwear sets --ui-border-width: 1px globally in core.css, so Cards already
    have visible borders everywhere and don't need the per-section re-enable. */
 
+/* Stacked "Stride / Street" wordmark — canonical header caps logos at h-3/h-4,
+   which crushes a two-line lockup. Give it room to read as a square mark. */
+@layer utilities {
+    [data-testid='header-logo'] img {
+        height: 2.5rem; /* 40px */
+        width: auto;
+    }
+
+    @media (min-width: 64rem) {
+        [data-testid='header-logo'] img {
+            height: 2.75rem; /* 44px */
+        }
+    }
+}
+
+/* Full-bleed footer band: forest-green surface edge-to-edge. */
+@layer utilities {
+    footer > .bg-footer-background {
+        max-width: none !important;
+        margin-inline: 0 !important;
+        width: 100%;
+    }
+
+    /* Wordmark is black fill — invert for visibility on the green footer. */
+    footer > .bg-footer-background img {
+        filter: brightness(0) invert(1);
+        height: 2.5rem;
+        width: auto;
+    }
+
+    /* Focus-ring contrast on the footer: --ring is terracotta (#C84C32), which is only
+       2.57:1 against the forest-green footer background — under WCAG 2.1 SC 1.4.11's 3:1
+       non-text-contrast minimum. Repoint --ring to white inside the footer only; every
+       other --ring consumer (form fields, buttons elsewhere) keeps the terracotta brand
+       color. White reaches 11.9:1 against #1F3D2E, well above the minimum. */
+    footer {
+        --ring: #FFFFFF;
+    }
+}
+

@@ -1,0 +1,252 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WidthSelector stories snapshot > AllUnavailable story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="width-selector-label-_r_6_"
+  >
+    Width
+  </div>
+  <div
+    aria-labelledby="width-selector-label-_r_6_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Narrow (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      Narrow
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Medium (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      Medium
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Wide (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      Wide
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Extra Wide (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      data-slot="tooltip-trigger"
+      data-state="closed"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      Extra Wide
+    </button>
+  </div>
+</div>
+`;
+
+exports[`WidthSelector stories snapshot > CodesOnly story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="width-selector-label-_r_2_"
+  >
+    Width
+  </div>
+  <div
+    aria-labelledby="width-selector-label-_r_2_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-label="N"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      N
+    </button>
+    <button
+      aria-checked="true"
+      aria-label="M"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      M
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="W"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      W
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="EW (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      data-slot="tooltip-trigger"
+      data-state="closed"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      EW
+    </button>
+  </div>
+</div>
+`;
+
+exports[`WidthSelector stories snapshot > Default story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="width-selector-label-_r_0_"
+  >
+    Width
+  </div>
+  <div
+    aria-labelledby="width-selector-label-_r_0_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-label="N · Narrow"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      N · Narrow
+    </button>
+    <button
+      aria-checked="true"
+      aria-label="M · Medium"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      M · Medium
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="W · Wide"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      W · Wide
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="EW · Extra Wide (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      data-slot="tooltip-trigger"
+      data-state="closed"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      EW · Extra Wide
+    </button>
+  </div>
+</div>
+`;
+
+exports[`WidthSelector stories snapshot > KeyboardNavigation story renders and matches snapshot 1`] = `
+<div
+  class="space-y-2"
+>
+  <div
+    class="text-base font-semibold leading-6 text-card-foreground"
+    id="width-selector-label-_r_4_"
+  >
+    Width
+  </div>
+  <div
+    aria-labelledby="width-selector-label-_r_4_"
+    class="flex flex-wrap gap-2 focus:outline-none"
+    role="radiogroup"
+  >
+    <button
+      aria-checked="false"
+      aria-label="Narrow"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      Narrow
+    </button>
+    <button
+      aria-checked="true"
+      aria-label="Medium"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      Medium
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Wide"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      Wide
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Extra Wide (out of stock)"
+      class="min-w-11 min-h-11 px-3 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-not-allowed relative before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[26px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-current before:opacity-60"
+      data-slot="tooltip-trigger"
+      data-state="closed"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      Extra Wide
+    </button>
+  </div>
+</div>
+`;

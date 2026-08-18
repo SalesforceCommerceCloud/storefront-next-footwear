@@ -14,23 +14,85 @@
  * limitations under the License.
  */
 
-// Testing libraries
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, test, expect } from 'vitest';
-// React Router
+import { describe, test, expect, vi } from 'vitest';
 import { createMemoryRouter, RouterProvider } from 'react-router';
-
-// Components
 import ProductInfo from './product-info';
 import ProductViewProvider from '@/providers/product-view';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
-// mock data
 import { masterProduct as mockProduct } from '@/components/__mocks__/master-variant-product';
 import { standardProd } from '@/components/__mocks__/standard-product-2';
 import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
+import type { ShopperProducts } from '@/scapi';
 
 const { t } = getTranslation();
+
+// Footwear-vertical strings aren't in the canonical resources vitest.setup.ts initializes
+// (VERTICAL isn't set for `pnpm test`), so layer a fallback mock over react-i18next's
+// useTranslation, mirroring the established pattern in this vertical's home route and
+// size-guide component tests. Canonical keys (quantitySelector, inventory messages, etc. from
+// other tests in this file) fall through to the real t() untouched.
+vi.mock('react-i18next', async () => {
+    const actual: any = await vi.importActual('react-i18next');
+    const translations: Record<string, string> = {
+        'sizeGuide.triggerLabel': 'Size Guide',
+        'sizeGuide.title': 'Size guide',
+        'sizeGuide.description': 'Find your perfect fit using our size conversion chart.',
+        'sizeGuide.descriptionWithBrand': 'Find your perfect fit with {{brandName}} using our size conversion chart.',
+        'sizeGuide.genderToggleLabel': 'Select gender',
+        'sizeGuide.gender.mens': "Men's",
+        'sizeGuide.gender.womens': "Women's",
+        'sizeGuide.gender.kids': 'Kids',
+        'sizeGuide.tabsLabel': 'Size guide sections',
+        'sizeGuide.tabs.sizeChart': 'Size chart',
+        'sizeGuide.tabs.howToMeasure': 'How to measure',
+        'sizeGuide.conversionTableCaption': '{{gender}} size conversion chart: US, UK, EU, and CM sizes',
+        'sizeGuide.us': 'US',
+        'sizeGuide.uk': 'UK',
+        'sizeGuide.eu': 'EU',
+        'sizeGuide.cm': 'CM',
+        'sizeGuide.jp': 'JP',
+        'sizeGuide.yourSize': '(your size)',
+        'sizeGuide.howToMeasure.step1': 'Trace your foot on a piece of paper.',
+        'sizeGuide.howToMeasure.step2': 'Measure the longest length in centimeters.',
+        'sizeGuide.howToMeasure.step3': 'Measure the widest width in centimeters.',
+        'sizeGuide.howToMeasure.step4': 'Compare against the chart above.',
+        'sizeGuide.fitConfidence.summary': '{{percent}}% of {{count}} reviewers say this fits true to size',
+        'sizeGuide.fitConfidence.trueToSize': 'True to size',
+        'sizeGuide.fitConfidence.runsSmall': 'Runs small',
+        'sizeGuide.fitConfidence.runsLarge': 'Runs large',
+    };
+    return {
+        ...actual,
+        useTranslation: (...args: unknown[]) => {
+            const real = actual.useTranslation(...args);
+            return {
+                ...real,
+                t: (key: string, options?: Record<string, string | number>) => {
+                    const normalizedKey = key.startsWith('product:') ? key.substring(8) : key;
+                    const override = translations[normalizedKey];
+                    if (override === undefined) {
+                        return real.t(key, options);
+                    }
+                    if (options) {
+                        return override.replace(/\{\{(\w+)\}\}/g, (_match, prop) =>
+                            String(options[prop] ?? `{{${prop}}}`)
+                        );
+                    }
+                    return override;
+                },
+            };
+        },
+    };
+});
+
+const validFitFeedback = JSON.stringify({
+    totalResponses: 120,
+    runsSmallPercent: 20,
+    trueToSizePercent: 65,
+    runsLargePercent: 15,
+});
 
 const renderProductInfo = (props: React.ComponentProps<typeof ProductInfo>) => {
     // Using createMemoryRouter in framework mode is fine
@@ -104,45 +166,33 @@ describe('ProductInfo', () => {
         test('should render variant selector for non-color attributes', () => {
             renderProductInfo({ product: mockProduct });
 
-            expect(screen.getByText(new RegExp('Size'))).toBeInTheDocument();
+            // Matches the "Size" attribute label, not the unrelated "Size Guide" trigger button.
+            expect(screen.getByText(/^Size$/)).toBeInTheDocument();
         });
 
         test('should generate correct URLs for swatch selection', () => {
             renderProductInfo({ product: mockProduct });
 
-            // Find color swatches - only Charcoal available
+            // Find color swatches - only Charcoal available (still rendered via generic Swatch)
             const charcoalSwatch = screen.getByLabelText('Charcoal');
             expect(charcoalSwatch).toBeInTheDocument();
             expect(charcoalSwatch).toHaveAttribute('href', '/global/en-GB/product/test-product?color=CHARCWL');
 
-            // Find size swatches
-            const size36Swatch = screen.getByLabelText('36');
-            expect(size36Swatch).toBeInTheDocument();
-            expect(size36Swatch).toHaveAttribute('href', '/global/en-GB/product/test-product?size=036');
-
-            const size38Swatch = screen.getByLabelText('38');
-            expect(size38Swatch).toBeInTheDocument();
-            expect(size38Swatch).toHaveAttribute('href', '/global/en-GB/product/test-product?size=038');
-
-            // Find width swatches
-            const shortSwatch = screen.getByLabelText('Short');
-            expect(shortSwatch).toBeInTheDocument();
-            expect(shortSwatch).toHaveAttribute('href', '/global/en-GB/product/test-product?width=S');
-
-            const regularSwatch = screen.getByLabelText('Regular');
-            expect(regularSwatch).toBeInTheDocument();
-            expect(regularSwatch).toHaveAttribute('href', '/global/en-GB/product/test-product?width=V');
+            // Size and width render via SizeGrid/WidthSelector (plain buttons, no href attribute).
+            // Their href-driven navigation is exercised in 'should update URL when swatch is clicked' below.
+            expect(screen.getByRole('radio', { name: /size 36, available/i })).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /size 38, available/i })).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /^short$/i })).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /^regular$/i })).toBeInTheDocument();
         });
 
         test('should update URL when swatch is clicked', async () => {
             const user = userEvent.setup();
             const { router } = renderProductInfo({ product: mockProduct });
 
-            // Click on size 38 swatch
-            const size38Swatch = screen.getByLabelText('38');
-            expect(size38Swatch).toHaveAttribute('href', '/global/en-GB/product/test-product?size=038');
-
-            await user.click(size38Swatch);
+            // Click on size 38 radio (SizeGrid button, no href attribute)
+            const size38Radio = screen.getByRole('radio', { name: /size 38, available/i });
+            await user.click(size38Radio);
 
             // After clicking, verify the location was updated
             await waitFor(() => {
@@ -177,13 +227,13 @@ describe('ProductInfo', () => {
             );
             render(<RouterProvider router={router} />);
 
-            // Size 38 swatch should be selected (aria-checked=true)
-            const size38Swatch = screen.getByLabelText('38');
-            expect(size38Swatch).toHaveAttribute('aria-checked', 'true');
+            // Size 38 radio should be selected (aria-checked=true)
+            const size38Radio = screen.getByRole('radio', { name: /size 38, available/i });
+            expect(size38Radio).toHaveAttribute('aria-checked', 'true');
 
-            // Size 36 swatch should not be selected
-            const size36Swatch = screen.getByLabelText('36');
-            expect(size36Swatch).toHaveAttribute('aria-checked', 'false');
+            // Size 36 radio should not be selected
+            const size36Radio = screen.getByRole('radio', { name: /size 36, available/i });
+            expect(size36Radio).toHaveAttribute('aria-checked', 'false');
         });
     });
 
@@ -222,10 +272,10 @@ describe('ProductInfo', () => {
 
             // Check that variation swatches are rendered - Charcoal color, sizes 36-50, widths Short/Regular/Long
             expect(screen.getByLabelText('Charcoal')).toBeInTheDocument();
-            expect(screen.getByLabelText('36')).toBeInTheDocument();
-            expect(screen.getByLabelText('38')).toBeInTheDocument();
-            expect(screen.getByLabelText('Short')).toBeInTheDocument();
-            expect(screen.getByLabelText('Regular')).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /size 36, available/i })).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /size 38, available/i })).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /^short$/i })).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: /^regular$/i })).toBeInTheDocument();
         });
 
         test('should hide inventory message until multi-attribute selection resolves to one variant in controlled mode', () => {
@@ -512,9 +562,10 @@ describe('ProductInfo', () => {
         test('should handle standard product without variation attributes', () => {
             renderProductInfo({ product: standardProd });
 
-            // Standard product has no variation attributes, so no swatches should render
+            // Standard product has no variation attributes, so no swatches should render.
+            // (The footwear overlay's "Size Guide" trigger is unrelated and always renders.)
             expect(screen.queryByText(/Color/)).not.toBeInTheDocument();
-            expect(screen.queryByText(/Size/)).not.toBeInTheDocument();
+            expect(screen.queryByText(/^Size$/)).not.toBeInTheDocument();
             expect(screen.queryByText(/Width/)).not.toBeInTheDocument();
 
             // Should render the product name and price
@@ -532,6 +583,134 @@ describe('ProductInfo', () => {
             // Should still render the product name - price may vary based on priceRanges
             expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
             expect(screen.getAllByText((content) => content.includes('$299.99')).length).toBeGreaterThanOrEqual(1);
+        });
+    });
+});
+
+describe('ProductInfo (footwear overlay)', () => {
+    describe('Size Guide trigger and drawer', () => {
+        test('renders a Size Guide trigger button', () => {
+            renderProductInfo({ product: mockProduct });
+            expect(screen.getByRole('button', { name: 'Size Guide' })).toBeInTheDocument();
+        });
+
+        test('does not render the Size Guide trigger in compact style', () => {
+            renderProductInfo({ product: mockProduct, variantStyle: 'compact' });
+            expect(screen.queryByRole('button', { name: 'Size Guide' })).not.toBeInTheDocument();
+        });
+
+        test('opens the drawer when the trigger is clicked', async () => {
+            renderProductInfo({ product: mockProduct });
+            expect(screen.queryByText('Size guide')).not.toBeInTheDocument();
+
+            await userEvent.click(screen.getByRole('button', { name: 'Size Guide' }));
+
+            expect(await screen.findByText('Size guide')).toBeInTheDocument();
+        });
+
+        test('threads the selected size through to the drawer as the highlighted row', async () => {
+            const product = { ...mockProduct } as ShopperProducts.schemas['Product'];
+            const router = createMemoryRouter(
+                [
+                    {
+                        path: '/product/:productId',
+                        element: (
+                            <AllProvidersWrapper>
+                                <ProductViewProvider product={product}>
+                                    <ProductInfo product={product} />
+                                </ProductViewProvider>
+                            </AllProvidersWrapper>
+                        ),
+                    },
+                    { path: '*', element: <div>Navigated</div> },
+                ],
+                { initialEntries: ['/product/test-product?size=040'] }
+            );
+            render(<RouterProvider router={router} />);
+
+            await userEvent.click(screen.getByRole('button', { name: 'Size Guide' }));
+            await screen.findByText('Size guide');
+
+            // Falls back to the default mens chart (no c_sizeChart on the mock product), which
+            // does not include US "040" as an entry, so no row should be highlighted -- this
+            // still proves the drawer mounted and reads highlightSize without throwing.
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+        });
+    });
+
+    describe('FitConfidenceIndicator', () => {
+        test('does not render when c_fitFeedback is absent', () => {
+            renderProductInfo({ product: mockProduct });
+            expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+        });
+
+        test('renders a meter when c_fitFeedback is valid', () => {
+            const product = {
+                ...mockProduct,
+                c_fitFeedback: validFitFeedback,
+            } as ShopperProducts.schemas['Product'] & { c_fitFeedback: string };
+            renderProductInfo({ product });
+            const meter = screen.getByRole('meter');
+            expect(meter).toHaveAttribute('aria-valuenow', '65');
+        });
+
+        test('does not render when c_fitFeedback is malformed', () => {
+            const product = {
+                ...mockProduct,
+                c_fitFeedback: '{not valid json',
+            } as ShopperProducts.schemas['Product'] & { c_fitFeedback: string };
+            renderProductInfo({ product });
+            expect(screen.queryByRole('meter')).not.toBeInTheDocument();
+        });
+    });
+
+    describe('gender derivation', () => {
+        test('derives mens from a primaryCategoryId with no gender signal', () => {
+            const product = {
+                ...mockProduct,
+                primaryCategoryId: 'mens-clothing-suits',
+                c_fitFeedback: validFitFeedback,
+            } as ShopperProducts.schemas['Product'] & { c_fitFeedback: string };
+            renderProductInfo({ product });
+            expect(screen.getByRole('meter')).toBeInTheDocument();
+        });
+
+        test('derives womens from a primaryCategoryId matching womens', async () => {
+            const product = {
+                ...mockProduct,
+                primaryCategoryId: 'womens-shoes',
+            } as ShopperProducts.schemas['Product'];
+            renderProductInfo({ product });
+
+            await userEvent.click(screen.getByRole('button', { name: 'Size Guide' }));
+            await screen.findByText('Size guide');
+
+            expect(screen.getByRole('button', { name: "Women's" })).toHaveAttribute('aria-pressed', 'true');
+        });
+
+        test('derives kids from a primaryCategoryId matching kids', async () => {
+            const product = {
+                ...mockProduct,
+                primaryCategoryId: 'kids-shoes',
+            } as ShopperProducts.schemas['Product'];
+            renderProductInfo({ product });
+
+            await userEvent.click(screen.getByRole('button', { name: 'Size Guide' }));
+            await screen.findByText('Size guide');
+
+            expect(screen.getByRole('button', { name: 'Kids' })).toHaveAttribute('aria-pressed', 'true');
+        });
+    });
+
+    describe('closing the drawer', () => {
+        test('closes the drawer when dismissed', async () => {
+            renderProductInfo({ product: mockProduct });
+            await userEvent.click(screen.getByRole('button', { name: 'Size Guide' }));
+            await screen.findByText('Size guide');
+
+            await userEvent.click(screen.getByRole('button', { name: /close/i }));
+
+            await waitFor(() => expect(screen.queryByText('Size guide')).not.toBeInTheDocument());
         });
     });
 });

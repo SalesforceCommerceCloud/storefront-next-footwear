@@ -1,41 +1,31 @@
 :root {
     /* core */
     --background: #FFFFFF;
-    --foreground: #17171B;
+    --foreground: #171B19;
 
     --card: #FFFFFF;
-    --card-foreground: #3F3F46;
+    --card-foreground: #3A423E;
 
     --popover: #FFFFFF;
-    --popover-foreground: #3F3F46;
+    --popover-foreground: #3A423E;
 
-    /* Footwear brand — placeholder athletic palette (cobalt primary, warm
-       orange tertiary). A full brand theme is out of scope for this scaffold;
-       swap these for the real palette during the brand pass. */
-    --primary: #1E40AF;                 /* cobalt (indigo-800) */
-    --primary-foreground: #FFFFFF;      /* 8.4:1 on cobalt (AAA) */
+    /* Stride Street brand pass — forest-green primary, terracotta tertiary. */
+    --primary: #1F3D2E;                 /* forest green */
+    --primary-foreground: #FFFFFF;
 
-    --secondary: #F8F8F8;
-    --secondary-foreground: #33373D;
+    --secondary: #F4F5F4;
+    --secondary-foreground: #272C29;
 
-    --tertiary: #C2410C;                /* warm orange (orange-700) */
-    --tertiary-foreground: #FFFFFF;     /* 4.8:1 on orange (AA) */
+    --tertiary: #C84C32;                /* terracotta */
+    --tertiary-foreground: #FFFFFF;
 
-    --muted: #F9FAFB;
-    --muted-foreground: #35353B;
-    /* not in Figma JSON */
-    --muted-hover: #ebebeb;
+    --muted: #F4F5F4;
+    --muted-foreground: #4D5651;
+    --muted-hover: #E8EBE9;
 
-    --accent: #ECECEC;
-    --accent-foreground: #373737;
+    --accent: #E8EBE9;
+    --accent-foreground: #1F3D2E;
 
-    /*
-     * Status colors. Figma's source values (red-500 / green-600 / amber-600 / sky-600)
-     * fail WCAG AA 4.5:1 against white and against their -foreground companions.
-     * We darken each to the next Tailwind shade (-700/-800) so all default pairings
-     * pass AA. Hue is preserved; only luminance changes. Flag for UX whether to
-     * sync these darker values back into Figma.
-     */
     /* WCAG AA: 6.47:1 on white; 5.30:1 on --destructive-foreground; 5.45:1 on bg-destructive/10 */
     --destructive: #B91C1C;
     --destructive-foreground: #FEE2E2;
@@ -52,30 +42,21 @@
     --info: #0369A1;
     --info-foreground: #DBEAFE;
 
-    --border: #9CA3AF;
-    --border-subtle: #D1D5DB;
-    /* not in Figma JSON for light mode (Figma only defines `input` in dark) */
-    --input: #e8e8e8;
-    /* 3.66:1 on #FFFFFF — meets WCAG SC 1.4.11 (3:1 for graphics); use for focus rings only,
-       not as text color on white. */
-    --ring: #3B82F6;
+    --border: #D5DBD7;
+    --border-subtle: #8A968F;
+    --input: #1F3D2E;
+    /* Focus ring — terracotta */
+    --ring: #C84C32;
 
-    /* not in Figma JSON */
-    --separator: rgba(0, 0, 0, 0.08);
-    --separator-foreground: #9e9e9e;
+    --separator: #E8EBE9;
+    --separator-foreground: #66706A;
 
-    /* not in Figma JSON */
     --rating: #facc15;
     --rating-foreground: #ffffff;
 
-    /*
-     * The aliases below inherit the WCAG-AA-passing values of their parent tokens.
-     */
-    /* not in Figma JSON: review-verified badge — semantic alias of --success* (5.53:1) */
     --review-verified-bg: var(--success-foreground);
     --review-verified-text: var(--success);
 
-    /* not in Figma JSON: selected filter chip — semantic alias of --info* (4.86:1) */
     --filter-selected: var(--info-foreground);
     --filter-selected-border: var(--info);
 
@@ -85,12 +66,12 @@
     --opacity-50: 50%;
     --opacity-30: 70%;
 
-    /* shape tokens — footwear uses a rounded, sporty shape with a soft shadow
-       and visible 1px borders on primitives. The --ui-* names are the source
-       values; tailwind.css bridges them into Tailwind's rounded-ui / shadow-ui
-       / border-ui utility namespaces. */
-    --ui-radius: var(--radius-lg);
-    --ui-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    /* shape tokens — Stride Street heritage chrome: soft rounded pills/cards,
+       no drop shadow, visible 1px borders on primitives. The --ui-* names are
+       the source values; tailwind.css bridges them into Tailwind's
+       rounded-ui / shadow-ui / border-ui utility namespaces. */
+    --ui-radius: 0.75rem;
+    --ui-shadow: none;
     --ui-border-width: 1px;
 
     [role="radio"]:not([data-labeled]) {

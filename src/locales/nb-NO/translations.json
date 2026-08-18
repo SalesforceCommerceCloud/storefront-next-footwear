@@ -28,12 +28,18 @@
             "emptyTitle": "Legg til tittelen her",
             "emptyButton": "Knapp"
         },
+        "image": {
+            "emptyTitle": "Legg til tittelen her"
+        },
+        "previousImage": "Forrige bilde",
+        "nextImage": "Neste bilde",
+        "announcementBanner": {
+            "emptyTitle": "Legg til tittelen her"
+        },
         "contentCard": {
             "emptyTitle": "Legg til tittelen her",
             "emptyDescription": "Legg til beskrivelsen her"
-        },
-        "previousImage": "Forrige bilde",
-        "nextImage": "Neste bilde"
+        }
     },
     "search": {
         "results": "Søkeresultater for",

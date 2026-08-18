@@ -1,8 +1,9 @@
 @theme inline {
     /* Font families */
-    --font-sans: 'Sen', -apple-system, 'system-ui', 'Helvetica Neue', Arial, sans-serif;
-    --font-serif: 'Sen', Georgia, serif;
-    --font-mono: 'Sen', 'Courier New', monospace;
+    --font-sans: 'Sen', Inter, -apple-system, 'system-ui', 'Helvetica Neue', Arial, sans-serif;
+    /* Heritage display — Georgia stack (no extra font file); italic for accent phrases */
+    --font-serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Times New Roman', serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
 
     /* Error page tokens */
     --text-error-status: 12rem;  /* Large status code display for error pages */

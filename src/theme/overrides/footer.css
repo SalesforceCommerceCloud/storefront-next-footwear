@@ -1,0 +1,7 @@
+/* Footer runs on the dark forest-green band, so its muted text and link-hover
+   state need light-on-dark values instead of the global (light-background) tokens.
+   #A8B3AD on #1F3D2E is ~5.5:1 (AA); white hover is ~11.9:1. */
+footer > .bg-footer-background {
+    --muted-foreground: #A8B3AD;
+    --foreground: #FFFFFF;
+}

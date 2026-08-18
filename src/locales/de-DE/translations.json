@@ -27,12 +27,18 @@
             "emptyTitle": "Titel hier hinzufügen",
             "emptyButton": "Schaltfläche"
         },
+        "image": {
+            "emptyTitle": "Titel hier hinzufügen"
+        },
+        "previousImage": "Vorheriges Bild",
+        "nextImage": "Nächstes Bild",
+        "announcementBanner": {
+            "emptyTitle": "Titel hier hinzufügen"
+        },
         "contentCard": {
             "emptyTitle": "Titel hier hinzufügen",
             "emptyDescription": "Beschreibung hier hinzufügen"
-        },
-        "previousImage": "Vorheriges Bild",
-        "nextImage": "Nächstes Bild"
+        }
     },
     "search": {
         "results": "Suchergebnisse für",

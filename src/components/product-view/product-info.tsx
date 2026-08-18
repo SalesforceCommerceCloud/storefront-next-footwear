@@ -23,11 +23,11 @@ import { useOptionalProductView } from '@/providers/product-view';
 import { useSite } from '@salesforce/storefront-next-runtime/site-context';
 import { toImageUrl } from '@/lib/images/dynamic-image';
 import { useConfig } from '@salesforce/storefront-next-runtime/config';
-import ProductPrice from '../product-price';
+import ProductPrice from '@/components/product-price';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
-import InventoryMessage, { InventoryStatus } from '../inventory-message';
+import InventoryMessage, { InventoryStatus } from '@/components/inventory-message';
 // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
-import { ProductRatingSummary } from './product-rating-summary';
+import { ProductRatingSummary } from '@/components/product-view/product-rating-summary';
 // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
 import { useCurrentVariant } from '@/hooks/product/use-current-variant';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +36,12 @@ import { ShareButton } from '@/components/buttons/share-button';
 import { UITarget } from '@/targets/ui-target';
 // @sfdc-extension-line SFDC_EXT_BOPIS
 import DeliveryOptions from '@/extensions/bopis/components/delivery-options/delivery-options';
+import { Button } from '@/components/ui/button';
+import { SizeGuideDrawer, parseSizeChart, deriveGenderFromCategory } from '@/components/size-guide-drawer';
+import { FitConfidenceIndicator, parseFitFeedback } from '@/components/fit-confidence-indicator';
+import { useNavigate } from '@/hooks/use-navigate';
+import { SizeGrid, type SizeOption } from '@/components/size-grid';
+import { WidthSelector, type WidthOption } from '@/components/width-selector';
 
 type ProductInfoBaseProps = {
     product: ShopperProducts.schemas['Product'];
@@ -101,7 +107,11 @@ const isControlledVariantValueOrderable = ({
 };
 
 /**
- * ProductInfo component displays product details including title, description, price, variants, and quantity picker
+ * Footwear overlay of ProductInfo: identical to canonical, plus a "Size Guide" trigger and
+ * FitConfidenceIndicator mounted below the variant swatches, and dedicated SizeGrid/WidthSelector
+ * controls for the size/width variation attributes. `c_sizeChart`/`c_fitFeedback` are read as
+ * untyped custom attributes (no `c_gender` attribute exists in the catalog, so gender is derived
+ * from `primaryCategoryId`).
  *
  * Supports two swatch modes:
  * - uncontrolled mode (default): Swatches use URL navigation for variant selection
@@ -130,6 +140,7 @@ export default function ProductInfo({
     disableRatingInteraction = false,
 }: ProductInfoProps): ReactElement {
     const config = useConfig();
+    const navigate = useNavigate();
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);
     // Use variation attributes hook for URL-aware swatches
@@ -191,7 +202,7 @@ export default function ProductInfo({
     const showQuantity = !isProductASet && !isProductABundle && (mode !== 'edit' || showQuantityInEditMode);
 
     // In compact mode, sort variation attributes by priority order
-    const COMPACT_ATTRIBUTE_ORDER = ['size', 'color'];
+    const COMPACT_ATTRIBUTE_ORDER = ['size', 'width', 'color'];
     const sortedVariationAttributes = isCompactStyle
         ? [...variationAttributes].sort((a, b) => {
               const aIndex = COMPACT_ATTRIBUTE_ORDER.indexOf(a.id);
@@ -256,6 +267,21 @@ export default function ProductInfo({
             return InventoryStatus.IN_STOCK;
         };
     }, [isVariantInventoryLoading, shouldHideInventoryForPartialVariantSelection]);
+
+    // Size guide + fit confidence: gender has no dedicated custom attribute, so it's derived
+    // from the category id. `highlightSize` soft-depends on the size variation attribute
+    // (WI-2); falls back to an unhighlighted table when no size is selected yet.
+    const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+    const gender = useMemo(() => deriveGenderFromCategory(product.primaryCategoryId), [product.primaryCategoryId]);
+    const sizeChart = useMemo(
+        () => parseSizeChart((product as { c_sizeChart?: unknown }).c_sizeChart, gender),
+        [product, gender]
+    );
+    const fitFeedback = useMemo(
+        () => parseFitFeedback((product as { c_fitFeedback?: unknown }).c_fitFeedback),
+        [product]
+    );
+    const highlightSize = selectedVariationValues.size;
 
     return (
         <div className="relative grid gap-4">
@@ -378,6 +404,76 @@ export default function ProductInfo({
                     ? values.filter((v) => v.value === selectedValue?.value)
                     : values;
 
+                const isOrderable = (value: (typeof values)[number]) =>
+                    swatchMode === 'controlled'
+                        ? isControlledVariantValueOrderable({
+                              variants: product.variants,
+                              currentSelection: variationValues ?? {},
+                              attributeId: id,
+                              attributeValue: value.value,
+                          })
+                        : (value.orderable ?? true);
+
+                const handleAttributeSelect = (value: string) => {
+                    if (hideVariantSelection) return;
+                    if (swatchMode === 'controlled') {
+                        onAttributeChange?.(id, value);
+                        return;
+                    }
+                    const matchingHref = values.find((v) => v.value === value)?.href;
+                    if (matchingHref) void navigate(matchingHref);
+                };
+
+                if (id === 'size') {
+                    const sizeOptions: SizeOption[] = swatchesToShow.map((value) => ({
+                        value: value.value,
+                        label: value.name ?? value.value,
+                        available: isOrderable(value),
+                        half: /\.\d/.test(value.name ?? value.value),
+                    }));
+                    return (
+                        <SizeGrid
+                            key={id}
+                            label={name}
+                            availableSizes={sizeOptions}
+                            selectedSize={
+                                swatchMode === 'uncontrolled' ? (selectedValue?.value ?? '') : (controlledValue ?? '')
+                            }
+                            onSizeChange={handleAttributeSelect}
+                            getAccessibleName={(option) =>
+                                t(option.available ? 'sizeAvailableAnnouncement' : 'sizeUnavailableAnnouncement', {
+                                    size: option.label,
+                                })
+                            }
+                        />
+                    );
+                }
+
+                if (id === 'width') {
+                    const widthOptions: WidthOption[] = swatchesToShow.map((value) => {
+                        const available = isOrderable(value);
+                        return {
+                            code: value.value,
+                            label: value.name ?? value.value,
+                            available,
+                            tooltip: available ? undefined : t('widthUnavailableTooltip'),
+                        };
+                    });
+                    return (
+                        <WidthSelector
+                            key={id}
+                            label={name}
+                            availableWidths={widthOptions}
+                            selectedWidth={
+                                swatchMode === 'uncontrolled' ? (selectedValue?.value ?? '') : (controlledValue ?? '')
+                            }
+                            onWidthChange={handleAttributeSelect}
+                            displayMode="labels"
+                            outOfStockSuffix={t('outOfStockSuffix')}
+                        />
+                    );
+                }
+
                 const swatches = swatchesToShow.map((value) => {
                     const { href, name: valueName, image, value: swatchValue, orderable } = value;
                     const isOrderableInCurrentSelection =
@@ -449,6 +545,28 @@ export default function ProductInfo({
                 );
             })}
             {!isCompactStyle && <UITarget targetId="sfcc.pdp.products.visualization" />}
+
+            {/* Size Guide trigger + Fit Confidence Indicator — footwear only */}
+            {!isCompactStyle && (
+                <div className="grid gap-3">
+                    <Button
+                        type="button"
+                        variant="link"
+                        className="justify-self-start px-0 text-sm font-medium underline"
+                        onClick={() => setIsSizeGuideOpen(true)}>
+                        {t('sizeGuide.triggerLabel', { defaultValue: 'Size Guide' })}
+                    </Button>
+                    <FitConfidenceIndicator feedback={fitFeedback} />
+                </div>
+            )}
+            <SizeGuideDrawer
+                isOpen={isSizeGuideOpen}
+                onClose={() => setIsSizeGuideOpen(false)}
+                sizeChart={sizeChart}
+                gender={gender}
+                brandName={product.brand}
+                highlightSize={highlightSize}
+            />
 
             {/* @sfdc-extension-block-start SFDC_EXT_BOPIS */}
             {/* Delivery Options - For individual products */}

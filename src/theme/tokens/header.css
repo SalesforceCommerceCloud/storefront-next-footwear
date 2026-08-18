@@ -1,26 +1,25 @@
 /*
- * Storefront header/footer chrome — auto-derived for footwear.
- * The cobalt --primary is dark, so white foreground reads on it and the black
- * logo.svg is inverted to white. Replace this file if you want different chrome.
+ * Storefront header/footer chrome — Stride Street heritage standard.
+ * Light header on white; forest-green footer. No cream/beige bands.
  */
 :root {
-    /* header & navigation — footwear cobalt chrome */
-    --header-background: #1E40AF;
-    --header-foreground: #FFFFFF;
-    --header-border: rgba(255, 255, 255, 0.1);
-    --header-divider: var(--header-border);
+    /* header & navigation */
+    --header-background: #FFFFFF;
+    --header-foreground: #1F3D2E;
+    --header-border: #E8EBE9;
+    --header-divider: #E8EBE9;
     /* header menu dropdowns */
-    --header-menu-background: var(--header-background);
-    --header-menu-foreground: var(--header-foreground);
-    --header-menu-border: var(--header-border);
-    --header-menu-hover-background: #FFFFFF;
-    --header-menu-hover-foreground: #000000;
-    --header-menu-active-background: rgba(255, 255, 255, 0.05);
-    --header-menu-icon: rgba(255, 255, 255, 0.7);
-    /* logo.svg is black; invert to white on dark header */
-    --header-logo-filter: brightness(0) invert(1);
+    --header-menu-background: #FFFFFF;
+    --header-menu-foreground: #1F3D2E;
+    --header-menu-border: #E8EBE9;
+    --header-menu-hover-background: #F4F5F4;
+    --header-menu-hover-foreground: #1F3D2E;
+    --header-menu-active-background: rgba(31, 61, 46, 0.08);
+    --header-menu-icon: #3A423E;
+    /* logo.svg is black; no invert needed on the light header */
+    --header-logo-filter: none;
 
-    /* footer */
-    --footer-background: #ffffff;
-    --footer-foreground: #000000;
+    /* footer — forest-green band; logo inverts to white in base.css */
+    --footer-background: #1F3D2E;
+    --footer-foreground: #FFFFFF;
 }

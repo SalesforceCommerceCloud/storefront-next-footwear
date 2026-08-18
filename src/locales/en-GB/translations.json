@@ -11,7 +11,7 @@
         "noFilterOptionsAvailable": "No filter options available."
     },
     "common": {
-        "defaultSiteName": "Footwear",
+        "defaultSiteName": "Stride Street",
         "loading": "Loading",
         "loadingMore": "Loading more...",
         "product": "the product",
@@ -28,9 +28,8 @@
             "emptyTitle": "Add your title here",
             "emptyButton": "Button"
         },
-        "contentCard": {
-            "emptyTitle": "Add your title here",
-            "emptyDescription": "Add your description here"
+        "image": {
+            "emptyTitle": "Add your title here"
         },
         "previousImage": "Previous image",
         "nextImage": "Next image",
@@ -43,7 +42,14 @@
             "play": "Play carousel",
             "pause": "Pause carousel"
         },
-        "skipToMainContent": "Skip to main content"
+        "skipToMainContent": "Skip to main content",
+        "announcementBanner": {
+            "emptyTitle": "Add your text here"
+        },
+        "contentCard": {
+            "emptyTitle": "Add your title here",
+            "emptyDescription": "Add your description here"
+        }
     },
     "search": {
         "results": "Search Results for",
@@ -1217,7 +1223,8 @@
                 "phoneInvalid": "Enter a valid phone number.",
                 "birthdayFuture": "Date of birth cannot be in the future."
             },
-            "phoneDescription": "Enter phone number including area code"
+            "phoneDescription": "Enter phone number including area code",
+            "dateOfBirthDescription": "Format: day, month, year"
         },
         "email": {
             "title": "Email Address",
@@ -1282,7 +1289,8 @@
                 "hasNumber": "At least one number",
                 "hasSpecial": "At least one special character",
                 "statusMet": "Requirement met",
-                "statusNotMet": "Requirement not met"
+                "statusNotMet": "Requirement not met",
+                "summary": "{{met}} of {{total}} requirements met"
             }
         },
         "common": {
@@ -1357,29 +1365,33 @@
                 "title": "The New Season",
                 "subtitle": "A new collection shaped by contrast, proportion, and modern attitude. Introducing key pieces for the season ahead.",
                 "ctaText": "Discover the Collection",
+                "ctaAriaLabel": "Discover the Collection: The New Season",
                 "imageAlt": "Women's Slacks Jackets and Purses"
             },
             "slide2": {
                 "title": "The Modern Wardrobe",
                 "subtitle": "Elevated silhouettes, refined textures, and a bold approach to everyday dressing. Designed to move with you.",
                 "ctaText": "Shop the Look",
+                "ctaAriaLabel": "Shop the Look: The Modern Wardrobe",
                 "imageAlt": "Women's White Linen Dress"
             },
             "slide3": {
                 "title": "After Hours",
                 "subtitle": "Statement pieces and refined layers designed for nights out, late moments, and everything in between.",
                 "ctaText": "Explore the Collection",
+                "ctaAriaLabel": "Explore the Collection: After Hours",
                 "imageAlt": "Women's Black Suit"
             },
             "slide4": {
                 "title": "New Perspectives",
                 "subtitle": "A curated drop of standout pieces that redefine contemporary fashion. Confident. Expressive. Uncompromising.",
                 "ctaText": "Shop Now",
+                "ctaAriaLabel": "Shop Now: New Perspectives",
                 "imageAlt": "Women's Grey Dress"
             }
         },
         "meta": {
-            "title": "Footwear",
+            "title": "Stride Street",
             "description": "Performance and everyday shoes for every step."
         },
         "featuredProducts": {
@@ -1389,7 +1401,7 @@
         },
         "categoryGrid": {
             "title": "Style for Real Life",
-            "description": "At Market Street, we believe fashion should be effortless, authentic, and accessible. Our collections are designed for the modern individual who values quality, versatility, and timeless style.",
+            "description": "At Stride Street, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.",
             "shopNowButton": "Shop Now",
             "loadFailed": "Unable to load categories."
         },
@@ -1410,7 +1422,7 @@
             },
             "styleForRealLife": {
                 "title": "Style for Real Life",
-                "description": "At Market Street, we believe fashion should be effortless, authentic, and accessible. Our collections are designed for the modern individual who values quality, versatility, and timeless style.\n\nDiscover pieces that move with you, adapt to your life, and become the foundation of a wardrobe that works—every day, everywhere."
+                "description": "At Stride Street, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.\n\nDiscover pairs that keep pace with your day, from the first stride to the last mile."
             },
             "newArrivals": {
                 "cubes": {
@@ -1476,7 +1488,7 @@
         },
         "copyright": "Salesforce or its affiliates. All rights reserved. This is a demo store only. Orders made WILL NOT be processed.",
         "address": "415 Mission St, San Francisco, CA 94105",
-        "logoAlt": "Market Street"
+        "logoAlt": "Stride Street"
     },
     "aboutUs": {
         "breadcrumb": {
@@ -1488,7 +1500,7 @@
         "section": {
             "ourGoal": {
                 "title": "Built for movement. Designed for everyday life.",
-                "content": "Inspired by urban culture and the energy of movement, Market Street was created to connect performance, style, and everyday essentials in one seamless experience. We believe that great products should move with you—from the streets to the studio, from work to the weekend.\nWhat started as a vision to simplify the way people experience fashion and lifestyle retail has evolved into a brand focused on clarity, accessibility, and smart design. Every collection is curated to deliver versatility, durability, and timeless appeal."
+                "content": "Inspired by movement and the energy of the street, Stride Street was created to connect performance, fit, and everyday footwear in one seamless experience. We believe great shoes should move with you—from the run to the studio, from work to the weekend.\nWhat started as a vision to simplify how people find footwear that actually fits has evolved into a brand focused on clarity, accessibility, and smart design. Every collection is curated to deliver fit confidence, durability, and everyday performance."
             },
             "ourVision": {
                 "title": "Our Vision",
@@ -1504,7 +1516,7 @@
             },
             "ourTeam": {
                 "title": "A Global Brand, A Street-Level Soul",
-                "content": "Market Street was born from the idea that great style shouldn’t feel unreachable. We blend global inspiration with a street-level mindset, connecting culture, performance, and lifestyle into one fluid expression.\nFrom product development to digital experience, everything we do is guided by one principle:\nMake commerce feel natural."
+                "content": "Stride Street was born from the idea that a great fit shouldn't feel like guesswork. We blend performance engineering with a street-level mindset, connecting fit, function, and everyday life into one fluid experience.\nFrom product development to digital experience, everything we do is guided by one principle:\nMake finding your fit feel natural."
             }
         },
         "contact": {
@@ -1898,6 +1910,9 @@
             "viewAllColors": "View all {{count}} colours for {{productName}}",
             "moreColorsTitle": "+{{count}} more"
         },
+        "sizeAvailableAnnouncement": "Size {{size}}, available",
+        "sizeUnavailableAnnouncement": "Size {{size}}, not available",
+        "widthUnavailableTooltip": "Not available in this colour or size",
         "showingReviews": "Showing {{from}}-{{to}} of {{total}} reviews",
         "filterBy": "Filter by:",
         "withPhotos": "With Photos",
@@ -1998,7 +2013,48 @@
             "listPrice": "List price: {{price}}"
         },
         "removingFromWishlist": "Removing from wishlist...",
-        "inWishlist": "In your wishlist"
+        "inWishlist": "In your wishlist",
+        "sizeGuide": {
+            "title": "Size Guide",
+            "description": "Find your size across UK, US, EU, and CM measurements.",
+            "descriptionWithBrand": "Find your {{brandName}} size across UK, US, EU, and CM measurements.",
+            "metaDescription": "Convert your shoe size across UK, US, EU, and CM measurements for every brand.",
+            "triggerLabel": "Size Guide",
+            "breadcrumb": {
+                "home": "Home",
+                "sizeGuide": "Size Guide"
+            },
+            "genderToggleLabel": "Shopper's size chart",
+            "gender": {
+                "mens": "Men's",
+                "womens": "Women's",
+                "kids": "Kids"
+            },
+            "tabsLabel": "Size guide sections",
+            "tabs": {
+                "sizeChart": "Size Chart",
+                "howToMeasure": "How to Measure"
+            },
+            "conversionTableCaption": "{{gender}} size conversion chart: UK, US, EU, and CM sizes",
+            "us": "US",
+            "uk": "UK",
+            "eu": "EU",
+            "cm": "CM",
+            "jp": "JP",
+            "yourSize": "(your size)",
+            "howToMeasure": {
+                "step1": "Trace the outline of your foot on a sheet of paper while standing.",
+                "step2": "Measure the longest distance from heel to toe in centimetres.",
+                "step3": "Repeat for your other foot; use the larger measurement.",
+                "step4": "Match your measurement to the CM column in the size chart."
+            },
+            "fitConfidence": {
+                "summary": "{{percent}}% say true to size ({{count}} responses)",
+                "runsSmall": "Runs small",
+                "trueToSize": "True to size",
+                "runsLarge": "Runs large"
+            }
+        }
     },
     "orderLookup": {
         "results": {

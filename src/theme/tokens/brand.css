@@ -1,29 +1,29 @@
 /*
- * Brand palette primitives for Footwear.
+ * Brand palette primitives for Stride Street.
  * Storefront-theme primitives owned by the brand team; downstream tokens may
- * reference them. The gray ramp is the neutral scale used across chrome and
- * surfaces. Placeholder values pending the footwear brand pass.
+ * reference them. The gray ramp is the cool-gray neutral scale used across
+ * chrome and surfaces.
  */
 :root {
     /* brand primary (e.g. Write a Review button) */
-    --brand-primary: #000000;
-    --brand-primary-hover: #333333;
+    --brand-primary: #1f3d2e;
+    --brand-primary-hover: #163024;
 
     /* Brand colors */
-    --brand-black: #000000;
-    --brand-black-off: #121212;
-    --brand-black-charcoal: #242424;
+    --brand-black: #17171b;
+    --brand-black-off: #1a1f1c;
+    --brand-black-charcoal: #24302a;
     --brand-white: #ffffff;
-    --brand-white-bone: #fafaf9;
-    --brand-white-ivory: #fcfcfc;
-    --brand-gray-50: #fafafa;
-    --brand-gray-100: #f5f5f5;
-    --brand-gray-200: #ededed;
-    --brand-gray-300: #e5e5e5;
-    --brand-gray-400: #d4d4d4;
-    --brand-gray-500: #9e9e9e;
-    --brand-gray-600: #757575;
-    --brand-gray-700: #616161;
-    --brand-gray-800: #424242;
-    --brand-gray-900: #212121;
+    --brand-white-bone: #ffffff;
+    --brand-white-ivory: #ffffff;
+    --brand-gray-50: #f4f5f4;
+    --brand-gray-100: #e8ebe9;
+    --brand-gray-200: #d5dbd7;
+    --brand-gray-300: #b7c0bb;
+    --brand-gray-400: #8a968f;
+    --brand-gray-500: #66706a;
+    --brand-gray-600: #4d5651;
+    --brand-gray-700: #3a423e;
+    --brand-gray-800: #272c29;
+    --brand-gray-900: #171b19;
 }
