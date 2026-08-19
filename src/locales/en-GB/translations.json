@@ -2064,6 +2064,7 @@
             "errors": {
                 "lookupFailed": "Unable to retrieve your order. Please try again later."
             },
+            "startOver": "Start over",
             "breadcrumb": {
                 "home": "Home",
                 "orderLookup": "Order Lookup"
