@@ -1,6 +1,7 @@
 import { n as Site } from "./types.js";
 import * as react_router8 from "react-router";
 import { MiddlewareFunction, RouterContextProvider, createContext } from "react-router";
+import { Tracer } from "@opentelemetry/api";
 import { DataStore, DataStoreNotFoundError, DataStoreServiceError, DataStoreUnavailableError } from "@salesforce/mrt-utilities/data-store";
 
 //#region src/data-store/utils.d.ts
@@ -171,6 +172,33 @@ declare const dataStoreLoggerContext: react_router8.RouterContext<DataStoreLogge
  * {@link RouterContextProvider}.
  */
 declare function getDataStoreLogger(context: Readonly<RouterContextProvider>): DataStoreLogger;
+//#endregion
+//#region src/data-store/tracer-context.d.ts
+/**
+ * Router context the SDK reads to obtain the request's OpenTelemetry tracer.
+ *
+ * Hosts (e.g. the storefront template) populate this from the dev layer's
+ * provider-held tracer (`initTelemetry()`) in their logging/telemetry middleware.
+ * When unset — local scripts, tests, or any host that has not wired tracing —
+ * {@link getDataStoreTracer} returns `null` and the data-store funnel runs
+ * untraced with no overhead.
+ *
+ * The tracer must come from the provider directly rather than the global
+ * `trace.getTracer()` API: on Managed Runtime the global tracer registry is an
+ * unreliable no-op (a dual `@opentelemetry/api` bundle splits the registry), so
+ * the dev layer holds the real tracer and the host passes it through here.
+ *
+ * Defaults to `null` (not `undefined`) because React Router's `context.get()`
+ * throws when `defaultValue === undefined`.
+ */
+declare const dataStoreTracerContext: react_router8.RouterContext<Tracer | null>;
+/**
+ * Read the data-store tracer from router context, or `null` when nothing has
+ * been injected. Callers treat `null` as "tracing disabled" and run the work
+ * directly. Use this from inside SDK middleware/loaders that have access to a
+ * {@link RouterContextProvider}.
+ */
+declare function getDataStoreTracer(context: Readonly<RouterContextProvider>): Tracer | null;
 //#endregion
 //#region src/data-store/middleware/custom-site-preferences.d.ts
 type SitePreferences = Record<string, unknown>;
@@ -374,5 +402,5 @@ declare const dataStoreMiddleware: react_router8.MiddlewareFunction<Response>[];
  */
 declare const dataStoreMiddlewareLazy: react_router8.MiddlewareFunction<Response>[];
 //#endregion
-export { type CustomGlobalPreferences, type DalSite, DataStore, type DataStoreContextKey, type DataStoreEntry, type DataStoreEntryKey, type DataStoreLogger, type DataStoreMiddlewareOptions, DataStoreNotFoundError, DataStoreServiceError, DataStoreUnavailableError, type GcpPreferences, type LoginPreferences, type SitePreferences, createDataStoreContext, createDataStoreMiddleware, createLazyDataStoreMiddleware, dataStoreLoggerContext, dataStoreMiddleware, dataStoreMiddlewareLazy, getCustomGlobalPreferences, getCustomGlobalPreferencesLazy, getDataStoreEntry, getDataStoreLogger, getGcpApiKey, getGcpApiKeyLazy, getGcpPreferences, getGcpPreferencesLazy, getLoginPreferences, getLoginPreferencesLazy, getSitePreferences, getSitePreferencesLazy, getSitesFromDataStoreLazy, readLazyDataStoreEntry, sitesMiddlewareLazy };
+export { type CustomGlobalPreferences, type DalSite, DataStore, type DataStoreContextKey, type DataStoreEntry, type DataStoreEntryKey, type DataStoreLogger, type DataStoreMiddlewareOptions, DataStoreNotFoundError, DataStoreServiceError, DataStoreUnavailableError, type GcpPreferences, type LoginPreferences, type SitePreferences, createDataStoreContext, createDataStoreMiddleware, createLazyDataStoreMiddleware, dataStoreLoggerContext, dataStoreMiddleware, dataStoreMiddlewareLazy, dataStoreTracerContext, getCustomGlobalPreferences, getCustomGlobalPreferencesLazy, getDataStoreEntry, getDataStoreLogger, getDataStoreTracer, getGcpApiKey, getGcpApiKeyLazy, getGcpPreferences, getGcpPreferencesLazy, getLoginPreferences, getLoginPreferencesLazy, getSitePreferences, getSitePreferencesLazy, getSitesFromDataStoreLazy, readLazyDataStoreEntry, sitesMiddlewareLazy };
 //# sourceMappingURL=data-store.d.ts.map
