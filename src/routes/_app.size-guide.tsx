@@ -42,7 +42,7 @@ export type SizeGuidePageData = {
  * Defaults to the mens chart with no product-specific `c_sizeChart`/highlighted size, since
  * this page has no product/category context to derive those from.
  */
-export async function loader({ request }: Route.LoaderArgs): Promise<SizeGuidePageData> {
+export function loader({ request }: Route.LoaderArgs): SizeGuidePageData {
     const requestUrl = new URL(request.url);
     return {
         pageUrl: buildCanonicalUrl(requestUrl.origin, requestUrl.pathname, requestUrl.search),

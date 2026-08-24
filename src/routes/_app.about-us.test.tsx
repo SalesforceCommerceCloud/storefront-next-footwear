@@ -37,21 +37,22 @@ const createMockPage = (regions: unknown[] = []): ShopperExperience.schemas['Pag
 vi.mock('@/components/region', async () => {
     const { Suspense } = await import('react');
     const { Await } = await import('react-router');
-    const renderRegion = (regionId: string, errorElement: unknown, fallbackElement: unknown) => (resolvedPage: any) => {
-        const components = resolvedPage?.regions?.find((region: any) => region.id === regionId)?.components ?? [];
-        return (
-            <div
-                data-testid={`region-${regionId}`}
-                data-has-error-element={String(errorElement !== undefined)}
-                data-has-fallback-element={String(fallbackElement !== undefined)}>
-                {components.map((component: any) => (
-                    <div key={component.id} data-testid={`region-component-${component.id}`}>
-                        {component.typeId}
-                    </div>
-                ))}
-            </div>
-        );
-    };
+    const renderRegion = (regionId: string, errorElement: unknown, fallbackElement: unknown) =>
+        function ResolvedRegion(resolvedPage: any) {
+            const components = resolvedPage?.regions?.find((region: any) => region.id === regionId)?.components ?? [];
+            return (
+                <div
+                    data-testid={`region-${regionId}`}
+                    data-has-error-element={String(errorElement !== undefined)}
+                    data-has-fallback-element={String(fallbackElement !== undefined)}>
+                    {components.map((component: any) => (
+                        <div key={component.id} data-testid={`region-component-${component.id}`}>
+                            {component.typeId}
+                        </div>
+                    ))}
+                </div>
+            );
+        };
     return {
         Region: ({ page, regionId, errorElement, fallbackElement }: any) =>
             page && typeof page.then === 'function' ? (

@@ -292,8 +292,9 @@ describe('ProductInfo', () => {
                 variationValues: {},
             });
 
-            expect(screen.getByRole('radio', { name: 'Blue' })).toBeDisabled();
-            expect(screen.getByRole('radio', { name: 'Blue' })).toHaveAttribute('aria-disabled', 'true');
+            // An unavailable colorway stays focusable/announceable and exposes aria-disabled with an
+            // out-of-stock accessible name (same contract as the disabled width swatch test below).
+            expect(screen.getByRole('radio', { name: /blue.*out of stock/i })).toHaveAttribute('aria-disabled', 'true');
         });
 
         test('keeps an orderable colorway selectable when it requires a different size or width', async () => {

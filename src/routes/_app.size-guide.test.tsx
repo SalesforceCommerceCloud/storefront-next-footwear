@@ -89,8 +89,8 @@ const renderPage = (data: SizeGuidePageData) => {
 
 describe('Footwear SizeGuidePage', () => {
     describe('Loaders', () => {
-        test('returns a canonical pageUrl derived from the request', async () => {
-            const result = await loader({
+        test('returns a canonical pageUrl derived from the request', () => {
+            const result = loader({
                 request: new Request('http://localhost/size-guide?foo=bar'),
             } as Parameters<typeof loader>[0]);
 

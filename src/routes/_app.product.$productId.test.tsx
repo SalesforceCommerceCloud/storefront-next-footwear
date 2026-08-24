@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * Footwear PDP route overlay test (Rule 5: a route overlay copies the canonical route's sibling
+ * test). The footwear overlay's ProductPageData adds two Einstein recommendation rails, so the
+ * shared mock loader data carries their promises. Everything else mirrors the canonical PDP test.
+ */
+
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { use } from 'react';
@@ -257,6 +263,11 @@ describe('Product Detail Route', () => {
             orderTracking: { heading: '', points: [] },
         }),
         // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
+        // Footwear overlay adds two Einstein recommendation rails (also-in-this-activity and
+        // performance-matched), so its ProductPageData requires these promises. The canonical
+        // route has no counterpart; empty payloads satisfy the (all-optional) Recommendation shape.
+        activityMatchedRecommendations: Promise.resolve({}),
+        performanceMatchedRecommendations: Promise.resolve({}),
     };
 
     describe('shouldRevalidate export', () => {
