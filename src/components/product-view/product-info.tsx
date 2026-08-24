@@ -31,6 +31,7 @@ import { ProductRatingSummary } from '@/components/product-view/product-rating-s
 // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
 import { useCurrentVariant } from '@/hooks/product/use-current-variant';
 import { useSelectedVariations } from '@/hooks/product/use-selected-variations';
+import { useNavigate } from '@/hooks/use-navigate';
 import { useTranslation } from 'react-i18next';
 import { WishlistButton } from '@/components/buttons/wishlist-button';
 import { ShareButton } from '@/components/buttons/share-button';
@@ -42,6 +43,8 @@ import { SizeGuideDrawer, parseSizeChart, deriveGenderFromCategory } from '@/com
 import { FitConfidenceIndicator, parseFitFeedback } from '@/components/fit-confidence-indicator';
 import { SizeGrid, type SizeOption } from '@/components/size-grid';
 import { WidthSelector, type WidthOption } from '@/components/width-selector';
+import { ColorwayStrip, type ColorwayOption } from '@/components/colorway-strip';
+import { resolveWidthLabel } from '@/lib/width-labels';
 
 type ProductInfoBaseProps = {
     product: ShopperProducts.schemas['Product'];
@@ -54,10 +57,18 @@ type ProductInfoBaseProps = {
     currentVariantOverride?: ShopperProducts.schemas['Variant'];
     /** Whether selected variant inventory is currently being fetched */
     isVariantInventoryLoading?: boolean;
+    /** Whether the selected variant inventory request failed. */
+    isVariantInventoryLoadError?: boolean;
+    /** Retries a failed selected-variant inventory request. */
+    onRetryVariantInventory?: () => void;
     /** Hide top-right action icons (wishlist/share) */
     hideActionIcons?: boolean;
     /** Optional action content rendered inline with title in full variant style */
     headerAction?: ReactNode;
+    /** Let PDP colorway options remain selectable when the current size or width is incompatible. */
+    colorwaysIgnoreSelectedAttributes?: boolean;
+    /** Limits controlled behavior to these variation attributes. Defaults to all attributes. */
+    controlledAttributeIds?: string[];
     // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
     /** Disable rating summary interactions (hover popover and review links) */
     disableRatingInteraction?: boolean;
@@ -106,6 +117,19 @@ const isControlledVariantValueOrderable = ({
         .some((variant) => variant.orderable);
 };
 
+const isColorwayOrderable = (
+    variants: ShopperProducts.schemas['Variant'][] | undefined,
+    colorwayId: string
+): boolean => {
+    if (!variants || variants.length === 0) {
+        return true;
+    }
+
+    // A colorway remains selectable when another size or width is available. Selecting it clears
+    // incompatible dimensions so the existing selectors can derive their new availability.
+    return variants.some((variant) => variant.orderable && variant.variationValues?.color === colorwayId);
+};
+
 /**
  * Footwear overlay of ProductInfo: identical to canonical, plus a "Size Guide" trigger and
  * FitConfidenceIndicator mounted below the variant swatches, and dedicated SizeGrid/WidthSelector
@@ -129,19 +153,24 @@ export default function ProductInfo({
     swatchMode = 'uncontrolled',
     onAttributeChange,
     variationValues,
+    controlledAttributeIds,
     hideVariantSelection = false,
     variantStyle = 'full',
     showQuantityInEditMode = false,
     currentVariantOverride,
     isVariantInventoryLoading = false,
+    isVariantInventoryLoadError = false,
+    onRetryVariantInventory,
     hideActionIcons = false,
     headerAction,
+    colorwaysIgnoreSelectedAttributes = false,
     // @sfdc-extension-line SFDC_EXT_RATINGS_REVIEWS
     disableRatingInteraction = false,
 }: ProductInfoProps): ReactElement {
     const config = useConfig();
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);
+    const navigate = useNavigate();
     const productView = useOptionalProductView();
 
     // Size/width selection is resolved entirely client-side from `product.variants` (already
@@ -165,38 +194,69 @@ export default function ProductInfo({
     // merged selection can be fed back into `useVariationAttributes` below without a circular
     // dependency. Mirrors ProductViewProvider's own URL+override merge.
     const urlSelections = useSelectedVariations({ product });
+
+    // Controlled callers (e.g. the footwear colorway overlay) can drive a subset of attributes via
+    // `variationValues`/`controlledAttributeIds`; the rest keep tracking the URL. Merge the two into
+    // the effective controlled selection. Undefined in uncontrolled mode.
+    const effectiveVariationValues = useMemo<Record<string, string> | undefined>(() => {
+        if (swatchMode !== 'controlled') return undefined;
+
+        if (controlledAttributeIds === undefined) return variationValues;
+
+        const selectedValues = { ...urlSelections };
+        controlledAttributeIds.forEach((attributeId) => {
+            const value = variationValues?.[attributeId];
+            if (value !== undefined) {
+                selectedValues[attributeId] = value;
+            }
+        });
+        return selectedValues;
+    }, [swatchMode, controlledAttributeIds, variationValues, urlSelections]);
+
+    // Single selection source both display (this component) and availability read: controlled mode
+    // uses the effective controlled selection; uncontrolled merges the client-side size/width
+    // override on top of the URL selection.
     const selectedVariationValues = useMemo(() => {
         if (swatchMode === 'controlled') {
-            return variationValues ?? {};
+            return effectiveVariationValues ?? {};
         }
         return { ...urlSelections, ...sizeWidthOverrides };
-    }, [swatchMode, variationValues, urlSelections, sizeWidthOverrides]);
+    }, [swatchMode, effectiveVariationValues, urlSelections, sizeWidthOverrides]);
     const hasSizeWidthOverride = Object.keys(sizeWidthOverrides).length > 0;
 
-    // Feed the merged local/URL selection into variation-attribute availability so a client-side
-    // size pick (which never touches the URL) recomputes cross-control availability -- e.g. which
-    // widths are orderable for the chosen size. Without the override the swatches read URL-only
-    // selections and a local size pick would leave an unorderable width enabled.
+    // Feed the merged selection into variation-attribute availability so a client-side size pick
+    // (which never touches the URL) recomputes cross-control availability -- e.g. which widths are
+    // orderable for the chosen size. Controlled mode passes the effective controlled selection.
     const variationAttributes = useVariationAttributes({
         product,
-        selectionsOverride: hasSizeWidthOverride ? selectedVariationValues : undefined,
+        selectionsOverride:
+            swatchMode === 'controlled'
+                ? effectiveVariationValues
+                : hasSizeWidthOverride
+                  ? selectedVariationValues
+                  : undefined,
     });
 
-    const urlCurrentVariant = useCurrentVariant({ product });
+    // URL-based variant. In controlled mode the effective selection guards `useCurrentVariant`'s
+    // pid-sync off; in uncontrolled mode the override is undefined, so pid-sync stays active and
+    // color navigation keeps syncing the pid.
+    const urlCurrentVariant = useCurrentVariant({ product, selectionsOverride: effectiveVariationValues });
     // Reuses the canonical hook a second time with the merged local/URL selection so size/width
     // picks resolve to a variant without a navigation; `useCurrentVariant`'s own pid-sync effect
     // is a no-op here since it's guarded by `selectionsOverride` being set.
     const localOverrideVariant = useCurrentVariant({ product, selectionsOverride: selectedVariationValues });
     const controlledCurrentVariant = useMemo(() => {
         if (swatchMode !== 'controlled') return undefined;
-        if (!variationValues) return undefined;
+        if (!effectiveVariationValues) return undefined;
 
         const potentialVariants =
             product.variants?.filter((variant) =>
-                Object.keys(variationValues).every((key) => variant.variationValues?.[key] === variationValues[key])
+                Object.keys(effectiveVariationValues ?? {}).every(
+                    (key) => variant.variationValues?.[key] === effectiveVariationValues?.[key]
+                )
             ) ?? [];
         return potentialVariants.length === 1 ? potentialVariants[0] : undefined;
-    }, [swatchMode, product.variants, variationValues]);
+    }, [swatchMode, product.variants, effectiveVariationValues]);
     // For controlled modal flows, prefer explicit override (can include fetched inventory), then
     // controlled selection, then the local/URL-merged variant, then pure URL-based as fallback.
     const currentVariant =
@@ -229,6 +289,7 @@ export default function ProductInfo({
             ...product,
             inventory: variantWithInventory.inventory ?? product.inventory,
             inventories: variantWithInventory.inventories ?? product.inventories,
+            currentVariant,
         };
     }, [product, currentVariant, productView?.hydratedVariant]);
     // Get currency from context (automatically derived from locale)
@@ -435,12 +496,27 @@ export default function ProductInfo({
                     />
                 </UITarget>
             )}
+            {isVariantInventoryLoadError && (
+                <div
+                    role="alert"
+                    className="flex items-center justify-between gap-3 rounded-ui border border-destructive/30 p-3">
+                    <p className="text-sm text-destructive">
+                        {t('inventory.loadError', { defaultValue: 'We could not verify availability.' })}
+                    </p>
+                    <Button type="button" variant="outline" size="sm" onClick={onRetryVariantInventory}>
+                        {t('retry', { defaultValue: 'Try again' })}
+                    </Button>
+                </div>
+            )}
             {!isCompactStyle && <UITarget targetId="sfcc.pdp.loyalty.points" />}
 
             {/* Swatch Groups for Product Variations */}
             {sortedVariationAttributes.map(({ id, name, selectedValue, values }) => {
+                const isControlledAttribute =
+                    swatchMode === 'controlled' &&
+                    (controlledAttributeIds === undefined || controlledAttributeIds.includes(id));
                 // In controlled mode, derive display name from variationValues state
-                const controlledValue = variationValues?.[id];
+                const controlledValue = effectiveVariationValues?.[id];
                 const controlledDisplayName = controlledValue
                     ? values.find((v) => v.value === controlledValue)?.name || ''
                     : '';
@@ -451,27 +527,78 @@ export default function ProductInfo({
                     : values;
 
                 const isOrderable = (value: (typeof values)[number]) =>
-                    swatchMode === 'controlled'
-                        ? isControlledVariantValueOrderable({
-                              variants: product.variants,
-                              currentSelection: variationValues ?? {},
-                              attributeId: id,
-                              attributeValue: value.value,
-                          })
-                        : (value.orderable ?? true);
+                    (() => {
+                        if (swatchMode !== 'controlled') return value.orderable ?? true;
+
+                        // Preserve the existing controlled-mode availability contract for modals and stories.
+                        if (controlledAttributeIds === undefined) {
+                            return isControlledVariantValueOrderable({
+                                variants: product.variants,
+                                currentSelection: effectiveVariationValues ?? {},
+                                attributeId: id,
+                                attributeValue: value.value,
+                            });
+                        }
+
+                        const currentSelection = effectiveVariationValues ?? {};
+                        const isOrderableWithCurrentSelection = isControlledVariantValueOrderable({
+                            variants: product.variants,
+                            currentSelection,
+                            attributeId: id,
+                            attributeValue: value.value,
+                        });
+                        if (isOrderableWithCurrentSelection || (id !== 'size' && id !== 'width')) {
+                            return isOrderableWithCurrentSelection;
+                        }
+
+                        // When a local colorway makes the URL's other fit dimension incompatible,
+                        // expose values that are available for that colorway so the shopper can repair the tuple.
+                        const otherDimensionId = id === 'size' ? 'width' : 'size';
+                        const selectionWithoutOtherDimension = { ...currentSelection };
+                        delete selectionWithoutOtherDimension[otherDimensionId];
+                        return isControlledVariantValueOrderable({
+                            variants: product.variants,
+                            currentSelection: selectionWithoutOtherDimension,
+                            attributeId: id,
+                            attributeValue: value.value,
+                        });
+                    })();
 
                 // Only wired to the size/width controls below (`onSizeChange`/`onWidthChange`) --
                 // generic swatches (color, etc.) further down still navigate via `<Swatch href>`.
                 const handleAttributeSelect = (value: string) => {
                     if (hideVariantSelection) return;
-                    if (swatchMode === 'controlled') {
+                    if (isControlledAttribute) {
                         onAttributeChange?.(id, value);
                         return;
                     }
-                    // Size/width resolve entirely client-side from `product.variants` (already
-                    // loaded by the initial SCAPI product fetch), so selecting one only updates
-                    // local state -- no navigation, no loader re-fetch, no pid-sync revalidation.
-                    setSizeWidthOverrides((prev) => (prev[id] === value ? prev : { ...prev, [id]: value }));
+                    // Uncontrolled: size/width resolve entirely client-side from `product.variants`
+                    // (already loaded by the initial SCAPI product fetch), so selecting one only
+                    // updates local state -- no navigation, no loader re-fetch, no pid-sync revalidation.
+                    if (swatchMode === 'uncontrolled') {
+                        setSizeWidthOverrides((prev) => (prev[id] === value ? prev : { ...prev, [id]: value }));
+                        return;
+                    }
+
+                    // Controlled overlay: size/width aren't in `controlledAttributeIds`, so they
+                    // navigate. Carry the locally-selected colorway and drop the stale pid so the
+                    // loader resolves the new size/width + color tuple.
+                    const matchingHref = values.find((v) => v.value === value)?.href;
+                    if (!matchingHref) return;
+
+                    const localColorway = effectiveVariationValues?.color;
+                    if (!localColorway) {
+                        void navigate(matchingHref);
+                        return;
+                    }
+
+                    const [pathname, search = ''] = matchingHref.split('?');
+                    const searchParams = new URLSearchParams(search);
+                    searchParams.set('color', localColorway);
+                    // The generated href can retain a PID for the pre-switch variant.
+                    // Let the loader resolve the URL's current variation tuple instead.
+                    searchParams.delete('pid');
+                    void navigate({ pathname, search: `?${searchParams}` });
                 };
 
                 if (id === 'size') {
@@ -506,7 +633,7 @@ export default function ProductInfo({
                         const available = isOrderable(value);
                         return {
                             code: value.value,
-                            label: value.name ?? value.value,
+                            label: resolveWidthLabel(t, value.name ?? value.value) ?? value.value,
                             available,
                             tooltip: available ? undefined : t('widthUnavailableTooltip'),
                         };
@@ -528,13 +655,85 @@ export default function ProductInfo({
                     );
                 }
 
+                if (id === 'color') {
+                    const colorways: ColorwayOption[] = swatchesToShow.map((value) => {
+                        const hasCompatibleVariationAttributes = (imageGroup: ShopperProducts.schemas['ImageGroup']) =>
+                            imageGroup.variationAttributes?.some(
+                                (attribute) =>
+                                    attribute.id === 'color' &&
+                                    attribute.values?.some((attributeValue) => attributeValue.value === value.value)
+                            ) &&
+                            imageGroup.variationAttributes.every(
+                                (attribute) =>
+                                    attribute.id === 'color' ||
+                                    attribute.values?.some(
+                                        (attributeValue) =>
+                                            attributeValue.value === selectedVariationValues[attribute.id]
+                                    )
+                            );
+                        const thumbnailImage = product.imageGroups?.find(
+                            (imageGroup) =>
+                                imageGroup.viewType === 'small' && hasCompatibleVariationAttributes(imageGroup)
+                        )?.images?.[0];
+                        const heroImages = product.imageGroups?.find(
+                            (imageGroup) =>
+                                imageGroup.viewType === 'large' && hasCompatibleVariationAttributes(imageGroup)
+                        )?.images;
+                        const thumbnailSource = thumbnailImage ?? heroImages?.[0];
+
+                        return {
+                            colorwayId: value.value,
+                            colorwayName: value.name,
+                            thumbnailImage: thumbnailSource
+                                ? (toImageUrl({ image: thumbnailSource, config }) ?? '')
+                                : undefined,
+                            available:
+                                colorwaysIgnoreSelectedAttributes || swatchMode === 'uncontrolled'
+                                    ? isColorwayOrderable(product.variants, value.value)
+                                    : isOrderable(value),
+                        };
+                    });
+
+                    const handleColorwayChange = (value: string) => {
+                        if (hideVariantSelection) return;
+                        if (isControlledAttribute) {
+                            onAttributeChange?.(id, value);
+                            return;
+                        }
+
+                        const matchingHref = values.find((variationValue) => variationValue.value === value)?.href;
+                        if (!matchingHref) return;
+
+                        const [pathname, search = ''] = matchingHref.split('?');
+                        const searchParams = new URLSearchParams(search);
+                        searchParams.delete('pid');
+                        product.variationAttributes?.forEach(({ id: variationAttributeId }) => {
+                            if (variationAttributeId && variationAttributeId !== id) {
+                                searchParams.delete(variationAttributeId);
+                            }
+                        });
+                        void navigate({ pathname, search: `?${searchParams}` });
+                    };
+
+                    return (
+                        <ColorwayStrip
+                            key={id}
+                            colorways={colorways}
+                            selectedColorwayId={
+                                swatchMode === 'uncontrolled' ? (selectedValue?.value ?? '') : (controlledValue ?? '')
+                            }
+                            onColorwayChange={handleColorwayChange}
+                        />
+                    );
+                }
+
                 const swatches = swatchesToShow.map((value) => {
                     const { href, name: valueName, image, value: swatchValue, orderable } = value;
                     const isOrderableInCurrentSelection =
                         swatchMode === 'controlled'
                             ? isControlledVariantValueOrderable({
                                   variants: product.variants,
-                                  currentSelection: variationValues ?? {},
+                                  currentSelection: effectiveVariationValues ?? {},
                                   attributeId: id,
                                   attributeValue: swatchValue,
                               })
@@ -568,7 +767,7 @@ export default function ProductInfo({
                     return (
                         <Swatch
                             key={swatchValue}
-                            href={swatchMode === 'uncontrolled' ? href : undefined}
+                            href={isControlledAttribute ? undefined : href}
                             // Disable when not orderable (out of stock)
                             disabled={!isOrderableInCurrentSelection}
                             value={swatchValue}
@@ -590,7 +789,7 @@ export default function ProductInfo({
                             // Disable handleChange when hideVariantSelection is true
                             hideVariantSelection
                                 ? undefined
-                                : swatchMode === 'controlled'
+                                : isControlledAttribute
                                   ? (value) => onAttributeChange?.(id, value)
                                   : undefined
                         }>
@@ -627,14 +826,17 @@ export default function ProductInfo({
             {/* @sfdc-extension-block-start SFDC_EXT_BOPIS */}
             {/* Delivery Options - For individual products */}
             {/* Hide for non-pickup items when opened from cart page */}
-            {!isOutOfStock && (mode !== 'edit' || basketPickupStore) && !(isProductABundle || isProductASet) && (
-                <DeliveryOptions
-                    product={productForDeliveryOptions}
-                    quantity={quantity}
-                    basketPickupStore={basketPickupStore}
-                    className="mt-6"
-                />
-            )}
+            {!isVariantInventoryLoading &&
+                !isOutOfStock &&
+                (mode !== 'edit' || basketPickupStore) &&
+                !(isProductABundle || isProductASet) && (
+                    <DeliveryOptions
+                        product={productForDeliveryOptions}
+                        quantity={quantity}
+                        basketPickupStore={basketPickupStore}
+                        className="mt-6"
+                    />
+                )}
             {/* @sfdc-extension-block-end SFDC_EXT_BOPIS */}
 
             {/* Quantity Selector - for non-set/bundle when not edit mode, or when showQuantityInEditMode in edit mode */}

@@ -19,6 +19,7 @@ import type { ShopperProducts } from '@/scapi';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
+import { resolveWidthLabel } from '@/lib/width-labels';
 
 // oxlint-disable-next-line react/only-export-components -- oxlint flags the co-exported Page Designer metadata class; eslint-plugin-react-refresh does not
 export const InventoryStatus = {
@@ -204,8 +205,11 @@ export default function InventoryMessage({
         const widthAttribute = product.variationAttributes?.find((attribute) => attribute.id === 'width');
         const selectedValue = currentVariant?.variationValues?.width;
         if (!widthAttribute || !selectedValue) return undefined;
-        return widthAttribute.values?.find((value) => value.value === selectedValue)?.name;
-    }, [product.variationAttributes, currentVariant?.variationValues]);
+        const matchedValue = widthAttribute.values?.find((value) => value.value === selectedValue);
+        // Spell out bare width codes ("D" → "Standard") so the low-stock message matches the
+        // width selector; a catalog that already names its widths passes through unchanged.
+        return resolveWidthLabel(t, matchedValue?.name ?? matchedValue?.value);
+    }, [product.variationAttributes, currentVariant?.variationValues, t]);
 
     let status = customGetInventoryStatus
         ? customGetInventoryStatus(product, currentVariant)

@@ -34,8 +34,9 @@ type VariantWithInventory = ShopperProducts.schemas['Variant'] & {
     inventory?: ShopperProducts.schemas['Inventory'];
 };
 
-// A master with two widths (D, E). `variationAttributes.width.values[].name` is what the width-aware
-// low-stock message reads for its label, so D/E map to their own display names here.
+// A master with two widths (D → Standard, 2E → Wide). The width-aware low-stock message reads
+// `variationAttributes.width.values[].name` for its raw label, then spells out bare US width codes
+// via lib/width-labels (D → "Standard", 2E → "Wide") so the message matches the width selector.
 const makeMaster = (
     loadedSku: string,
     loadedInventory: ShopperProducts.schemas['Inventory'] | undefined
@@ -46,7 +47,7 @@ const makeMaster = (
         inventory: loadedInventory,
         variants: [
             { productId: 'shoe-D', orderable: true, variationValues: { width: 'D' } },
-            { productId: 'shoe-E', orderable: true, variationValues: { width: 'E' } },
+            { productId: 'shoe-2E', orderable: true, variationValues: { width: '2E' } },
         ],
         variationAttributes: [
             {
@@ -54,7 +55,7 @@ const makeMaster = (
                 name: 'Width',
                 values: [
                     { value: 'D', name: 'D' },
-                    { value: 'E', name: 'E' },
+                    { value: '2E', name: '2E' },
                 ],
             },
         ],
@@ -81,31 +82,31 @@ describe('InventoryMessage (footwear) — per-width transient safety', () => {
 
         render(<InventoryMessage product={product} currentVariant={variant} lowStockThreshold={5} />);
 
-        expect(screen.getByText('Few items left in width D')).toBeInTheDocument();
+        expect(screen.getByText('Few items left in width Standard')).toBeInTheDocument();
     });
 
     it('leaves the live region empty (UNKNOWN) while a newly selected width awaits its own inventory', () => {
-        // Still loaded for shoe-D (low stock), but the shopper just picked width E. The E SKU differs
+        // Still loaded for shoe-D (low stock), but the shopper just picked width 2E. The 2E SKU differs
         // from the loaded SKU and its inventory has not arrived — the stale shoe-D stock must NOT be
-        // relabeled "in width E".
+        // relabeled "in width Wide".
         const product = makeMaster('shoe-D', lowStock(2));
-        const selectedWidthE = {
-            productId: 'shoe-E',
+        const selectedWidth2E = {
+            productId: 'shoe-2E',
             orderable: true,
-            variationValues: { width: 'E' },
+            variationValues: { width: '2E' },
         } as VariantWithInventory;
 
-        render(<InventoryMessage product={product} currentVariant={selectedWidthE} lowStockThreshold={5} />);
+        render(<InventoryMessage product={product} currentVariant={selectedWidth2E} lowStockThreshold={5} />);
 
         const region = screen.getByRole('status');
         expect(region).not.toHaveAttribute('aria-hidden');
         expect(region).toBeEmptyDOMElement();
-        // The critical negative: the previously loaded SKU's stock is never announced against width E.
-        expect(screen.queryByText('Few items left in width E')).not.toBeInTheDocument();
-        expect(screen.queryByText('Few items left in width D')).not.toBeInTheDocument();
+        // The critical negative: the previously loaded SKU's stock is never announced against width 2E.
+        expect(screen.queryByText('Few items left in width Wide')).not.toBeInTheDocument();
+        expect(screen.queryByText('Few items left in width Standard')).not.toBeInTheDocument();
     });
 
-    it('transitions low-stock(D) -> empty(E pending) -> correct message once E inventory arrives', () => {
+    it('transitions low-stock(D) -> empty(2E pending) -> correct message once 2E inventory arrives', () => {
         // State 1: width D is the loaded SKU and low on stock.
         const productD = makeMaster('shoe-D', lowStock(2));
         const variantD = {
@@ -118,44 +119,44 @@ describe('InventoryMessage (footwear) — per-width transient safety', () => {
         const { rerender } = render(
             <InventoryMessage product={productD} currentVariant={variantD} lowStockThreshold={5} />
         );
-        expect(screen.getByText('Few items left in width D')).toBeInTheDocument();
+        expect(screen.getByText('Few items left in width Standard')).toBeInTheDocument();
 
-        // State 2: shopper selects width E; its SKU differs from the loaded SKU and has no inventory
-        // yet. The region goes empty rather than mislabeling shoe-D's stock as width E.
-        const selectedWidthE = {
-            productId: 'shoe-E',
+        // State 2: shopper selects width 2E; its SKU differs from the loaded SKU and has no inventory
+        // yet. The region goes empty rather than mislabeling shoe-D's stock as width 2E.
+        const selectedWidth2E = {
+            productId: 'shoe-2E',
             orderable: true,
-            variationValues: { width: 'E' },
+            variationValues: { width: '2E' },
         } as VariantWithInventory;
-        rerender(<InventoryMessage product={productD} currentVariant={selectedWidthE} lowStockThreshold={5} />);
+        rerender(<InventoryMessage product={productD} currentVariant={selectedWidth2E} lowStockThreshold={5} />);
 
         expect(screen.getByRole('status')).toBeEmptyDOMElement();
-        expect(screen.queryByText(/width [DE]/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/width (Standard|Wide)/)).not.toBeInTheDocument();
 
-        // State 3: the pid-synced loader revalidated — product.id is now shoe-E and its own low-stock
+        // State 3: the pid-synced loader revalidated — product.id is now shoe-2E and its own low-stock
         // inventory is present. The correct per-width message is announced.
-        const productE = makeMaster('shoe-E', lowStock(1));
-        const variantE = {
-            productId: 'shoe-E',
+        const product2E = makeMaster('shoe-2E', lowStock(1));
+        const variant2E = {
+            productId: 'shoe-2E',
             orderable: true,
-            variationValues: { width: 'E' },
+            variationValues: { width: '2E' },
             inventory: lowStock(1),
         } as VariantWithInventory;
-        rerender(<InventoryMessage product={productE} currentVariant={variantE} lowStockThreshold={5} />);
+        rerender(<InventoryMessage product={product2E} currentVariant={variant2E} lowStockThreshold={5} />);
 
-        expect(screen.getByText('1 item left in width E')).toBeInTheDocument();
+        expect(screen.getByText('1 item left in width Wide')).toBeInTheDocument();
     });
 
     it('still reports out-of-stock for a definitively non-orderable selected width even before its inventory loads', () => {
         // orderable === false is a reliable per-variant flag; the SKU-mismatch gate must not suppress it.
         const product = makeMaster('shoe-D', lowStock(2));
-        const nonOrderableWidthE = {
-            productId: 'shoe-E',
+        const nonOrderableWidth2E = {
+            productId: 'shoe-2E',
             orderable: false,
-            variationValues: { width: 'E' },
+            variationValues: { width: '2E' },
         } as VariantWithInventory;
 
-        render(<InventoryMessage product={product} currentVariant={nonOrderableWidthE} lowStockThreshold={5} />);
+        render(<InventoryMessage product={product} currentVariant={nonOrderableWidth2E} lowStockThreshold={5} />);
 
         expect(screen.getByText('Out of stock')).toBeInTheDocument();
     });

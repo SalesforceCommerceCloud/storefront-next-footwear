@@ -1,0 +1,406 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ColorwayStrip stories snapshot > Default story renders and matches snapshot 1`] = `
+<div
+  class="space-y-3"
+  data-slot="colorway-strip"
+>
+  <div
+    class="flex items-center justify-between gap-2"
+  >
+    <p
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="_r_0_"
+    >
+      Colour
+    </p>
+    <span
+      class="text-sm text-secondary-foreground"
+    >
+      3 colours
+    </span>
+  </div>
+  <div
+    aria-labelledby="_r_0_"
+    class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+    data-max-visible="8"
+    data-slot="colorway-strip-list"
+    data-testid="colorway-strip-list"
+    role="radiogroup"
+    style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+  >
+    <button
+      aria-checked="true"
+      aria-label="University Blue / White / Black"
+      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      <div
+        class="size-full object-cover"
+      >
+        <img
+          alt=""
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="/images/footwear/product-blue.jpg"
+        />
+      </div>
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Triple Black"
+      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      <div
+        class="size-full object-cover"
+      >
+        <img
+          alt=""
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="/images/footwear/product-black.jpg"
+        />
+      </div>
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Crimson Red (out of stock)"
+      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      <div
+        class="size-full object-cover"
+      >
+        <img
+          alt=""
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="/images/footwear/product-red.jpg"
+        />
+      </div>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ColorwayStrip stories snapshot > KeyboardNavigation story renders and matches snapshot 1`] = `
+<div
+  class="space-y-3"
+  data-slot="colorway-strip"
+>
+  <div
+    class="flex items-center justify-between gap-2"
+  >
+    <p
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="_r_1_"
+    >
+      Colour
+    </p>
+    <span
+      class="text-sm text-secondary-foreground"
+    >
+      3 colours
+    </span>
+  </div>
+  <div
+    aria-labelledby="_r_1_"
+    class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+    data-max-visible="8"
+    data-slot="colorway-strip-list"
+    data-testid="colorway-strip-list"
+    role="radiogroup"
+    style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+  >
+    <button
+      aria-checked="true"
+      aria-label="University Blue / White / Black"
+      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+      role="radio"
+      tabindex="0"
+      type="button"
+    >
+      <div
+        class="size-full object-cover"
+      >
+        <img
+          alt=""
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="/images/footwear/product-blue.jpg"
+        />
+      </div>
+    </button>
+    <button
+      aria-checked="false"
+      aria-label="Triple Black"
+      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      <div
+        class="size-full object-cover"
+      >
+        <img
+          alt=""
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="/images/footwear/product-black.jpg"
+        />
+      </div>
+    </button>
+    <button
+      aria-checked="false"
+      aria-disabled="true"
+      aria-label="Crimson Red (out of stock)"
+      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
+      role="radio"
+      tabindex="-1"
+      type="button"
+    >
+      <div
+        class="size-full object-cover"
+      >
+        <img
+          alt=""
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="/images/footwear/product-red.jpg"
+        />
+      </div>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ColorwayStrip stories snapshot > Overflow story renders and matches snapshot 1`] = `
+<div
+  style="width: 320px;"
+>
+  <div
+    class="space-y-3"
+    data-slot="colorway-strip"
+  >
+    <div
+      class="flex items-center justify-between gap-2"
+    >
+      <p
+        class="text-base font-semibold leading-6 text-card-foreground"
+        id="_r_2_"
+      >
+        Colour
+      </p>
+      <span
+        class="text-sm text-secondary-foreground"
+      >
+        9 colours
+      </span>
+    </div>
+    <div
+      aria-labelledby="_r_2_"
+      class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+      data-max-visible="8"
+      data-slot="colorway-strip-list"
+      data-testid="colorway-strip-list"
+      role="radiogroup"
+      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    >
+      <button
+        aria-checked="true"
+        aria-label="Colorway 1"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-1.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 2"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-2.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 3"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-3.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 4"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-4.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 5"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-5.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 6"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-6.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 7"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-7.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 8"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-8.jpg"
+          />
+        </div>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Colorway 9"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="size-full object-cover"
+        >
+          <img
+            alt=""
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="/images/footwear/product-9.jpg"
+          />
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+`;

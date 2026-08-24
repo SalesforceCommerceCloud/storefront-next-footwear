@@ -26,9 +26,10 @@ type VariantWithInventory = ShopperProducts.schemas['Variant'] & {
 };
 
 /**
- * The `width` variation attribute shared by the width-aware low-stock stories below. Values use
- * the standard shoe-width codes (`B` narrow, `D` medium, `2E` wide) as both the `value` and the
- * display `name`, matching the component's own JSDoc examples ("Few items left in width D").
+ * The `width` variation attribute shared by the width-aware low-stock stories below. Values ship
+ * the bare US width codes (`B`, `D`, `2E`) as both the `value` and the display `name`; the
+ * component spells them out via lib/width-labels (D → "Standard"), so the message reads
+ * "Few items left in width Standard".
  */
 const WIDTH_ATTRIBUTE: ShopperProducts.schemas['VariationAttribute'] = {
     id: 'width',
@@ -61,9 +62,9 @@ const createMockVariant = (
 
 /**
  * Footwear overlay of the canonical Inventory Message component. Identical props to canonical,
- * plus a width-aware low-stock message ("Few items left in width D" / "1 item left in width D")
- * derived internally from `product.variationAttributes` + `currentVariant.variationValues.width`
- * — the qualifier never turns into an exact stock count.
+ * plus a width-aware low-stock message ("Few items left in width Standard" / "1 item left in
+ * width Standard") derived internally from `product.variationAttributes` +
+ * `currentVariant.variationValues.width` — the qualifier never turns into an exact stock count.
  */
 const meta: Meta<typeof InventoryMessage> = {
     title: 'Footwear/Product/Inventory Message',
@@ -81,7 +82,7 @@ for shoe widths.
 **Features:**
 - **In Stock**: Green message
 - **Low Stock**: Warning message, bucketed ("Few items left" / "1 item left"); on footwear PDPs
-  with a width selected, names the width ("Few items left in width D" / "1 item left in width D")
+  with a width selected, names the width ("Few items left in width Standard" / "1 item left in width Standard")
 - **Pre-Order**: Blue message for pre-orderable items
 - **Back Order**: Orange message for back-orderable items
 - **Out of Stock**: Red message when the product is unavailable
@@ -183,14 +184,14 @@ export const LowStockWithWidth: Story = {
     play: async ({ canvasElement }) => {
         await waitForStorybookReady(canvasElement);
         const canvas = within(canvasElement);
-        await expect(canvas.getByText('Few items left in width D')).toBeInTheDocument();
+        await expect(canvas.getByText('Few items left in width Standard')).toBeInTheDocument();
         await expect(canvas.queryByText(/^Few items left$/)).not.toBeInTheDocument();
     },
 };
 
 /**
  * Low stock with a selected width and exactly one unit left — singular copy ("1 item left in
- * width D"), still no exact count beyond the singular/plural distinction.
+ * width Standard"), still no exact count beyond the singular/plural distinction.
  */
 export const LowStockWithWidthOneLeft: Story = {
     args: {
@@ -206,7 +207,7 @@ export const LowStockWithWidthOneLeft: Story = {
     play: async ({ canvasElement }) => {
         await waitForStorybookReady(canvasElement);
         const canvas = within(canvasElement);
-        await expect(canvas.getByText('1 item left in width D')).toBeInTheDocument();
+        await expect(canvas.getByText('1 item left in width Standard')).toBeInTheDocument();
     },
 };
 

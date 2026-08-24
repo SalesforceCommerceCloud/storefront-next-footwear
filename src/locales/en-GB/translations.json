@@ -363,7 +363,7 @@
         },
         "empty": {
             "title": "Your cart is empty.",
-            "registeredMessage": "Continue shopping to add items to your cart.",
+            "registeredMessage": "Welcome back. Continue shopping to find something you’ll love.",
             "guestMessage": "Sign in to retrieve your saved items or continue shopping.",
             "continueShopping": "Continue Shopping",
             "signIn": "Sign In"
@@ -2032,6 +2032,16 @@
         },
         "removingFromWishlist": "Removing from wishlist...",
         "inWishlist": "In your wishlist",
+        "colorway": {
+            "label": "Colour",
+            "count_one": "{{count}} colour",
+            "count_other": "{{count}} colours"
+        },
+        "shoeFinder": {
+            "title": "Find Your Shoe",
+            "description": "Find the shoe built for how you move.",
+            "comingSoon": "Our personalised shoe finder is coming soon. Check back for help finding the right fit and activity."
+        },
         "sizeGuide": {
             "title": "Size Guide",
             "description": "Find your size across UK, US, EU, and CM measurements.",
@@ -2072,6 +2082,13 @@
                 "trueToSize": "True to size",
                 "runsLarge": "Runs large"
             }
+        },
+        "width": {
+            "narrow": "Narrow",
+            "standard": "Standard",
+            "wide": "Wide",
+            "extraWide": "Extra Wide",
+            "extraExtraWide": "Extra Extra Wide"
         },
         "gallery": {
             "thumbnailAngle": {

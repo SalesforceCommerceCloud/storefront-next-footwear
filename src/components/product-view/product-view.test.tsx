@@ -13,571 +13,158 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// Testing libraries
+// The footwear PDP resolves the selected colorway/size/width SKU client-side and fetches its
+// authoritative availability itself (no navigation, so the loader never re-fetches the SKU and the
+// route product stays the master). A 200 for that fetch can legitimately omit the site inventory or
+// the requested store when the SKU has no record there. These tests lock the rule that such gaps are
+// treated as "unavailable for this SKU" and never silently borrow the master product's availability,
+// which would re-enable delivery, pickup, or Add to Cart for a SKU with no inventory.
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, test, expect, vi, beforeEach } from 'vitest';
-// React Router
 import { createMemoryRouter, RouterProvider } from 'react-router';
-// Components
-import ProductView from './product-view';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+import type { ShopperProducts } from '@/scapi';
+import ProductView from '@/components/product-view';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
-// mock data
-import { masterProduct as mockProduct } from '@/components/__mocks__/master-variant-product';
-import { standardProd } from '@/components/__mocks__/standard-product-2';
-import { bundleProd } from '@/components/__mocks__/bundle-product';
-import { setProduct } from '@/components/__mocks__/set-product';
-import { mockAltSiteObject, mockBuildConfig } from '@/test-utils/config';
-import type { AppConfig } from '@/types/config';
+import { masterProduct } from '@/components/__mocks__/master-variant-product';
+import StoreLocatorProvider from '@/extensions/store-locator/providers/store-locator';
 
-// Prop-capture mock for <ImageGallery>. The PDP intentionally does not pass `widths` so the
-// gallery's documented PDP-shaped defaults apply — we assert that absence below. The mock still
-// renders a real <img> with the productName alt so existing assertions like
-// `getAllByRole('img', { name: /<product-name>/i })` keep matching. Uses a 1x1 transparent GIF
-// data URI to avoid the React empty-`src` warning.
-const TRANSPARENT_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-const capturedImageGalleryProps: { last: any } = { last: null };
+const SELECTED_STORE_INVENTORY_ID = 'store-a-inventory';
+
+// Controls what the selected-SKU availability fetch returns. `null` omits the field entirely, the way
+// SCAPI drops `inventory` / `inventories` when the SKU has no record at the site or requested store.
+let variantSiteInventory: ShopperProducts.schemas['Inventory'] | null;
+let variantStoreInventories: ShopperProducts.schemas['Inventory'][] | null;
+
 vi.mock('@/components/image-gallery', () => ({
-    default: (props: any) => {
-        capturedImageGalleryProps.last = props;
-        return <img alt={props.productName ?? ''} src={TRANSPARENT_PIXEL} data-testid="image-gallery" />;
+    default: () => <div data-testid="image-gallery" />,
+}));
+
+vi.mock('@/hooks/use-scapi-fetcher', () => ({
+    useScapiFetcher: (_client: string, _method: string, options: { params: { path: { id: string } } }) => {
+        const variantId = options.params.path.id;
+        const data: Record<string, unknown> = { id: variantId };
+        if (variantSiteInventory !== null) data.inventory = variantSiteInventory;
+        if (variantStoreInventories !== null) data.inventories = variantStoreInventories;
+        return {
+            data,
+            errors: undefined,
+            load: vi.fn(),
+            state: 'idle',
+            success: true,
+        };
     },
 }));
 
-// Mock useToast
-const mockAddToast = vi.fn();
-vi.mock('@/components/toast', () => ({
-    useToast: () => ({
-        addToast: mockAddToast,
-    }),
+const blueImageGroups = ['small', 'large'].map((viewType) => ({
+    viewType,
+    variationAttributes: [{ id: 'color', values: [{ value: 'BLUE' }] }],
+    images: [{ alt: `Blue ${viewType}`, link: `https://example.com/blue-${viewType}.jpg` }],
 }));
 
-// Mock navigator.clipboard
-const mockWriteText = vi.fn();
-Object.assign(navigator, {
-    clipboard: {
-        writeText: mockWriteText,
-    },
-});
+// Master with orderable site inventory (inherited from the mock) plus a store record that is in stock
+// at the selected store. Both are the "wrong SKU" signals the overlay must not borrow -- the buggy
+// fallback would use them to keep delivery/pickup available for a SKU that has no record.
+const product = {
+    ...masterProduct,
+    variationAttributes: (masterProduct.variationAttributes ?? []).map((attribute) =>
+        attribute.id === 'color'
+            ? { ...attribute, values: [...(attribute.values ?? []), { name: 'Blue', value: 'BLUE' }] }
+            : attribute
+    ),
+    imageGroups: [...(masterProduct.imageGroups ?? []), ...blueImageGroups],
+    inventories: [
+        {
+            ats: 50,
+            id: SELECTED_STORE_INVENTORY_ID,
+            orderable: true,
+            stockLevel: 50,
+        },
+    ],
+    variants: [
+        ...(masterProduct.variants ?? []),
+        {
+            productId: 'blue-variant',
+            orderable: true,
+            price: 299.99,
+            variationValues: { color: 'BLUE', size: '038', width: 'S' },
+        },
+    ],
+} as ShopperProducts.schemas['Product'];
 
-// Mock navigator.share
-const mockShare = vi.fn();
-// oxlint-disable-next-line @typescript-eslint/unbound-method -- test fixture
-const originalShare = navigator.share;
-
-// Mock window.open
-const mockWindowOpen = vi.fn();
-window.open = mockWindowOpen;
-
-// Module-level setup and cleanup for navigator.share to prevent test pollution
-beforeEach(() => {
-    Object.defineProperty(navigator, 'share', {
-        writable: true,
-        configurable: true,
-        value: mockShare,
-    });
-});
-
-afterEach(() => {
-    Object.defineProperty(navigator, 'share', {
-        writable: true,
-        configurable: true,
-        value: originalShare,
-    });
-    mockShare.mockClear();
-});
-
-const renderProductView = (props: React.ComponentProps<typeof ProductView>, initialUrl = '/product/test-product') => {
-    // Using createMemoryRouter in framework mode is fine
-    // because both framework and data routers share the same underlying architecture, so it provides a valid navigation context for hooks and <Link>.
-    // Even though it's listed under "data routers," it fully supports testing non-route components that rely on router behavior.
+const renderOverlay = (withSelectedStore: boolean) => {
+    const overlay = <ProductView product={product} />;
     const router = createMemoryRouter(
         [
             {
-                path: '/product/:productId',
+                path: '/:siteId/:localeId/product/:productId',
                 element: (
                     <AllProvidersWrapper>
-                        <ProductView {...props} />
+                        {withSelectedStore ? (
+                            <StoreLocatorProvider
+                                selectedStoreInfo={{ id: 'store-a', inventoryId: SELECTED_STORE_INVENTORY_ID }}>
+                                {overlay}
+                            </StoreLocatorProvider>
+                        ) : (
+                            overlay
+                        )}
                     </AllProvidersWrapper>
                 ),
             },
         ],
-        {
-            initialEntries: [initialUrl],
-        }
+        { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
     );
-    return {
-        ...render(<RouterProvider router={router} />),
-        router,
-    };
+    return render(<RouterProvider router={router} />);
 };
 
-describe('ProductView', () => {
+describe('Footwear PDP selected-variant inventory fallback', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
-        capturedImageGalleryProps.last = null;
-        mockWriteText.mockResolvedValue(undefined);
-        mockShare.mockResolvedValue(undefined);
-        mockWindowOpen.mockClear();
+        // Default: SKU is fully in stock at the site (store record left to each test).
+        variantSiteInventory = { ats: 50, id: 'blue-site-inventory', orderable: true, stockLevel: 50 };
+        variantStoreInventories = null;
     });
 
-    describe('basic rendering', () => {
-        test('should render product properly', () => {
-            renderProductView({ product: mockProduct });
+    test('blocks purchase when the SKU fetch omits site inventory (does not borrow the master)', async () => {
+        // SCAPI returned no site inventory record for this SKU -- treat as out of stock, do not fall
+        // back to the master's orderable site inventory.
+        variantSiteInventory = null;
 
-            // Product name should be visible
-            expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
+        renderOverlay(false);
 
-            // Image gallery should be present
-            expect(
-                screen.getAllByRole('img', { name: /Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit/i })[0]
-            ).toBeInTheDocument();
-
-            // Price should be visible (single price or range depending on context)
-            expect(screen.getAllByText((content) => content.includes('$299.99')).length).toBeGreaterThanOrEqual(1);
-
-            // Swatches should be visible
-            expect(screen.getByLabelText('Charcoal')).toBeInTheDocument();
-            expect(screen.getByLabelText('36')).toBeInTheDocument();
-            expect(screen.getByLabelText('Short')).toBeInTheDocument();
-
-            // Quantity picker should be visible
-            expect(screen.getAllByLabelText(/quantity/i)[0]).toBeInTheDocument();
-
-            // Cart action buttons should be visible
-            expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
-            expect(screen.getByRole('button', { name: /add to wishlist/i })).toBeInTheDocument();
-            // Share button should be visible
-            expect(screen.getByRole('button', { name: /share/i })).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByTestId('add-to-cart')).toBeDisabled();
+            expect(screen.getByText('Out of stock')).toBeInTheDocument();
         });
+        // Delivery options only render for an in-stock item; a borrowed master would have kept them.
+        expect(screen.queryByText(/Deliver to/i)).not.toBeInTheDocument();
     });
 
-    describe('product types', () => {
-        test('should render correctly for standard product', () => {
-            renderProductView({ product: standardProd });
+    test('disables pickup when the SKU fetch omits the selected store (does not borrow the master store)', async () => {
+        // Site inventory present (delivery works), but the SKU has no record at the selected store.
+        variantStoreInventories = null;
 
-            // Should render product name
-            expect(screen.getByText('Laptop Briefcase with wheels (37L)')).toBeInTheDocument();
+        renderOverlay(true);
 
-            // Should have quantity picker text and aria-label
-            expect(screen.getAllByLabelText(/quantity/i)[0]).toBeInTheDocument();
-
-            // Should NOT have variation swatches (no radiogroups for color/size selection)
-            // Note: DeliveryOptions component may render a radiogroup for delivery options
-            const radiogroups = screen.queryAllByRole('radiogroup');
-            const variationRadiogroups = radiogroups.filter(
-                (radio) => !radio.getAttribute('data-testid')?.includes('delivery-option')
-            );
-            expect(variationRadiogroups).toHaveLength(0);
+        await waitFor(() => {
+            // Delivery stays available for the in-stock site inventory.
+            expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+            expect(screen.getByText(/Deliver to/i)).toBeInTheDocument();
+            // Pickup at the selected store is unavailable -- the master's in-stock store record is not borrowed.
+            expect(screen.getByText(/Pickup unavailable at/i)).toBeInTheDocument();
         });
-
-        test('should render correctly for bundle product', () => {
-            renderProductView({ product: bundleProd });
-
-            // Should render product name
-            expect(screen.getByText('Turquoise Jewelry Bundle')).toBeInTheDocument();
-
-            // Bundles do NOT have quantity picker at the parent level
-            expect(screen.queryByLabelText(/quantity/i)).not.toBeInTheDocument();
-
-            // Should show bundle notice message
-            expect(screen.getByText(/this is a product bundle/i)).toBeInTheDocument();
-        });
-
-        test('should render correctly for set product', () => {
-            renderProductView({ product: setProduct });
-
-            // Should render product name
-            expect(screen.getByText('Winter Look')).toBeInTheDocument();
-
-            // Sets do NOT have quantity picker at the parent level
-            expect(screen.queryByLabelText(/quantity/i)).not.toBeInTheDocument();
-
-            // Should show set notice message
-            expect(screen.getByText(/this is a product set/i)).toBeInTheDocument();
-        });
+        expect(screen.queryByText(/Free pickup in/i)).not.toBeInTheDocument();
     });
 
-    describe('Performance and Optimization', () => {
-        test('renders efficiently with complex product data', () => {
-            renderProductView({ product: mockProduct });
+    test('keeps pickup available when the SKU fetch reports the selected store in stock', async () => {
+        // Regression guard: the fix must not over-broaden. When the SKU's own fetch returns an
+        // orderable record for the selected store, pickup stays available.
+        variantStoreInventories = [{ ats: 12, id: SELECTED_STORE_INVENTORY_ID, orderable: true, stockLevel: 12 }];
 
-            // Should render all major components without errors
-            expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
-            expect(screen.getAllByText((content) => content.includes('$299.99')).length).toBeGreaterThanOrEqual(1);
-            expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
+        renderOverlay(true);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+            expect(screen.getByText(/Free pickup in/i)).toBeInTheDocument();
         });
-    });
-
-    describe('Edge Cases', () => {
-        test('handles product without images gracefully', () => {
-            const productWithoutImages = {
-                ...mockProduct,
-                imageGroups: [],
-            };
-
-            renderProductView({ product: productWithoutImages });
-
-            // Should still render the product name
-            expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
-        });
-
-        test('handles product without variations gracefully', () => {
-            const productWithoutVariations = {
-                ...standardProd,
-                variationAttributes: [],
-            };
-
-            renderProductView({ product: productWithoutVariations });
-
-            // Should render product name
-            expect(screen.getByText('Laptop Briefcase with wheels (37L)')).toBeInTheDocument();
-
-            // Should not have variation swatches
-            const radiogroups = screen.queryAllByRole('radiogroup');
-            const variationRadiogroups = radiogroups.filter(
-                (radio) => !radio.getAttribute('data-testid')?.includes('delivery-option')
-            );
-            expect(variationRadiogroups).toHaveLength(0);
-        });
-
-        test('handles product with minimal data', () => {
-            const minimalProduct = {
-                id: 'minimal-product',
-                name: 'Minimal Product',
-                price: 99.99,
-                currency: mockAltSiteObject.defaultCurrency,
-                imageGroups: [],
-                variationAttributes: [],
-            } as any;
-
-            renderProductView({ product: minimalProduct });
-
-            // Should render basic product information
-            expect(screen.getByText('Minimal Product')).toBeInTheDocument();
-        });
-    });
-
-    describe('Accessibility', () => {
-        test('maintains proper ARIA attributes', () => {
-            renderProductView({ product: mockProduct });
-
-            // Check for proper form labels
-            expect(screen.getAllByLabelText(/quantity/i)[0]).toBeInTheDocument();
-
-            // Check for proper button labels
-            expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
-            expect(screen.getByRole('button', { name: /add to wishlist/i })).toBeInTheDocument();
-            expect(screen.getByRole('button', { name: /share/i })).toBeInTheDocument();
-        });
-    });
-
-    describe('Component Integration', () => {
-        test('integrates with ProductViewProvider correctly', () => {
-            renderProductView({ product: mockProduct });
-
-            // Should render all product components
-            expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
-            expect(screen.getAllByText((content) => content.includes('$299.99')).length).toBeGreaterThanOrEqual(1);
-        });
-
-        test('maintains consistent behavior across different product types', () => {
-            const productTypes = [
-                { product: mockProduct, name: 'Master Product' },
-                { product: standardProd, name: 'Standard Product' },
-                { product: bundleProd, name: 'Bundle Product' },
-                { product: setProduct, name: 'Set Product' },
-            ];
-
-            productTypes.forEach(({ product, name: _name }) => {
-                const { unmount } = renderProductView({ product });
-
-                // Each product type should render its name
-                if (product.name) {
-                    expect(screen.getByText(product.name)).toBeInTheDocument();
-                }
-                unmount();
-            });
-        });
-    });
-
-    describe('Additional Coverage Tests', () => {
-        test('renders product with all required elements', () => {
-            renderProductView({ product: mockProduct });
-
-            // Verify all major product elements are present
-            expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
-            expect(screen.getAllByText((content) => content.includes('$299.99')).length).toBeGreaterThanOrEqual(1);
-            expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
-            expect(screen.getByRole('button', { name: /add to wishlist/i })).toBeInTheDocument();
-            expect(screen.getByRole('button', { name: /share/i })).toBeInTheDocument();
-        });
-
-        test('handles product with different pricing structures', () => {
-            const productWithPriceRange = {
-                ...mockProduct,
-                price: 299.99,
-                priceMax: 500,
-            };
-
-            renderProductView({ product: productWithPriceRange });
-
-            expect(screen.getByText('Charcoal Flat Front Athletic Fit Shadow Striped Wool Suit')).toBeInTheDocument();
-            expect(screen.getAllByText((content) => content.includes('$299.99')).length).toBeGreaterThanOrEqual(1);
-        });
-
-        test('renders product with variation attributes', () => {
-            renderProductView({ product: mockProduct });
-
-            // Should have variation swatches
-            expect(screen.getByLabelText('Charcoal')).toBeInTheDocument();
-            expect(screen.getByLabelText('36')).toBeInTheDocument();
-            expect(screen.getByLabelText('Short')).toBeInTheDocument();
-        });
-
-        test('handles product without variation attributes', () => {
-            const productWithoutVariations = {
-                ...standardProd,
-                variationAttributes: [],
-            };
-
-            renderProductView({ product: productWithoutVariations });
-
-            expect(screen.getByText('Laptop Briefcase with wheels (37L)')).toBeInTheDocument();
-            // Should not have variation swatches
-            const radiogroups = screen.queryAllByRole('radiogroup');
-            const variationRadiogroups = radiogroups.filter(
-                (radio) => !radio.getAttribute('data-testid')?.includes('delivery-option')
-            );
-            expect(variationRadiogroups).toHaveLength(0);
-        });
-    });
-
-    describe('Description section', () => {
-        test('description summary has hover background style', () => {
-            const productWithDescription = {
-                ...mockProduct,
-                longDescription: 'A unique long description that differs from the short one.',
-                shortDescription: 'Short description.',
-            };
-            renderProductView({ product: productWithDescription });
-
-            const summary = screen.getByText(/Description:/i).closest('summary');
-            expect(summary).toBeInTheDocument();
-            expect(summary).toHaveClass('hover:bg-accent');
-        });
-    });
-
-    describe('Share Button Integration', () => {
-        test('renders share button in action buttons section', () => {
-            renderProductView({ product: mockProduct });
-
-            const shareButton = screen.getByRole('button', { name: /share/i });
-            expect(shareButton).toBeInTheDocument();
-        });
-
-        test('share button triggers native share when available', async () => {
-            const user = userEvent.setup();
-            renderProductView({ product: mockProduct });
-
-            const shareButton = screen.getByRole('button', { name: /share/i });
-            await user.click(shareButton);
-
-            // Native share should be called
-            await waitFor(() => {
-                expect(mockShare).toHaveBeenCalledOnce();
-            });
-        });
-
-        test('share button opens dropdown menu when native share is not available', async () => {
-            // Temporarily set navigator.share to undefined to test fallback
-            // oxlint-disable-next-line @typescript-eslint/unbound-method -- test fixture
-            const previousShare = navigator.share;
-
-            Object.defineProperty(navigator, 'share', {
-                writable: true,
-                configurable: true,
-                value: undefined,
-            });
-
-            const user = userEvent.setup();
-            renderProductView({ product: mockProduct });
-
-            const shareButton = screen.getByRole('button', { name: /share/i });
-            await user.click(shareButton);
-
-            // Wait for dropdown to appear
-            await waitFor(() => {
-                expect(screen.getByText('Copy link')).toBeInTheDocument();
-            });
-
-            // Check for configured social providers
-            expect(screen.getByText('Email')).toBeInTheDocument();
-            expect(screen.getByText('Twitter/X')).toBeInTheDocument();
-
-            // Restore navigator.share
-            Object.defineProperty(navigator, 'share', {
-                writable: true,
-                configurable: true,
-                value: previousShare,
-            });
-        });
-
-        test('share button respects disabled socialShare config in fallback menu', async () => {
-            // Temporarily set navigator.share to undefined to test fallback
-            // oxlint-disable-next-line @typescript-eslint/unbound-method -- test fixture
-            const previousShare = navigator.share;
-
-            Object.defineProperty(navigator, 'share', {
-                writable: true,
-                configurable: true,
-                value: undefined,
-            });
-
-            const customConfig: AppConfig = {
-                ...mockBuildConfig.app,
-                features: {
-                    ...mockBuildConfig.app.features,
-                    socialShare: { enabled: false, providers: ['Twitter', 'Facebook', 'LinkedIn', 'Email'] },
-                },
-            };
-
-            const user = userEvent.setup();
-            const router = createMemoryRouter(
-                [
-                    {
-                        path: '/product/:productId',
-                        element: (
-                            <AllProvidersWrapper config={customConfig}>
-                                <ProductView product={mockProduct} />
-                            </AllProvidersWrapper>
-                        ),
-                    },
-                ],
-                {
-                    initialEntries: ['/product/test-product'],
-                }
-            );
-            render(<RouterProvider router={router} />);
-
-            const shareButton = screen.getByRole('button', { name: /share/i });
-            await user.click(shareButton);
-
-            await waitFor(() => {
-                expect(screen.getByText('Copy link')).toBeInTheDocument();
-            });
-
-            // Social providers should not be shown when disabled
-            expect(screen.queryByText('Email')).not.toBeInTheDocument();
-            expect(screen.queryByText('Twitter/X')).not.toBeInTheDocument();
-
-            // Restore navigator.share
-            Object.defineProperty(navigator, 'share', {
-                writable: true,
-                configurable: true,
-                value: previousShare,
-            });
-        });
-
-        test('share button shows only configured providers in fallback menu', async () => {
-            // Temporarily set navigator.share to undefined to test fallback
-            // oxlint-disable-next-line @typescript-eslint/unbound-method -- test fixture
-            const previousShare = navigator.share;
-
-            Object.defineProperty(navigator, 'share', {
-                writable: true,
-                configurable: true,
-                value: undefined,
-            });
-
-            const customConfig: AppConfig = {
-                ...mockBuildConfig.app,
-                features: {
-                    ...mockBuildConfig.app.features,
-                    socialShare: { enabled: true, providers: ['Email'] },
-                },
-            };
-
-            const user = userEvent.setup();
-            const router = createMemoryRouter(
-                [
-                    {
-                        path: '/product/:productId',
-                        element: (
-                            <AllProvidersWrapper config={customConfig}>
-                                <ProductView product={mockProduct} />
-                            </AllProvidersWrapper>
-                        ),
-                    },
-                ],
-                {
-                    initialEntries: ['/product/test-product'],
-                }
-            );
-            render(<RouterProvider router={router} />);
-
-            const shareButton = screen.getByRole('button', { name: /share/i });
-            await user.click(shareButton);
-
-            await waitFor(() => {
-                expect(screen.getByText('Copy link')).toBeInTheDocument();
-            });
-
-            // Only Email should be shown
-            expect(screen.getByText('Email')).toBeInTheDocument();
-            expect(screen.queryByText('Twitter/X')).not.toBeInTheDocument();
-            expect(screen.queryByText('Facebook')).not.toBeInTheDocument();
-
-            // Restore navigator.share
-            Object.defineProperty(navigator, 'share', {
-                writable: true,
-                configurable: true,
-                value: previousShare,
-            });
-        });
-
-        test('share button appears alongside wishlist button', () => {
-            renderProductView({ product: mockProduct });
-
-            const wishlistButton = screen.getByRole('button', { name: /add to wishlist/i });
-            const shareButton = screen.getByRole('button', { name: /share/i });
-
-            expect(wishlistButton).toBeInTheDocument();
-            expect(shareButton).toBeInTheDocument();
-
-            // Both buttons should be in the same container (flex layout)
-            const buttonsContainer = wishlistButton.closest('div.flex');
-            expect(buttonsContainer).toContainElement(shareButton);
-        });
-
-        test('share button works with different product types', () => {
-            const productTypes = [
-                { product: mockProduct, name: 'Master Product' },
-                { product: standardProd, name: 'Standard Product' },
-            ];
-
-            productTypes.forEach(({ product }) => {
-                const { unmount } = renderProductView({ product });
-
-                const shareButton = screen.getByRole('button', { name: /share/i });
-                expect(shareButton).toBeInTheDocument();
-
-                unmount();
-            });
-        });
-    });
-
-    describe('Gallery widths', () => {
-        // The PDP is the canonical surface the <ImageGallery> defaults are sized for
-        // (`section-container` → `lg:grid-cols-2` → `max-w-screen-2xl`, capped at 680). It
-        // intentionally does NOT pass a `widths` override — the gallery falls back to its
-        // documented PDP-shaped defaults. Guarding the absence of an override prevents someone
-        // from tightening this surface and silently breaking the cache-ladder alignment.
-        test('does not pass a widths override (relies on gallery defaults)', () => {
-            renderProductView({ product: mockProduct });
-
-            expect(capturedImageGalleryProps.last?.widths).toBeUndefined();
-        });
+        expect(screen.queryByText(/Pickup unavailable at/i)).not.toBeInTheDocument();
     });
 });

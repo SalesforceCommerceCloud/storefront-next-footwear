@@ -28,6 +28,14 @@ import type { ShopperProducts } from '@/scapi';
 
 const { t } = getTranslation();
 
+vi.mock('@/extensions/bopis/components/delivery-options/delivery-options', () => ({
+    default: ({ product }: { product: ShopperProducts.schemas['Product'] }) => (
+        <div data-testid="delivery-options-variant-id">
+            {(product.currentVariant as { productId?: string } | undefined)?.productId}
+        </div>
+    ),
+}));
+
 // Footwear-vertical strings aren't in the canonical resources vitest.setup.ts initializes
 // (VERTICAL isn't set for `pnpm test`), so layer a fallback mock over react-i18next's
 // useTranslation, mirroring the established pattern in this vertical's home route and
@@ -155,12 +163,10 @@ describe('ProductInfo', () => {
     });
 
     describe('variant selection', () => {
-        test('should render color label when color variation exists', () => {
+        test('should render colorway radiogroup when color variation exists', () => {
             renderProductInfo({ product: mockProduct });
 
-            // The component shows "Color: [SelectedColorName]" - Red is selected by default
-            // Use flexible text matching for the color attribute name and value
-            expect(screen.getByText(new RegExp('Color'))).toBeInTheDocument();
+            expect(screen.getByRole('radiogroup', { name: /colou?r/i })).toBeInTheDocument();
         });
 
         test('should render variant selector for non-color attributes', () => {
@@ -170,20 +176,185 @@ describe('ProductInfo', () => {
             expect(screen.getByText(/^Size$/)).toBeInTheDocument();
         });
 
-        test('should generate correct URLs for swatch selection', () => {
+        test('should render colorways as product-image thumbnails', () => {
             renderProductInfo({ product: mockProduct });
 
-            // Find color swatches - only Charcoal available (still rendered via generic Swatch)
-            const charcoalSwatch = screen.getByLabelText('Charcoal');
-            expect(charcoalSwatch).toBeInTheDocument();
-            expect(charcoalSwatch).toHaveAttribute('href', '/global/en-GB/product/test-product?color=CHARCWL');
+            const charcoalColorway = screen.getByRole('radio', { name: 'Charcoal' });
+            expect(charcoalColorway).toHaveAttribute('aria-checked', 'true');
+            expect(charcoalColorway.querySelector('img')).toHaveAttribute(
+                'src',
+                expect.stringContaining('PG.33330DAN84Q.CHARCWL.PZ')
+            );
 
             // Size and width render via SizeGrid/WidthSelector (plain buttons, no href attribute).
-            // Their href-driven navigation is exercised in 'should update URL when swatch is clicked' below.
+            // Their client-side selection is exercised in 'should update selection locally (not the
+            // URL) when a size is clicked' below.
             expect(screen.getByRole('radio', { name: /size 36, available/i })).toBeInTheDocument();
             expect(screen.getByRole('radio', { name: /size 38, available/i })).toBeInTheDocument();
             expect(screen.getByRole('radio', { name: /^short$/i })).toBeInTheDocument();
             expect(screen.getByRole('radio', { name: /^regular$/i })).toBeInTheDocument();
+        });
+
+        test('uses the named fallback when a colorway has no color-specific image', () => {
+            const productWithImageLessColorway = {
+                ...mockProduct,
+                variationAttributes: (mockProduct.variationAttributes ?? []).map((attribute) =>
+                    attribute.id === 'color'
+                        ? { ...attribute, values: [...(attribute.values ?? []), { name: 'Blue', value: 'BLUE' }] }
+                        : attribute
+                ),
+                variants: [
+                    ...(mockProduct.variants ?? []),
+                    {
+                        productId: 'blue-variant',
+                        orderable: true,
+                        variationValues: { color: 'BLUE', size: '036', width: 'S' },
+                    },
+                ],
+            } as ShopperProducts.schemas['Product'];
+
+            renderProductInfo({ product: productWithImageLessColorway });
+
+            const blueColorway = screen.getByRole('radio', { name: 'Blue' });
+            expect(blueColorway.querySelector('img')).not.toBeInTheDocument();
+            expect(blueColorway).toHaveTextContent('B');
+        });
+
+        test('does not use a colorway image with incompatible variation attributes', () => {
+            const productWithIncompatibleColorwayImage = {
+                ...mockProduct,
+                variationAttributes: (mockProduct.variationAttributes ?? []).map((attribute) =>
+                    attribute.id === 'color'
+                        ? { ...attribute, values: [...(attribute.values ?? []), { name: 'Blue', value: 'BLUE' }] }
+                        : attribute
+                ),
+                imageGroups: [
+                    ...(mockProduct.imageGroups ?? []),
+                    {
+                        viewType: 'small',
+                        variationAttributes: [
+                            { id: 'color', values: [{ value: 'BLUE' }] },
+                            { id: 'size', values: [{ value: '999' }] },
+                        ],
+                        images: [{ alt: 'Wrong Blue', link: 'https://example.com/wrong-blue.jpg' }],
+                    },
+                ],
+                variants: [
+                    ...(mockProduct.variants ?? []),
+                    {
+                        productId: 'blue-variant',
+                        orderable: true,
+                        variationValues: { color: 'BLUE', size: '036', width: 'S' },
+                    },
+                ],
+            } as ShopperProducts.schemas['Product'];
+
+            renderProductInfo({ product: productWithIncompatibleColorwayImage });
+
+            expect(screen.getByRole('radio', { name: 'Blue' }).querySelector('img')).not.toBeInTheDocument();
+        });
+
+        test('marks a colorway unavailable in controlled mode when no matching orderable variant exists', () => {
+            const controlledProduct = {
+                ...mockProduct,
+                variationAttributes: (mockProduct.variationAttributes ?? []).map((attribute) =>
+                    attribute.id === 'color'
+                        ? { ...attribute, values: [...(attribute.values ?? []), { name: 'Blue', value: 'BLUE' }] }
+                        : attribute
+                ),
+                imageGroups: [
+                    ...(mockProduct.imageGroups ?? []),
+                    {
+                        viewType: 'small',
+                        variationAttributes: [{ id: 'color', values: [{ value: 'BLUE' }] }],
+                        images: [{ alt: 'Blue', link: 'https://example.com/blue-small.jpg' }],
+                    },
+                    {
+                        viewType: 'large',
+                        variationAttributes: [{ id: 'color', values: [{ value: 'BLUE' }] }],
+                        images: [{ alt: 'Blue', link: 'https://example.com/blue-large.jpg' }],
+                    },
+                ],
+                variants: [
+                    ...(mockProduct.variants ?? []),
+                    {
+                        productId: 'blue-unavailable',
+                        orderable: false,
+                        variationValues: { color: 'BLUE', size: '036', width: 'S' },
+                    },
+                ],
+            } as ShopperProducts.schemas['Product'];
+
+            renderProductInfo({
+                product: controlledProduct,
+                swatchMode: 'controlled',
+                onAttributeChange: vi.fn(),
+                variationValues: {},
+            });
+
+            expect(screen.getByRole('radio', { name: 'Blue' })).toBeDisabled();
+            expect(screen.getByRole('radio', { name: 'Blue' })).toHaveAttribute('aria-disabled', 'true');
+        });
+
+        test('keeps an orderable colorway selectable when it requires a different size or width', async () => {
+            const user = userEvent.setup();
+            const productWithColorway = {
+                ...mockProduct,
+                variationAttributes: (mockProduct.variationAttributes ?? []).map((attribute) =>
+                    attribute.id === 'color'
+                        ? { ...attribute, values: [...(attribute.values ?? []), { name: 'Blue', value: 'BLUE' }] }
+                        : attribute
+                ),
+                imageGroups: [
+                    ...(mockProduct.imageGroups ?? []),
+                    {
+                        viewType: 'small',
+                        variationAttributes: [{ id: 'color', values: [{ value: 'BLUE' }] }],
+                        images: [{ alt: 'Blue', link: 'https://example.com/blue-small.jpg' }],
+                    },
+                    {
+                        viewType: 'large',
+                        variationAttributes: [{ id: 'color', values: [{ value: 'BLUE' }] }],
+                        images: [{ alt: 'Blue', link: 'https://example.com/blue-large.jpg' }],
+                    },
+                ],
+                variants: [
+                    {
+                        productId: 'charcoal-38-short',
+                        orderable: true,
+                        variationValues: { color: 'CHARCWL', size: '038', width: 'S' },
+                    },
+                    {
+                        productId: 'blue-36-regular',
+                        orderable: true,
+                        variationValues: { color: 'BLUE', size: '036', width: 'V' },
+                    },
+                ],
+            } as ShopperProducts.schemas['Product'];
+            const router = createMemoryRouter(
+                [
+                    {
+                        path: '/product/:productId',
+                        element: (
+                            <AllProvidersWrapper>
+                                <ProductViewProvider product={productWithColorway}>
+                                    <ProductInfo product={productWithColorway} />
+                                </ProductViewProvider>
+                            </AllProvidersWrapper>
+                        ),
+                    },
+                ],
+                { initialEntries: ['/product/test-product?color=CHARCWL&size=038&width=S'] }
+            );
+            render(<RouterProvider router={router} />);
+
+            const blueColorway = screen.getByRole('radio', { name: 'Blue' });
+            expect(blueColorway).not.toBeDisabled();
+            await user.click(blueColorway);
+
+            await waitFor(() => {
+                expect(router.state.location.search).toBe('?color=BLUE');
+            });
         });
 
         test('should update selection locally (not the URL) when a size is clicked', async () => {
@@ -556,6 +727,21 @@ describe('ProductInfo', () => {
             renderProductInfo({ product: outOfStockProduct });
 
             expect(screen.getByText(t('product:outOfStockLabel'))).toBeInTheDocument();
+        });
+    });
+
+    describe('delivery options', () => {
+        test('passes the selected variant to delivery options', () => {
+            const currentVariant = {
+                productId: 'selected-variant',
+                orderable: true,
+                inventory: { ats: 10, id: 'selected-inventory', orderable: true },
+                variationValues: { color: 'CHARCWL', size: '036', width: 'S' },
+            } as ShopperProducts.schemas['Variant'];
+
+            renderProductInfo({ product: mockProduct, currentVariantOverride: currentVariant });
+
+            expect(screen.getByTestId('delivery-options-variant-id')).toHaveTextContent('selected-variant');
         });
     });
 
