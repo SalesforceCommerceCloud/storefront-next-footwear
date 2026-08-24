@@ -79,8 +79,8 @@
    footwear sets --ui-border-width: 1px globally in core.css, so Cards already
    have visible borders everywhere and don't need the per-section re-enable. */
 
-/* Stacked "Stride / Street" wordmark — canonical header caps logos at h-3/h-4,
-   which crushes a two-line lockup. Give it room to read as a square mark. */
+/* Stacked "Footwear / Next" wordmark — canonical header caps logos at h-3/h-4,
+   which crushes a two-line lockup. Give it room to read as a legible two-line mark. */
 @layer utilities {
     [data-testid='header-logo'] img {
         height: 2.5rem; /* 40px */

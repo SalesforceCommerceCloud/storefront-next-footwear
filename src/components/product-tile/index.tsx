@@ -13,6 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Footwear vertical override of the canonical ProductTile.
+ *
+ * Adds PLP-surfaced performance signals on top of the canonical tile: a "Wide" width-availability
+ * badge, Terrain/Cushioning/Support performance badges (from the PDP's PerformanceSpecCard data),
+ * a colorway-count badge, and a "Starting at" price prefix for master/set products that show a
+ * price range. All additions render in a badge row below the swatches — the canonical top-left
+ * image-overlay badge slot (promo/sale badges) is untouched so the two never collide.
+ */
 import {
     type ComponentProps,
     forwardRef,
@@ -24,27 +34,26 @@ import {
     lazy,
     Suspense,
 } from 'react';
-import { Link } from '@/components/link';
 import { useTranslation } from 'react-i18next';
-import { usePageDesignerMode } from '@salesforce/storefront-next-runtime/design/react/core';
+import { Link } from '@/components/link';
 
 import type { ShopperSearch } from '@/scapi';
 import type { ComponentDesignMetadata } from '@salesforce/storefront-next-runtime/design/react';
+import { usePageDesignerMode } from '@salesforce/storefront-next-runtime/design/react/core';
 
 import { cn, resolveAssetUrl } from '@/lib/utils';
-import { DynamicImage } from '@/components/dynamic-image';
-import { carouselItemImageWidths } from '@/components/carousel-section';
 import {
     createProductUrl,
     getDecoratedVariationAttributes,
     type DecoratedVariationAttributeValue,
 } from '@/lib/product/product-utils';
 import { getProductRating } from '@/lib/product/product-utils-plp';
-import { isDesktopViewport, useProductTileContext } from './context';
-import { DeferredWishlistButton } from './deferred-wishlist-button';
+import { getPriceData } from '@/components/product-price/utils';
+import { isDesktopViewport, useProductTileContext } from '@/components/product-tile/context';
+import { DeferredWishlistButton } from '@/components/product-tile/deferred-wishlist-button';
 import { useWishlistLoader } from '@/providers/wishlist';
 import { PickupIcon } from '@/components/icons';
-import { QuickAddButton } from './quick-add-button';
+import { QuickAddButton } from '@/components/product-tile/quick-add-button';
 import { ProductTileSwatchesSkeleton } from '@/components/category-skeleton';
 import { Component } from '@/lib/decorators/component';
 import { AttributeDefinition } from '@/lib/decorators/attribute-definition';
@@ -52,24 +61,27 @@ import { RegionDefinition } from '@/lib/decorators/region-definition';
 import type { ComponentType } from '@/components/region';
 import { ProductImageContainer } from '@/components/product-image';
 import ProductPrice from '@/components/product-price';
-import CurrentPrice from '@/components/product-price/current-price';
 import { StarRating } from '@/components/product-ratings/star-rating';
+import CurrentPrice from '@/components/product-price/current-price';
+import { DynamicImage } from '@/components/dynamic-image';
+import { carouselItemImageWidths } from '@/components/carousel-section';
 import { UITarget } from '@/targets/ui-target';
 import { Card } from '@/components/ui/card';
-import { loader as loaders } from './loaders';
+import { loader as loaders } from '@/components/product-tile/loaders';
+import { parsePerformanceSpec } from '@/components/performance-spec-card';
+import {
+    CUSHIONING_TECHNICAL_KEY,
+    SUPPORT_TECHNICAL_KEY,
+    TERRAIN_TECHNICAL_KEY,
+} from '@/components/performance-spec-card/performance-spec-labels';
 
-const LazySwatches = lazy(() => import('./swatches').then((m) => ({ default: m.ProductTileSwatches })));
+const LazySwatches = lazy(() =>
+    import('@/components/product-tile/swatches').then((m) => ({ default: m.ProductTileSwatches }))
+);
 
 const PRODUCT_TILE_SELECTABLE_ATTRIBUTE_ID = 'color';
 const PRODUCT_TILE_MAX_SWATCHES = 3;
-
-/**
- * Public-dir path to the shared authoring placeholder. Referenced by URL (not a module import) so
- * the 906-byte SVG is never inlined as a data URI into the Product Tile's shopper bundle — a
- * top-level `import … from '/images/…svg'` would inline it and regress the Lighthouse bundle-size
- * budget (Product Tile ships in the above-the-fold Product Carousel / Product Recommendations
- * chunks). Only ever resolved on the design-mode empty-state path.
- */
+const WIDE_WIDTH_CODES = new Set(['W', 'EW']);
 const EMPTY_STATE_PLACEHOLDER_SRC = '/images/content-placeholder.svg';
 
 /* v8 ignore start - do not test decorators in unit tests, decorator functionality is tested separately*/
@@ -300,6 +312,17 @@ export interface ProductTileProps extends ComponentProps<'div'> {
     data?: unknown;
 }
 
+/** Small pill used for the performance/fit badge row below the swatches. */
+function PerformanceBadge({ children }: { children: string }) {
+    return (
+        <span
+            data-slot="badge"
+            className="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent">
+            {children}
+        </span>
+    );
+}
+
 const ProductTile = memo(
     forwardRef<HTMLDivElement, ProductTileProps>(
         (
@@ -338,6 +361,7 @@ const ProductTile = memo(
             const product = (data as ShopperSearch.schemas['ProductSearchHit'] | undefined) || productProp;
 
             const { config, t, currency, getBadges } = useProductTileContext();
+            const { t: tProduct } = useTranslation('product');
             const { t: tCommon } = useTranslation('common');
             const { isDesignMode } = usePageDesignerMode();
 
@@ -396,6 +420,32 @@ const ProductTile = memo(
             const colorAttributes = variationAttributes.filter(({ id }) => PRODUCT_TILE_SELECTABLE_ATTRIBUTE_ID === id);
             const colorValues = (colorAttributes[0]?.values?.slice(0, maxSwatches) ??
                 []) as DecoratedVariationAttributeValue[];
+            const totalColorCount = colorAttributes[0]?.values?.length ?? colorValues.length;
+
+            // "Available in Wide" — true when a wide width is orderable, regardless of the tile's
+            // currently-selected color/size combination. When the hit exposes real
+            // `variationAttributes`, their per-value `orderable` already aggregates whether any
+            // variant with that width is orderable. When it doesn't (the synthesized-attribute path
+            // for hits with only `variants`), that flag is dropped, so read `orderable` straight off
+            // the hit's variants instead — otherwise every wide width defaults to available and the
+            // badge shows even when all wide variants are sold out.
+            const isAvailableInWide = useMemo(() => {
+                if (!product?.variationAttributes?.length && product?.variants?.length) {
+                    return product.variants.some(
+                        (variant) =>
+                            (variant.orderable ?? true) && WIDE_WIDTH_CODES.has(variant.variationValues?.width ?? '')
+                    );
+                }
+                const widthAttribute = variationAttributes.find(({ id }) => id === 'width');
+                return (widthAttribute?.values ?? []).some(
+                    (value) => WIDE_WIDTH_CODES.has(value.value ?? '') && (value.orderable ?? true)
+                );
+            }, [product, variationAttributes]);
+
+            const performanceSpec = useMemo(() => parsePerformanceSpec(product), [product]);
+
+            const priceData = useMemo(() => (product ? getPriceData(product) : undefined), [product]);
+            const showStartingAtPrefix = !!priceData?.isRange;
 
             const handleSwatchHover = useCallback(
                 (value: string) => {
@@ -511,6 +561,35 @@ const ProductTile = memo(
                 );
             }
 
+            // Each badge is prefixed with its category label ("Cushioning: Maximum") — the bare
+            // technical value alone (e.g. "Stability", "Neutral") doesn't identify which spec it
+            // is when shown as a flat row of pills, for sighted and screen-reader shoppers alike.
+            const performanceBadges: string[] = [];
+            if (performanceSpec?.terrain) {
+                performanceBadges.push(
+                    `${tProduct('performanceSpecs.terrain.label', { defaultValue: 'Terrain' })}: ${tProduct(
+                        TERRAIN_TECHNICAL_KEY[performanceSpec.terrain].key,
+                        { defaultValue: TERRAIN_TECHNICAL_KEY[performanceSpec.terrain].defaultValue }
+                    )}`
+                );
+            }
+            if (performanceSpec?.cushioning) {
+                performanceBadges.push(
+                    `${tProduct('performanceSpecs.cushioning.label', { defaultValue: 'Cushioning' })}: ${tProduct(
+                        CUSHIONING_TECHNICAL_KEY[performanceSpec.cushioning].key,
+                        { defaultValue: CUSHIONING_TECHNICAL_KEY[performanceSpec.cushioning].defaultValue }
+                    )}`
+                );
+            }
+            if (performanceSpec?.supportType) {
+                performanceBadges.push(
+                    `${tProduct('performanceSpecs.support.label', { defaultValue: 'Support' })}: ${tProduct(
+                        SUPPORT_TECHNICAL_KEY[performanceSpec.supportType].key,
+                        { defaultValue: SUPPORT_TECHNICAL_KEY[performanceSpec.supportType].defaultValue }
+                    )}`
+                );
+            }
+
             return (
                 <Card
                     ref={ref}
@@ -537,15 +616,7 @@ const ProductTile = memo(
                             />
                             <UITarget targetId="sfcc.plp.shipping.deliveryEstimate" />
 
-                            {/*
-                             * Clickable product link over the image. This is the tile's keyboard
-                             * entry point (a real tab stop with an accessible name): focusing it
-                             * fires `group-focus-within`, which reveals the wishlist and quick-add
-                             * controls before forward-Tab reaches them in DOM order — without it,
-                             * those controls stay `invisible` (removed from tab order) and keyboard
-                             * users can never reach them (WCAG 2.1.1). The product name link below
-                             * is `tabIndex={-1}` so this does not add a second tab stop.
-                             */}
+                            {/* The tile's one product link precedes controls that appear on focus. */}
                             <Link
                                 to={productUrl}
                                 className="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
@@ -553,7 +624,7 @@ const ProductTile = memo(
                                 onClick={handleClick}
                             />
 
-                            {/* Badges — top-left */}
+                            {/* Badges — top-left (canonical promo/sale badges; untouched) */}
                             {productData?.badges.hasBadges && (
                                 <div className="absolute top-2 left-2 flex flex-col items-start gap-1 z-20">
                                     {productData.badges.badges.map((badge) => (
@@ -634,11 +705,37 @@ const ProductTile = memo(
                                         onSwatchHover={handleSwatchHover}
                                         onSwatchClick={handleClick}
                                         productName={productName}
-                                        totalColorCount={colorAttributes[0]?.values?.length ?? colorValues.length}
+                                        totalColorCount={totalColorCount}
                                         maxSwatches={maxSwatches}
                                         productHref={productUrl}
                                     />
                                 </Suspense>
+                            </div>
+                        )}
+
+                        {/* Footwear performance/fit badge row — colorway count, wide-width
+                            availability, and terrain/cushioning/support signals parsed from the
+                            same `c_*` custom attributes the PDP's PerformanceSpecCard reads. Kept
+                            separate from the canonical promo badge slot above so the two never
+                            compete for the same visual space. */}
+                        {(totalColorCount > 0 || isAvailableInWide || performanceBadges.length > 0) && (
+                            <div className="flex flex-wrap gap-1 mb-2">
+                                {totalColorCount > 0 && (
+                                    <PerformanceBadge>
+                                        {tProduct('tile.colorCount', {
+                                            count: totalColorCount,
+                                            defaultValue: '{{count}} Color',
+                                        })}
+                                    </PerformanceBadge>
+                                )}
+                                {isAvailableInWide && (
+                                    <PerformanceBadge>
+                                        {tProduct('tile.availableInWide', { defaultValue: 'Available in Wide' })}
+                                    </PerformanceBadge>
+                                )}
+                                {performanceBadges.map((label) => (
+                                    <PerformanceBadge key={label}>{label}</PerformanceBadge>
+                                ))}
                             </div>
                         )}
 
@@ -654,19 +751,8 @@ const ProductTile = memo(
                             </p>
                         )}
 
-                        {/* Product name — the heading carries the product's accessible name directly.
-                            The tile's single product link (keyboard + AT) is the image overlay above;
-                            this inner link is a mouse-only convenience, so it is `aria-hidden` and
-                            `tabIndex={-1}` to avoid duplicating that link in the accessibility tree. */}
-                        <h3
-                            aria-label={productName}
-                            className="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2">
-                            <Link
-                                to={productUrl}
-                                className="hover:underline"
-                                tabIndex={-1}
-                                aria-hidden="true"
-                                onClick={handleClick}>
+                        <h3 className="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2">
+                            <Link to={productUrl} className="hover:underline" onClick={handleClick}>
                                 {productName}
                             </Link>
                         </h3>
@@ -694,13 +780,21 @@ const ProductTile = memo(
                         </div>
                         <UITarget targetId="sfcc.productCard.reviews.rating" />
 
-                        {/* Price */}
+                        {/* Price — for master/set products with a price range, prefix the bare
+                            current (= lowest) price with "Starting at" instead of rendering
+                            canonical's full From/list-price treatment. */}
                         <div>
+                            {showStartingAtPrefix && (
+                                <p className="text-xs text-muted-foreground mb-0.5">
+                                    {tProduct('tile.startingAtPricePrefix', { defaultValue: 'Starting at' })}
+                                </p>
+                            )}
                             <ProductPrice
                                 type="unit"
                                 product={product}
                                 currency={currency ?? config.commerce.sites?.[0]?.defaultCurrency ?? ''}
                                 labelForA11y={(product?.productName ?? product?.productId) || ''}
+                                currentPriceOnly={showStartingAtPrefix}
                                 currentPriceProps={{
                                     className:
                                         'text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground',
@@ -729,5 +823,5 @@ ProductTile.displayName = 'ProductTile';
 export const loader = loaders.server;
 export { ProductTile };
 // oxlint-disable-next-line react-refresh/only-export-components
-export { ProductTileProvider, useProductTileContext } from './context';
+export { ProductTileProvider, useProductTileContext } from '@/components/product-tile/context';
 export default ProductTile;

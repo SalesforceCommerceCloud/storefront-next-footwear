@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useRef, Suspense, Fragment } from 'react';
+import { useEffect, useMemo, useRef, Suspense, Fragment } from 'react';
 import { Await, useRouteLoaderData } from 'react-router';
 import type { loader as rootLoader } from '@/root';
 import { shouldRevalidate as shouldRevalidateProduct } from '@/lib/revalidation/routes/product';
@@ -48,6 +48,7 @@ import { getPublicOrigin } from '@/utils/schema-url';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { getLogger } from '@/lib/logger.server';
 import { UITarget } from '@/targets/ui-target';
+import { PerformanceSpecCard, parsePerformanceSpec } from '@/components/performance-spec-card';
 // @sfdc-extension-block-start SFDC_EXT_BOPIS
 import { selectedStoreContext } from '@/extensions/store-locator/middlewares/selected-store.server';
 import PickupProvider from '@/extensions/bopis/context/pickup-context';
@@ -341,6 +342,8 @@ function ProductContent({
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);
 
+    const performanceSpec = useMemo(() => parsePerformanceSpec(product), [product]);
+
     return (
         <ProductProvider product={product}>
             {/* @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT */}
@@ -373,6 +376,8 @@ function ProductContent({
                             ) : (
                                 <ProductView product={product} />
                             )}
+
+                            <PerformanceSpecCard specs={performanceSpec} />
 
                             {/* @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS */}
                             <UITarget targetId="sfcc.pdp.reviews.section" />

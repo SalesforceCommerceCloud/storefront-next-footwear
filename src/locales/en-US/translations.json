@@ -11,7 +11,7 @@
         "noFilterOptionsAvailable": "No filter options available."
     },
     "common": {
-        "defaultSiteName": "Stride Street",
+        "defaultSiteName": "Footwear Next",
         "loading": "Loading",
         "loadingMore": "Loading more...",
         "product": "the product",
@@ -1404,7 +1404,7 @@
             }
         },
         "meta": {
-            "title": "Stride Street",
+            "title": "Footwear Next",
             "description": "Performance and everyday shoes for every step."
         },
         "featuredProducts": {
@@ -1414,7 +1414,7 @@
         },
         "categoryGrid": {
             "title": "Style for Real Life",
-            "description": "At Stride Street, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.",
+            "description": "At Footwear Next, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.",
             "shopNowButton": "Shop Now",
             "loadFailed": "Unable to load categories.",
             "emptyTitle": "Add your title here",
@@ -1437,7 +1437,7 @@
             },
             "styleForRealLife": {
                 "title": "Style for Real Life",
-                "description": "At Stride Street, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.\n\nDiscover pairs that keep pace with your day, from the first stride to the last mile."
+                "description": "At Footwear Next, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.\n\nDiscover pairs that keep pace with your day, from the first stride to the last mile."
             }
         },
         "activityDiscovery": {
@@ -1487,7 +1487,7 @@
         },
         "copyright": "Salesforce or its affiliates. All rights reserved. This is a demo store only. Orders made WILL NOT be processed.",
         "address": "415 Mission St, San Francisco, CA 94105",
-        "logoAlt": "Stride Street"
+        "logoAlt": "Footwear Next"
     },
     "aboutUs": {
         "breadcrumb": {
@@ -1499,7 +1499,7 @@
         "section": {
             "ourGoal": {
                 "title": "Built for movement. Designed for everyday life.",
-                "content": "Inspired by movement and the energy of the street, Stride Street was created to connect performance, fit, and everyday footwear in one seamless experience. We believe great shoes should move with you—from the run to the studio, from work to the weekend.\nWhat started as a vision to simplify how people find footwear that actually fits has evolved into a brand focused on clarity, accessibility, and smart design. Every collection is curated to deliver fit confidence, durability, and everyday performance."
+                "content": "Inspired by movement and the energy of the street, Footwear Next was created to connect performance, fit, and everyday footwear in one seamless experience. We believe great shoes should move with you—from the run to the studio, from work to the weekend.\nWhat started as a vision to simplify how people find footwear that actually fits has evolved into a brand focused on clarity, accessibility, and smart design. Every collection is curated to deliver fit confidence, durability, and everyday performance."
             },
             "ourVision": {
                 "title": "Our Vision",
@@ -1515,7 +1515,7 @@
             },
             "ourTeam": {
                 "title": "A Global Brand, A Street-Level Soul",
-                "content": "Stride Street was born from the idea that a great fit shouldn't feel like guesswork. We blend performance engineering with a street-level mindset, connecting fit, function, and everyday life into one fluid experience.\nFrom product development to digital experience, everything we do is guided by one principle:\nMake finding your fit feel natural."
+                "content": "Footwear Next was born from the idea that a great fit shouldn't feel like guesswork. We blend performance engineering with a street-level mindset, connecting fit, function, and everyday life into one fluid experience.\nFrom product development to digital experience, everything we do is guided by one principle:\nMake finding your fit feel natural."
             }
         },
         "contact": {
@@ -2067,6 +2067,62 @@
                 "runsLarge": "Runs large"
             }
         },
+        "performanceSpecs": {
+            "title": "Performance Specs",
+            "viewSpecsTrigger": "View Specs",
+            "cushioning": {
+                "label": "Cushioning",
+                "technical": {
+                    "light": "Light",
+                    "moderate": "Moderate",
+                    "maximum": "Maximum"
+                },
+                "experiential": {
+                    "light": "Fast and responsive underfoot",
+                    "moderate": "Balanced cushioning for everyday miles",
+                    "maximum": "Plush, high-cushion ride for long distances"
+                }
+            },
+            "heelToeDrop": {
+                "label": "Heel-to-Toe Drop",
+                "value": "{{mm}} mm",
+                "experiential": "{{mm}} mm offset from heel to toe"
+            },
+            "weight": {
+                "label": "Weight",
+                "value": "{{g}} g"
+            },
+            "support": {
+                "label": "Support",
+                "technical": {
+                    "neutral": "Neutral",
+                    "stability": "Stability",
+                    "motion_control": "Motion control"
+                },
+                "experiential": {
+                    "neutral": "Natural stride with no added correction",
+                    "stability": "Gentle guidance to counter overpronation",
+                    "motion_control": "Maximum structure for significant overpronation"
+                }
+            },
+            "terrain": {
+                "label": "Terrain",
+                "technical": {
+                    "road": "Road",
+                    "trail": "Trail",
+                    "track": "Track",
+                    "treadmill": "Treadmill",
+                    "multi": "Multi-surface"
+                },
+                "experiential": {
+                    "road": "Built for pavement and paved paths",
+                    "trail": "Grips loose dirt, rock, and roots",
+                    "track": "Tuned for speed on the track",
+                    "treadmill": "Lightweight feel for indoor running",
+                    "multi": "Versatile traction for mixed surfaces"
+                }
+            }
+        },
         "width": {
             "narrow": "Narrow",
             "standard": "Standard",
@@ -2081,6 +2137,12 @@
                 "back": "Back view",
                 "sole": "Sole view"
             }
+        },
+        "tile": {
+            "availableInWide": "Available in Wide",
+            "colorCount_one": "{{count}} Color",
+            "colorCount_other": "{{count}} Colors",
+            "startingAtPricePrefix": "Starting at"
         }
     },
     "orderLookup": {

@@ -24,15 +24,30 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@/components/typography';
 import { UITarget } from '@/targets/ui-target';
 import { uiConfig } from '@/lib/config.ui';
-import type { FilterValue, RefinementProps } from './types';
-import RefineDefault from './refine-default';
-import RefineColor from './refine-color';
-import RefineSize from './refine-size';
-import RefinePrice from './refine-price';
-import RefineCategory from './refine-cgid';
+import type { FilterValue, RefinementProps } from '@/components/category-refinements/types';
+import RefineDefault from '@/components/category-refinements/refine-default';
+import RefineColor from '@/components/category-refinements/refine-color';
+import RefineSize from '@/components/category-refinements/refine-size';
+import RefinePrice from '@/components/category-refinements/refine-price';
+import RefineCategory from '@/components/category-refinements/refine-cgid';
 // @sfdc-extension-line SFDC_EXT_BOPIS
 import RefineInventory from '@/extensions/bopis/components/refine-inventory';
+import RefineCushioning from './refine-cushioning';
+import RefineSupport from './refine-support';
+import RefineTerrain from './refine-terrain';
 
+/**
+ * Footwear overlay of the canonical `CategoryRefinements` orchestrator (`@/components/category-refinements`).
+ *
+ * Adds performance-attribute facets on top of the canonical dispatch: `c_cushioning`, `c_supportType`, and
+ * `c_terrain` get dedicated overlay components that map technical values to shopper-facing labels, while
+ * `c_heelDrop` reuses the canonical `RefineDefault` checkbox list directly — SCAPI returns its heel-to-toe
+ * drop buckets (0-4, 5-8, 9-12+ mm) as predefined range values, the same mechanism as the system `price`
+ * attribute, so no client-side transformation is needed. The `cgid` case is unchanged from canonical:
+ * footwear's "Shop by Activity" facet is already served by the existing `cgid`→`RefineCategory` sidebar
+ * mechanism (`uiConfig.pages.category.sidebarCategoryRefinement.enabled`, see `@/lib/config.ui`), not a new
+ * component.
+ */
 export default function CategoryRefinements({
     result,
     refine = [],
@@ -46,26 +61,10 @@ export default function CategoryRefinements({
     const navigation = useNavigation();
     const isPending = navigation.state !== 'idle';
 
-    /**
-     * Optimistic refinements derived from the in-flight navigation target.
-     *
-     * When a user toggles a filter, `navigate()` updates the URL which triggers a loader call. While that navigation
-     * is pending, `navigation.location` holds the target location, allowing us to read the intended refine params
-     * immediately.
-     *
-     * Note: `navigation.location` is inherently tied to the pending state — it's only defined while
-     * `navigation.state !== 'idle'`, and both reset in the same render cycle once the navigation completes. An
-     * additional `isPending` guard is therefore not needed here.
-     *
-     * Minor trade-off: `useNavigation()` is global — it reflects any in-flight navigation, not just filter toggles.
-     * In practice this is acceptable because if a different navigation starts, the entire page is about to change
-     * anyway.
-     */
     const effectiveRefines = navigation.location
         ? new URLSearchParams(navigation.location.search).getAll('refine')
         : refine;
 
-    // Track which sections should be expanded (default open if has active filters)
     const hasActiveFilter = useCallback(
         (attributeId: string) => {
             return effectiveRefines.some((r) => r.startsWith(`${attributeId}=`));
@@ -73,9 +72,6 @@ export default function CategoryRefinements({
         [effectiveRefines]
     );
 
-    // Category (`cgid`) selection is handled by QuickFilters, not the side filters panel — unless a
-    // vertical opts a promoted category level into the sidebar as a grouped facet (e.g. footwear
-    // "Shop by Activity"), in which case the route suppresses QuickFilters and we keep `cgid` here.
     const keepCgidInSidebar = uiConfig.pages.category.sidebarCategoryRefinement?.enabled ?? false;
     const refinements = useMemo(
         () =>
@@ -91,28 +87,16 @@ export default function CategoryRefinements({
 
             let nextRefines: string[];
             if (refines.includes(refinePair)) {
-                // Remove this refinement
                 nextRefines = refines.filter((r) => r !== refinePair);
             } else {
-                // Exclusive refinements - only one value can be selected at a time.
-                // `cgid` is single-valued per SCAPI (the productSearch `refine` param documents
-                // "refinement per single category ID; multiple category IDs are not supported"), so a
-                // promoted category facet is single-select — picking an activity replaces the prior one.
-                const exclusiveRefinements = [
-                    'price',
-                    'cgid',
-                    // @sfdc-extension-line SFDC_EXT_BOPIS
-                    'ilids',
-                ];
+                const exclusiveRefinements = ['price', 'cgid', /* @sfdc-extension-line SFDC_EXT_BOPIS */ 'ilids'];
                 if (exclusiveRefinements.includes(attributeId)) {
-                    // Remove all refinements for this attribute first
                     nextRefines = [...refines.filter((r) => !r.startsWith(`${attributeId}=`)), refinePair];
                 } else {
                     nextRefines = [...refines, refinePair];
                 }
             }
 
-            // Rebuild search params with the new refines
             params.delete('refine');
             nextRefines.forEach((r) => params.append('refine', r));
             params.set('offset', '0');
@@ -127,7 +111,6 @@ export default function CategoryRefinements({
         [location, navigate]
     );
 
-    // Check if a filter value is selected (uses optimistic state)
     const isFilterSelected = useCallback(
         (attributeId: string, value: string) => {
             return effectiveRefines.includes(`${attributeId}=${value}`);
@@ -135,7 +118,6 @@ export default function CategoryRefinements({
         [effectiveRefines]
     );
 
-    // Render the appropriate filter component based on type
     const renderFilterValues = (
         refinement: ShopperSearch.schemas['ProductSearchRefinement'] & { values: FilterValue[] }
     ) => {
@@ -155,14 +137,22 @@ export default function CategoryRefinements({
             case 'price':
                 return <RefinePrice {...refinementProps} result={result} />;
             case 'cgid':
-                // Pass the refinement label so RefineCategory can name its radiogroup for AT.
                 return <RefineCategory {...refinementProps} label={refinement.label} />;
+            case 'c_cushioning':
+                return <RefineCushioning {...refinementProps} />;
+            case 'c_supportType':
+                return <RefineSupport {...refinementProps} />;
+            case 'c_terrain':
+                return <RefineTerrain {...refinementProps} />;
+            // Heel-drop buckets arrive from SCAPI as predefined range values, so the canonical
+            // checkbox list renders them as-is — no dedicated component needed (see file docstring).
+            case 'c_heelDrop':
+                return <RefineDefault {...refinementProps} />;
             default:
                 return <RefineDefault {...refinementProps} />;
         }
     };
 
-    // No refinements available
     if (refinements.length === 0) {
         return (
             <div className="border p-4">
@@ -182,7 +172,6 @@ export default function CategoryRefinements({
                 />
                 {/*  @sfdc-extension-block-end SFDC_EXT_BOPIS */}
 
-                {/* Individual collapsible sections for each refinement category */}
                 {refinements.map((refinement) => {
                     const { values, attributeId, label } = refinement;
                     if (!Array.isArray(values) || !values.length) {

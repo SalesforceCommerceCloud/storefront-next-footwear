@@ -15,7 +15,7 @@
  */
 
 /**
- * Footwear (Stride Street) home route overlay.
+ * Footwear Next home route overlay.
  *
  * A full replacement of the canonical `src/routes/_app._index.tsx` (route overlays replace, they do
  * not merge — the SDK swaps the whole module). It follows the Foundations static-with-Page-Designer-

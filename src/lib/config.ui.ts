@@ -15,7 +15,7 @@
  */
 
 /**
- * Footwear (Stride Street) per-page UI overrides:
+ * Footwear Next per-page UI overrides:
  * - Opts the category (`cgid`) refinement into the side-panel filters as a single-select
  *   radio group (`category.sidebarCategoryRefinement.enabled`). Footwear surfaces the
  *   "activity" category level (Running / Trail / Training / …) as a "Shop by Activity"

@@ -79,10 +79,10 @@ describe('SizeGuideDrawer', () => {
 
     it('includes the brand name in the description when provided', () => {
         render(
-            <SizeGuideDrawer isOpen sizeChart={mensChart} gender="mens" onClose={vi.fn()} brandName="Stride Street" />
+            <SizeGuideDrawer isOpen sizeChart={mensChart} gender="mens" onClose={vi.fn()} brandName="Footwear Next" />
         );
         expect(
-            screen.getByText('Find your perfect fit with Stride Street using our size conversion chart.')
+            screen.getByText('Find your perfect fit with Footwear Next using our size conversion chart.')
         ).toBeInTheDocument();
     });
 

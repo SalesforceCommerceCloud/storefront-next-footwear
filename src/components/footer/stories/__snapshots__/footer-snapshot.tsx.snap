@@ -12,7 +12,7 @@ exports[`Footer stories snapshot > CheckoutVariant story renders and matches sna
     >
       <div>
         © 
-        Stride Street
+        Footwear Next
          
         415 Mission St, San Francisco, CA 94105
       </div>
@@ -117,7 +117,7 @@ exports[`Footer stories snapshot > Default story renders and matches snapshot 1`
               href="/"
             >
               <img
-                alt="Stride Street"
+                alt="Footwear Next"
                 class="h-4 w-auto"
                 src="__ASSET_MOCK__"
               />
@@ -402,7 +402,7 @@ exports[`Footer stories snapshot > FooterSelectsForcedFocus story renders and ma
               href="/"
             >
               <img
-                alt="Stride Street"
+                alt="Footwear Next"
                 class="h-4 w-auto"
                 src="__ASSET_MOCK__"
               />
@@ -687,7 +687,7 @@ exports[`Footer stories snapshot > MobileView story renders and matches snapshot
               href="/"
             >
               <img
-                alt="Stride Street"
+                alt="Footwear Next"
                 class="h-4 w-auto"
                 src="__ASSET_MOCK__"
               />

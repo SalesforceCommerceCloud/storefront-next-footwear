@@ -9,7 +9,7 @@
     --popover: #FFFFFF;
     --popover-foreground: #3A423E;
 
-    /* Stride Street brand pass — forest-green primary, terracotta tertiary. */
+    /* Footwear Next brand pass — forest-green primary, terracotta tertiary. */
     --primary: #1F3D2E;                 /* forest green */
     --primary-foreground: #FFFFFF;
 
@@ -66,7 +66,7 @@
     --opacity-50: 50%;
     --opacity-30: 70%;
 
-    /* shape tokens — Stride Street heritage chrome: soft rounded pills/cards,
+    /* shape tokens — Footwear Next heritage chrome: soft rounded pills/cards,
        no drop shadow, visible 1px borders on primitives. The --ui-* names are
        the source values; tailwind.css bridges them into Tailwind's
        rounded-ui / shadow-ui / border-ui utility namespaces. */
