@@ -17,20 +17,15 @@
 /**
  * Footwear (Stride Street) home route overlay.
  *
- * A full replacement of the canonical `src/routes/_app._index.tsx` (route overlays REPLACE, they do
- * not merge — the SDK swaps the whole module). It is byte-for-byte the canonical home EXCEPT the
- * `main` region's empty/error fallback renders the shared <PopularCategories> as an ACTIVITY rail:
- * it fetches the children of the `activity` parent category and presents them left-aligned with a
- * "View all activities" shop-all link to the activity landing PLP. Because `<Region>` renders
- * `errorElement` whenever the region has no authored components (see src/components/region/index.tsx),
- * this activity rail is the Page Designer FALLBACK: it shows out-of-the-box / in dev / when no home
- * content is authored, and a merchant-authored `main` region (or a datasets seed) takes over when
- * present.
+ * A full replacement of the canonical `src/routes/_app._index.tsx` (route overlays replace, they do
+ * not merge — the SDK swaps the whole module). It follows the Foundations static-with-Page-Designer-
+ * regions pattern: the Footwear marketing sections always render, while empty Page Designer slots are
+ * interspersed between them. Merchant content in a slot therefore augments the page instead of replacing
+ * its hero, product carousel, activity discovery rail, or editorial content.
  *
- * Reuses the canonical curated-category component (a rail of category cards linking to
- * `/category/:id`) rather than a bespoke footwear component — activities ARE categories, so the
- * shared component fits. The only footwear-specific inputs are the `activity` parent id and the
- * heading/CTA copy (footwear-only `home.activityDiscovery.*` keys, scoped to this overlay).
+ * The existing `headerbanner` and `main` slots remain intact so merchant-authored content stays compatible
+ * with the deployed Page Designer metadata. The activity rail reuses the shared curated-category component
+ * with the `activity` parent id and footwear-specific heading and CTA copy.
  */
 import { Suspense } from 'react';
 import { Await, redirect, useAsyncError } from 'react-router';
@@ -53,7 +48,7 @@ import hero01 from '/images/hero-01.webp';
 import hero02 from '/images/hero-02.webp';
 import hero03 from '/images/hero-03.webp';
 import hero04 from '/images/hero-04.webp';
-import HeroCarousel, { HeroCarouselSkeleton, type HeroSlide } from '@/components/hero-carousel';
+import HeroCarousel, { type HeroSlide } from '@/components/hero-carousel';
 import { ProductCarouselSkeleton } from '@/components/product-carousel';
 import { ProductCarouselWithData } from '@/components/product-carousel/carousel';
 import { SeoMeta } from '@/components/seo-meta';
@@ -212,132 +207,98 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
     ];
 
     return (
-        <>
-            <div className="pb-16 -mt-8">
-                <h1 className="sr-only">{t('meta.title', { defaultValue: 'NextGen PWA Kit Store' })}</h1>
-                <SeoMeta
-                    rawTitle
-                    title={t('meta.title', { defaultValue: 'NextGen PWA Kit Store' })}
-                    description={t('meta.description', {
-                        defaultValue: 'Welcome to our web store for high performers!',
-                    })}
-                    openGraph={{
-                        type: 'website',
-                        url: loaderData.pageUrl,
-                        image: loaderData.ogImageUrl,
-                    }}
-                />
-                {/* Header Banner Region - Region component handles its own Suspense internally */}
-                <div>
-                    <Region
-                        page={loaderData.page}
-                        regionId="headerbanner"
-                        fallbackElement={
-                            <>
-                                {/* Provide fallback skeletons for the above the fold content */}
-                                <HeroCarouselSkeleton showDots={true} showNavigation={true} />
-                                <ProductCarouselSkeleton title={t('featuredProducts.title')} />
-                            </>
-                        }
-                        errorElement={
-                            <>
-                                <HeroCarousel
-                                    slides={heroSlides}
-                                    autoPlay={true}
-                                    autoPlayInterval={6000}
-                                    showNavigation={true}
-                                    showDots={true}
-                                />
+        <div className="pb-16 -mt-8">
+            <h1 className="sr-only">{t('meta.title', { defaultValue: 'NextGen PWA Kit Store' })}</h1>
+            <SeoMeta
+                rawTitle
+                title={t('meta.title', { defaultValue: 'NextGen PWA Kit Store' })}
+                description={t('meta.description', {
+                    defaultValue: 'Welcome to our web store for high performers!',
+                })}
+                openGraph={{
+                    type: 'website',
+                    url: loaderData.pageUrl,
+                    image: loaderData.ogImageUrl,
+                }}
+            />
 
-                                {/* Featured Products */}
-                                <Suspense fallback={<ProductCarouselSkeleton title={t('featuredProducts.title')} />}>
-                                    <Await resolve={loaderData.searchResult} errorElement={<FeaturedProductsError />}>
-                                        {(searchResult) => (
-                                            <ProductCarouselWithData
-                                                data={searchResult}
-                                                title={t('featuredProducts.title')}
-                                                shopAllUrl="/category/root"
-                                                shopAllText={t('featuredProducts.shopAll')}
-                                            />
-                                        )}
-                                    </Await>
-                                </Suspense>
-                            </>
-                        }
-                    />
+            <Region page={loaderData.page} regionId="headerbanner" />
+
+            <HeroCarousel
+                slides={heroSlides}
+                autoPlay={true}
+                autoPlayInterval={6000}
+                showNavigation={true}
+                showDots={true}
+            />
+
+            <Suspense fallback={<ProductCarouselSkeleton title={t('featuredProducts.title')} />}>
+                <Await resolve={loaderData.searchResult} errorElement={<FeaturedProductsError />}>
+                    {(searchResult) => (
+                        <ProductCarouselWithData
+                            data={searchResult}
+                            title={t('featuredProducts.title')}
+                            shopAllUrl="/category/root"
+                            shopAllText={t('featuredProducts.shopAll')}
+                        />
+                    )}
+                </Await>
+            </Suspense>
+
+            <Region page={loaderData.page} regionId="main" />
+
+            <PopularCategories
+                categoriesPromise={loaderData.categories}
+                titleAlign="left"
+                labelPosition="below"
+                title={t('activityDiscovery.title')}
+                subtitle={t('activityDiscovery.subtitle')}
+                shopAllText={t('activityDiscovery.viewAll')}
+                shopAllUrl={routeHref(routes.category, { categoryId: 'activity' })}
+            />
+
+            <div className="pt-16">
+                <div className="section-container">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <ContentCard
+                            title={t('featuredContent.women.title')}
+                            description={t('featuredContent.women.description')}
+                            imageUrl={hero03}
+                            imageAlt={t('featuredContent.women.imageAlt')}
+                            buttonText={t('featuredContent.women.ctaText')}
+                            buttonAriaLabel={t('featuredContent.women.ctaAriaLabel')}
+                            buttonLink="/category/womens"
+                            showBackground={false}
+                            showBorder={false}
+                            loading="lazy"
+                        />
+                        <ContentCard
+                            title={t('featuredContent.men.title')}
+                            description={t('featuredContent.men.description')}
+                            imageUrl={hero04}
+                            imageAlt={t('featuredContent.men.imageAlt')}
+                            buttonText={t('featuredContent.men.ctaText')}
+                            buttonAriaLabel={t('featuredContent.men.ctaAriaLabel')}
+                            buttonLink="/category/mens"
+                            showBackground={false}
+                            showBorder={false}
+                            loading="lazy"
+                        />
+                    </div>
+
+                    <div className="mt-16 max-w-4xl mx-auto layout-gutter text-center">
+                        <ContentCard
+                            title={t('featuredContent.styleForRealLife.title')}
+                            description={t('featuredContent.styleForRealLife.description')}
+                            showBackground={false}
+                            showBorder={false}
+                            cardFooterClassName="items-center text-center p-0"
+                            cardDescriptionClassName="text-center"
+                            className="[&_h3]:text-3xl [&_h3]:md:text-4xl [&_h3]:font-normal [&_h3]:text-brand-black [&_h3]:mb-6 [&_h3]:tracking-tight [&_p]:text-sm [&_p]:text-brand-gray-700 [&_p]:leading-relaxed [&_p]:font-normal [&_p:last-of-type]:text-base [&_p:last-of-type]:text-brand-gray-600"
+                        />
+                    </div>
                 </div>
-
-                {/* Main Region - Region component handles its own Suspense internally */}
-                {/* Note: This region doesn't provide fallback skeletons right now as it's located below the fold */}
-                <Region
-                    page={loaderData.page}
-                    regionId="main"
-                    errorElement={
-                        <>
-                            {/* Activity discovery rail — the shared curated-category component, fed the
-                                children of the `activity` parent category. Left-aligned with a
-                                "View all activities" link to the activity landing PLP. This is the Page
-                                Designer fallback for the main region (canonical uses the same component
-                                with the `root` categories, centered and without a shop-all link).
-                                PopularCategories owns its own Suspense/Await around `categoriesPromise`. */}
-                            <PopularCategories
-                                categoriesPromise={loaderData.categories}
-                                titleAlign="left"
-                                labelPosition="below"
-                                title={t('activityDiscovery.title')}
-                                subtitle={t('activityDiscovery.subtitle')}
-                                shopAllText={t('activityDiscovery.viewAll')}
-                                shopAllUrl={routeHref(routes.category, { categoryId: 'activity' })}
-                            />
-
-                            {/* Featured Content Cards - Static content */}
-                            <div className="pt-16">
-                                <div className="section-container">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <ContentCard
-                                            title={t('featuredContent.women.title')}
-                                            description={t('featuredContent.women.description')}
-                                            imageUrl={hero03}
-                                            imageAlt={t('featuredContent.women.imageAlt')}
-                                            buttonText={t('featuredContent.women.ctaText')}
-                                            buttonAriaLabel={t('featuredContent.women.ctaAriaLabel')}
-                                            buttonLink="/category/womens"
-                                            showBackground={false}
-                                            showBorder={false}
-                                            loading="lazy"
-                                        />
-                                        <ContentCard
-                                            title={t('featuredContent.men.title')}
-                                            description={t('featuredContent.men.description')}
-                                            imageUrl={hero04}
-                                            imageAlt={t('featuredContent.men.imageAlt')}
-                                            buttonText={t('featuredContent.men.ctaText')}
-                                            buttonAriaLabel={t('featuredContent.men.ctaAriaLabel')}
-                                            buttonLink="/category/mens"
-                                            showBackground={false}
-                                            showBorder={false}
-                                            loading="lazy"
-                                        />
-                                    </div>
-
-                                    {/* Text-only card below women/men cards */}
-                                    <div className="mt-16 max-w-4xl mx-auto layout-gutter text-center">
-                                        <ContentCard
-                                            title={t('featuredContent.styleForRealLife.title')}
-                                            description={t('featuredContent.styleForRealLife.description')}
-                                            showBackground={false}
-                                            showBorder={false}
-                                            cardFooterClassName="items-center text-center p-0"
-                                            cardDescriptionClassName="text-center"
-                                            className="[&_h3]:text-3xl [&_h3]:md:text-4xl [&_h3]:font-normal [&_h3]:text-brand-black [&_h3]:mb-6 [&_h3]:tracking-tight [&_p]:text-sm [&_p]:text-brand-gray-700 [&_p]:leading-relaxed [&_p]:font-normal [&_p:last-of-type]:text-base [&_p:last-of-type]:text-brand-gray-600"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                    }
-                />
             </div>
-        </>
+        </div>
     );
 }

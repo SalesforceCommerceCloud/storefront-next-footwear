@@ -16,22 +16,23 @@
 
 /**
  * Footwear home route overlay test (Rule 5: a route overlay copies the canonical route's sibling
- * test). Mirrors src/routes/_app._index.test.tsx. The footwear overlay reuses the shared
- * <PopularCategories> as the `main` region fallback, but feeds it the `activity` parent's children
- * and renders it left-aligned with a "View all activities" shop-all link (the canonical home uses
- * the `root` categories, centered, with no shop-all link).
+ * test). The footwear overlay renders static marketing content and uses additive Page Designer slots.
+ * It reuses the shared <PopularCategories> with the `activity` parent's children, left-aligned with a
+ * "View all activities" shop-all link (the canonical home uses the `root` categories, centered, with
+ * no shop-all link).
  */
 
 import { render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import type { ShopperExperience, ShopperProducts, ShopperSearch } from '@/scapi';
 import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
-import HomePage, { type HomePageData, loader } from './_app._index';
+import HomePage, { HomePageMetadata, type HomePageData, loader } from './_app._index';
 import { createTestContext } from '@/lib/test-utils';
 import { fetchPageWithComponentData } from '@/lib/page-designer/page-loader.server';
 import { fetchCategories } from '@/lib/api/categories.server';
 import { getConfig } from '@salesforce/storefront-next-runtime/config';
 import type { AppConfig } from '@/types/config';
+import { getRegionDefinitions } from '@/lib/decorators/region-definition';
 
 const { t } = getTranslation();
 
@@ -84,14 +85,42 @@ const createMockPage = (regions: any[] = []): ShopperExperience.schemas['Page'] 
         regions,
     }) as ShopperExperience.schemas['Page'];
 
-// Mock the Region component to render the `errorElement` as fallback
-vi.mock('@/components/region', () => ({
-    Region: ({ errorElement }: any) => <>{errorElement}</>,
-}));
+// Region mock that mirrors the real component closely enough to prove composition: once the page
+// resolves it renders the region's authored components (like the real Region does), so a test can
+// tell additive slots apart from ones that replace the static sections. It still surfaces the
+// fallback props so we can assert the overlay passes none.
+vi.mock('@/components/region', async () => {
+    const { Suspense } = await import('react');
+    const { Await } = await import('react-router');
+    const renderRegion = (regionId: string, errorElement: unknown, fallbackElement: unknown) => (resolvedPage: any) => {
+        const components = resolvedPage?.regions?.find((region: any) => region.id === regionId)?.components ?? [];
+        return (
+            <div
+                data-testid={`region-${regionId}`}
+                data-has-error-element={String(errorElement !== undefined)}
+                data-has-fallback-element={String(fallbackElement !== undefined)}>
+                {components.map((component: any) => (
+                    <div key={component.id} data-testid={`region-component-${component.id}`}>
+                        {component.typeId}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+    return {
+        Region: ({ page, regionId, errorElement, fallbackElement }: any) =>
+            page && typeof page.then === 'function' ? (
+                <Suspense fallback={<div data-testid={`region-${regionId}-pending`} />}>
+                    <Await resolve={page}>{renderRegion(regionId, errorElement, fallbackElement)}</Await>
+                </Suspense>
+            ) : (
+                renderRegion(regionId, errorElement, fallbackElement)(page)
+            ),
+    };
+});
 
-// Mock the shared PopularCategories component (the main-region fallback in this overlay). Surface
-// the activity-specific inputs (heading alignment + shop-all link) so the overlay's wiring is
-// assertable without pulling in the real carousel.
+// Mock the shared PopularCategories component. Surface the activity-specific inputs (heading alignment
+// + shop-all link) so the overlay's wiring is assertable without pulling in the real carousel.
 vi.mock('@/components/home/popular-categories', () => ({
     default: ({ titleAlign, title, shopAllText, shopAllUrl }: any) => (
         <div data-testid="popular-categories" data-title-align={titleAlign}>
@@ -114,7 +143,6 @@ vi.mock('@/components/content-card', () => ({
 // Mock HeroCarousel component
 vi.mock('@/components/hero-carousel', () => ({
     default: () => <div data-testid="hero-carousel">Hero Carousel</div>,
-    HeroCarouselSkeleton: () => <div data-testid="hero-carousel-skeleton">Hero Carousel</div>,
 }));
 
 // Mock ProductCarousel components
@@ -193,11 +221,6 @@ vi.mock('@/lib/decorators/page-type', () => ({
     PageType: () => (target: any) => target,
 }));
 
-vi.mock('@/lib/decorators/region-definition', () => ({
-    RegionDefinition: () => (target: any) => target,
-    getRegionDefinition: vi.fn(() => ({ id: 'headerbanner' })),
-}));
-
 vi.mock('@/lib/page-designer/page-loader.server', () => ({
     fetchPageWithComponentData: vi.fn(),
 }));
@@ -265,7 +288,7 @@ describe('Footwear HomePage overlay', () => {
             expect(screen.getByText(t('home:featuredContent.men.title'))).toBeInTheDocument();
         });
 
-        test('renders the activity rail (PopularCategories) as the main-region fallback', async () => {
+        test('renders the activity rail as static content', async () => {
             renderComponent();
             await waitFor(() => {
                 expect(screen.getByTestId('popular-categories')).toBeInTheDocument();
@@ -283,23 +306,35 @@ describe('Footwear HomePage overlay', () => {
             expect(viewAll).toHaveAttribute('href', expect.stringContaining('/category/activity'));
         });
 
-        test('renders header banner region content (hero + product carousel) via the fallback', async () => {
-            const headerBannerRegion = {
-                id: 'headerbanner',
-                components: [{ id: 'hero-1', typeId: 'hero' }],
-            };
-            const pagePromise = Promise.resolve({
-                ...createMockPage([headerBannerRegion]),
-                componentData: {},
+        test('stacks authored Page Designer content on top of the static marketing sections', async () => {
+            renderComponent({
+                page: Promise.resolve({
+                    ...createMockPage([
+                        { id: 'headerbanner', components: [{ id: 'top-slot', typeId: 'hero' }] },
+                        { id: 'main', components: [{ id: 'main-slot', typeId: 'banner' }] },
+                    ]),
+                    componentData: {},
+                }),
             });
 
-            renderComponent({ page: pagePromise });
-
+            // Authored components render inside their slots...
+            expect(await screen.findByTestId('region-component-top-slot')).toBeInTheDocument();
+            expect(screen.getByTestId('region-component-main-slot')).toBeInTheDocument();
+            // ...and the static sections still render alongside them, rather than being replaced.
             expect(screen.getByTestId('hero-carousel')).toBeInTheDocument();
-            await waitFor(() => {
-                expect(screen.getByTestId('product-carousel')).toBeInTheDocument();
-            });
+            expect(screen.getByTestId('popular-categories')).toBeInTheDocument();
             expect(screen.getByText(t('home:featuredContent.women.title'))).toBeInTheDocument();
+            expect(await screen.findByTestId('product-carousel')).toBeInTheDocument();
+        });
+
+        test('does not pass fallbacks to Page Designer regions', async () => {
+            renderComponent();
+
+            for (const regionId of ['headerbanner', 'main']) {
+                const region = await screen.findByTestId(`region-${regionId}`);
+                expect(region).toHaveAttribute('data-has-error-element', 'false');
+                expect(region).toHaveAttribute('data-has-fallback-element', 'false');
+            }
         });
     });
 
@@ -308,6 +343,25 @@ describe('Footwear HomePage overlay', () => {
             renderComponent();
             const contentCards = screen.getAllByTestId('content-card');
             expect(contentCards).toHaveLength(3); // Women, Men, and Style for Real Life card
+        });
+    });
+
+    describe('Page Designer metadata', () => {
+        test('retains the deployed Page Designer region contract', () => {
+            expect(getRegionDefinitions(HomePageMetadata)).toEqual([
+                {
+                    id: 'headerbanner',
+                    name: 'Header Banner Region',
+                    description: 'Region for promotional banners and hero content',
+                    maxComponents: 3,
+                },
+                {
+                    id: 'main',
+                    name: 'Main Content Region',
+                    description: 'Region for main content',
+                    maxComponents: 10,
+                },
+            ]);
         });
     });
 

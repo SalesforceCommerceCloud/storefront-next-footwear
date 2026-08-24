@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { type ReactElement, type ReactNode, useMemo, useState } from 'react';
+import { type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import type { ShopperProducts } from '@/scapi';
 import ProductQuantityPicker from '@/components/product-quantity-picker';
 import { SwatchGroup, Swatch } from '@/components/swatch-group';
@@ -30,6 +30,7 @@ import InventoryMessage, { InventoryStatus } from '@/components/inventory-messag
 import { ProductRatingSummary } from '@/components/product-view/product-rating-summary';
 // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
 import { useCurrentVariant } from '@/hooks/product/use-current-variant';
+import { useSelectedVariations } from '@/hooks/product/use-selected-variations';
 import { useTranslation } from 'react-i18next';
 import { WishlistButton } from '@/components/buttons/wishlist-button';
 import { ShareButton } from '@/components/buttons/share-button';
@@ -39,7 +40,6 @@ import DeliveryOptions from '@/extensions/bopis/components/delivery-options/deli
 import { Button } from '@/components/ui/button';
 import { SizeGuideDrawer, parseSizeChart, deriveGenderFromCategory } from '@/components/size-guide-drawer';
 import { FitConfidenceIndicator, parseFitFeedback } from '@/components/fit-confidence-indicator';
-import { useNavigate } from '@/hooks/use-navigate';
 import { SizeGrid, type SizeOption } from '@/components/size-grid';
 import { WidthSelector, type WidthOption } from '@/components/width-selector';
 
@@ -140,12 +140,53 @@ export default function ProductInfo({
     disableRatingInteraction = false,
 }: ProductInfoProps): ReactElement {
     const config = useConfig();
-    const navigate = useNavigate();
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);
-    // Use variation attributes hook for URL-aware swatches
-    const variationAttributes = useVariationAttributes({ product });
+    const productView = useOptionalProductView();
+
+    // Size/width selection is resolved entirely client-side from `product.variants` (already
+    // present in the initial SCAPI product fetch) instead of navigating to a new URL/pid. This
+    // keeps color swatches on the existing URL-navigation pattern while size/width changes never
+    // trigger a route loader re-fetch or pid-sync revalidation. When rendered inside
+    // ProductViewProvider (the real PDP composition), the override lives in shared context so
+    // ProductCartActions's canAddToCart/currentVariant can't disagree with what's displayed here;
+    // standalone usage (Storybook/tests with no provider) falls back to local state. Either way,
+    // reset whenever the underlying product changes so a stale pick can't leak across a
+    // client-side PDP-to-PDP navigation that doesn't remount this component -- the provider
+    // resets its own copy on the same trigger.
+    const [localSizeWidthOverrides, setLocalSizeWidthOverrides] = useState<Record<string, string>>({});
+    useEffect(() => {
+        setLocalSizeWidthOverrides({});
+    }, [product.id]);
+    const sizeWidthOverrides = productView?.selectionsOverride ?? localSizeWidthOverrides;
+    const setSizeWidthOverrides = productView?.setSelectionsOverride ?? setLocalSizeWidthOverrides;
+
+    // Derive URL-based selections from their own source (not from `variationAttributes`) so the
+    // merged selection can be fed back into `useVariationAttributes` below without a circular
+    // dependency. Mirrors ProductViewProvider's own URL+override merge.
+    const urlSelections = useSelectedVariations({ product });
+    const selectedVariationValues = useMemo(() => {
+        if (swatchMode === 'controlled') {
+            return variationValues ?? {};
+        }
+        return { ...urlSelections, ...sizeWidthOverrides };
+    }, [swatchMode, variationValues, urlSelections, sizeWidthOverrides]);
+    const hasSizeWidthOverride = Object.keys(sizeWidthOverrides).length > 0;
+
+    // Feed the merged local/URL selection into variation-attribute availability so a client-side
+    // size pick (which never touches the URL) recomputes cross-control availability -- e.g. which
+    // widths are orderable for the chosen size. Without the override the swatches read URL-only
+    // selections and a local size pick would leave an unorderable width enabled.
+    const variationAttributes = useVariationAttributes({
+        product,
+        selectionsOverride: hasSizeWidthOverride ? selectedVariationValues : undefined,
+    });
+
     const urlCurrentVariant = useCurrentVariant({ product });
+    // Reuses the canonical hook a second time with the merged local/URL selection so size/width
+    // picks resolve to a variant without a navigation; `useCurrentVariant`'s own pid-sync effect
+    // is a no-op here since it's guarded by `selectionsOverride` being set.
+    const localOverrideVariant = useCurrentVariant({ product, selectionsOverride: selectedVariationValues });
     const controlledCurrentVariant = useMemo(() => {
         if (swatchMode !== 'controlled') return undefined;
         if (!variationValues) return undefined;
@@ -156,9 +197,10 @@ export default function ProductInfo({
             ) ?? [];
         return potentialVariants.length === 1 ? potentialVariants[0] : undefined;
     }, [swatchMode, product.variants, variationValues]);
-    // For controlled modal flows, prefer explicit override (can include fetched inventory),
-    // then controlled selection, then URL-based variant as fallback.
-    const currentVariant = currentVariantOverride || controlledCurrentVariant || urlCurrentVariant;
+    // For controlled modal flows, prefer explicit override (can include fetched inventory), then
+    // controlled selection, then the local/URL-merged variant, then pure URL-based as fallback.
+    const currentVariant =
+        currentVariantOverride || controlledCurrentVariant || localOverrideVariant || urlCurrentVariant;
     const productForPrice = useMemo(() => {
         if (!currentVariant) return product;
         // Build a variant-like product shape so ProductPrice does not treat it as master range pricing.
@@ -171,7 +213,13 @@ export default function ProductInfo({
     }, [product, currentVariant]);
     const productForDeliveryOptions = useMemo(() => {
         if (!currentVariant) return product;
-        const variantWithInventory = currentVariant as ShopperProducts.schemas['Variant'] & {
+        // Prefer the provider-hydrated selected-SKU inventory (authoritative site + per-store) when
+        // available; otherwise any inventory carried on the resolved variant; otherwise the master.
+        // Footwear resolves size/width client-side, so on the PDP the bare variant carries neither
+        // and the master would show a different SKU's store inventory -- the hydrated variant fixes
+        // that so DeliveryOptions reflects the selected SKU at the selected store.
+        const variantWithInventory = (productView?.hydratedVariant ??
+            currentVariant) as ShopperProducts.schemas['Variant'] & {
             inventory?: ShopperProducts.schemas['Inventory'];
             inventories?: ShopperProducts.schemas['Inventory'][];
         };
@@ -182,10 +230,9 @@ export default function ProductInfo({
             inventory: variantWithInventory.inventory ?? product.inventory,
             inventories: variantWithInventory.inventories ?? product.inventories,
         };
-    }, [product, currentVariant]);
+    }, [product, currentVariant, productView?.hydratedVariant]);
     // Get currency from context (automatically derived from locale)
     const { currency } = useSite();
-    const productView = useOptionalProductView();
     const [standaloneQuantity, setStandaloneQuantity] = useState(1);
     const quantity = productView?.quantity ?? standaloneQuantity;
     const isOutOfStock = productView?.isOutOfStock ?? product.inventory?.orderable === false;
@@ -195,6 +242,12 @@ export default function ProductInfo({
     const mode = productView?.mode ?? 'add';
     // @sfdc-extension-line SFDC_EXT_BOPIS
     const basketPickupStore = productView?.basketPickupStore;
+
+    // Selected-SKU inventory can be pending in two flows: the controlled quick-add modal passes the
+    // flag as a prop, while the real PDP hydrates it inside the shared provider (useProductActions).
+    // Honor both so the inventory message reads "unknown" -- rather than a master-fallback status --
+    // while the selected SKU's authoritative inventory is still resolving.
+    const variantInventoryLoading = isVariantInventoryLoading || (productView?.isVariantInventoryLoading ?? false);
 
     const { t } = useTranslation('product');
 
@@ -213,18 +266,6 @@ export default function ProductInfo({
               return aPriority - bPriority;
           })
         : variationAttributes;
-    const selectedVariationValues = useMemo(() => {
-        if (swatchMode === 'controlled') {
-            return variationValues ?? {};
-        }
-        return variationAttributes.reduce<Record<string, string>>((acc, attribute) => {
-            const selectedValue = attribute.selectedValue?.value;
-            if (selectedValue) {
-                acc[attribute.id] = selectedValue;
-            }
-            return acc;
-        }, {});
-    }, [swatchMode, variationValues, variationAttributes]);
     const shouldHideInventoryForPartialVariantSelection = useMemo(() => {
         const variants = product.variants ?? [];
         const variationAttributeCount = product.variationAttributes?.length ?? 0;
@@ -240,7 +281,7 @@ export default function ProductInfo({
         return potentialVariants.length !== 1;
     }, [product.variants, product.variationAttributes?.length, selectedVariationValues]);
     const inventoryStatusOverride = useMemo(() => {
-        if (!isVariantInventoryLoading && !shouldHideInventoryForPartialVariantSelection) {
+        if (!variantInventoryLoading && !shouldHideInventoryForPartialVariantSelection) {
             return undefined;
         }
         return (
@@ -266,12 +307,15 @@ export default function ProductInfo({
             }
             return InventoryStatus.IN_STOCK;
         };
-    }, [isVariantInventoryLoading, shouldHideInventoryForPartialVariantSelection]);
+    }, [variantInventoryLoading, shouldHideInventoryForPartialVariantSelection]);
 
     // Size guide + fit confidence: gender has no dedicated custom attribute, so it's derived
     // from the category id. `highlightSize` soft-depends on the size variation attribute
     // (WI-2); falls back to an unhighlighted table when no size is selected yet.
     const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+    // Focus target for the drawer's `onCloseAutoFocus`: the trigger below is rendered outside the
+    // drawer's own Sheet tree, so Radix has no internal reference to restore focus to on close.
+    const sizeGuideTriggerRef = useRef<HTMLButtonElement | null>(null);
     const gender = useMemo(() => deriveGenderFromCategory(product.primaryCategoryId), [product.primaryCategoryId]);
     const sizeChart = useMemo(
         () => parseSizeChart((product as { c_sizeChart?: unknown }).c_sizeChart, gender),
@@ -383,7 +427,9 @@ export default function ProductInfo({
                 <UITarget targetId="sfcc.pdp.shipping.deliveryEstimate">
                     <InventoryMessage
                         product={product}
-                        currentVariant={currentVariant}
+                        // Prefer the provider-hydrated variant so the low-stock message reflects the
+                        // selected SKU's own inventory instead of falling back to the master's.
+                        currentVariant={productView?.hydratedVariant ?? currentVariant}
                         lowStockThreshold={config.global.inventory.lowStockThreshold}
                         getInventoryStatus={inventoryStatusOverride}
                     />
@@ -414,14 +460,18 @@ export default function ProductInfo({
                           })
                         : (value.orderable ?? true);
 
+                // Only wired to the size/width controls below (`onSizeChange`/`onWidthChange`) --
+                // generic swatches (color, etc.) further down still navigate via `<Swatch href>`.
                 const handleAttributeSelect = (value: string) => {
                     if (hideVariantSelection) return;
                     if (swatchMode === 'controlled') {
                         onAttributeChange?.(id, value);
                         return;
                     }
-                    const matchingHref = values.find((v) => v.value === value)?.href;
-                    if (matchingHref) void navigate(matchingHref);
+                    // Size/width resolve entirely client-side from `product.variants` (already
+                    // loaded by the initial SCAPI product fetch), so selecting one only updates
+                    // local state -- no navigation, no loader re-fetch, no pid-sync revalidation.
+                    setSizeWidthOverrides((prev) => (prev[id] === value ? prev : { ...prev, [id]: value }));
                 };
 
                 if (id === 'size') {
@@ -437,7 +487,9 @@ export default function ProductInfo({
                             label={name}
                             availableSizes={sizeOptions}
                             selectedSize={
-                                swatchMode === 'uncontrolled' ? (selectedValue?.value ?? '') : (controlledValue ?? '')
+                                swatchMode === 'uncontrolled'
+                                    ? (selectedVariationValues[id] ?? '')
+                                    : (controlledValue ?? '')
                             }
                             onSizeChange={handleAttributeSelect}
                             getAccessibleName={(option) =>
@@ -465,7 +517,9 @@ export default function ProductInfo({
                             label={name}
                             availableWidths={widthOptions}
                             selectedWidth={
-                                swatchMode === 'uncontrolled' ? (selectedValue?.value ?? '') : (controlledValue ?? '')
+                                swatchMode === 'uncontrolled'
+                                    ? (selectedVariationValues[id] ?? '')
+                                    : (controlledValue ?? '')
                             }
                             onWidthChange={handleAttributeSelect}
                             displayMode="labels"
@@ -550,6 +604,7 @@ export default function ProductInfo({
             {!isCompactStyle && (
                 <div className="grid gap-3">
                     <Button
+                        ref={sizeGuideTriggerRef}
                         type="button"
                         variant="link"
                         className="justify-self-start px-0 text-sm font-medium underline"
@@ -566,6 +621,7 @@ export default function ProductInfo({
                 gender={gender}
                 brandName={product.brand}
                 highlightSize={highlightSize}
+                triggerRef={sizeGuideTriggerRef}
             />
 
             {/* @sfdc-extension-block-start SFDC_EXT_BOPIS */}

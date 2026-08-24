@@ -15,136 +15,58 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useEffect, useRef, type ReactElement, type ReactNode } from 'react';
-import { action } from 'storybook/actions';
 import { expect, within } from 'storybook/test';
 import { waitForStorybookReady } from '@storybook/test-utils';
+import type { ReactElement } from 'react';
 import type { ShopperProducts } from '@/scapi';
-
 import InventoryMessage from '../index';
 
-function ActionLogger({ children }: { children: ReactNode }): ReactElement {
-    const containerRef = useRef<HTMLDivElement | null>(null);
-
-    useEffect(() => {
-        const root = containerRef.current;
-        if (!root) return;
-
-        const logClick = action('inventory-message-click');
-        const logHover = action('inventory-message-hover');
-
-        const isInsideHarness = (element: Element) => root.contains(element);
-
-        const deriveLabel = (element: HTMLElement): string => {
-            const ariaLabel = element.getAttribute('aria-label')?.trim();
-            if (ariaLabel) {
-                return ariaLabel;
-            }
-
-            const textContent = element.textContent?.replace(/\s+/g, ' ').trim();
-            if (textContent) {
-                return textContent;
-            }
-
-            const testId = element.getAttribute('data-testid')?.trim();
-            if (testId) {
-                return testId;
-            }
-
-            return element.tagName.toLowerCase();
-        };
-
-        const findMessageElement = (start: Element | null): HTMLElement | null => {
-            let current: Element | null = start;
-            while (current && current !== root) {
-                if (current instanceof HTMLElement && isInsideHarness(current)) {
-                    return current;
-                }
-                current = current.parentElement;
-            }
-            return null;
-        };
-
-        let lastHoverElement: HTMLElement | null = null;
-
-        const handleClick = (event: Event) => {
-            const target = event.target as Element | null;
-            if (!target) return;
-
-            const message = findMessageElement(target);
-            if (!message) {
-                return;
-            }
-
-            const label = deriveLabel(message);
-            if (!label) {
-                return;
-            }
-
-            logClick({ label });
-        };
-
-        const handlePointerOver = (event: PointerEvent) => {
-            const target = event.target as Element | null;
-            if (!target) return;
-
-            const message = findMessageElement(target);
-            if (!message || message === lastHoverElement) {
-                return;
-            }
-
-            const label = deriveLabel(message);
-            if (!label) {
-                return;
-            }
-
-            lastHoverElement = message;
-            logHover({ label });
-        };
-
-        const handlePointerOut = (event: PointerEvent) => {
-            if (!lastHoverElement) {
-                return;
-            }
-
-            const target = event.target as Element | null;
-            if (!target) return;
-
-            const message = findMessageElement(target);
-            if (!message || message !== lastHoverElement) {
-                return;
-            }
-
-            const related = event.relatedTarget as Element | null;
-            if (related && lastHoverElement.contains(related)) {
-                return;
-            }
-
-            lastHoverElement = null;
-        };
-
-        root.addEventListener('click', handleClick, true);
-        root.addEventListener('pointerover', handlePointerOver, true);
-        root.addEventListener('pointerout', handlePointerOut, true);
-
-        return () => {
-            lastHoverElement = null;
-            root.removeEventListener('click', handleClick, true);
-            root.removeEventListener('pointerover', handlePointerOver, true);
-            root.removeEventListener('pointerout', handlePointerOut, true);
-        };
-    }, []);
-
-    return <div ref={containerRef}>{children}</div>;
-}
+type VariantWithInventory = ShopperProducts.schemas['Variant'] & {
+    inventory?: ShopperProducts.schemas['Inventory'];
+};
 
 /**
- * The InventoryMessage component displays inventory status messages for products.
- * It supports four different states: In Stock, Pre-Order, Back Order, and Out of Stock.
- * Each state has its own color scheme and messaging.
+ * The `width` variation attribute shared by the width-aware low-stock stories below. Values use
+ * the standard shoe-width codes (`B` narrow, `D` medium, `2E` wide) as both the `value` and the
+ * display `name`, matching the component's own JSDoc examples ("Few items left in width D").
+ */
+const WIDTH_ATTRIBUTE: ShopperProducts.schemas['VariationAttribute'] = {
+    id: 'width',
+    name: 'Width',
+    values: [
+        { value: 'B', name: 'B' },
+        { value: 'D', name: 'D' },
+        { value: '2E', name: '2E' },
+    ],
+};
+
+const createMockProduct = (
+    inventory?: Partial<ShopperProducts.schemas['Inventory']>,
+    withWidths = false
+): ShopperProducts.schemas['Product'] => ({
+    id: 'footwear-trail-runner-123',
+    name: 'Trail Runner',
+    ...(inventory ? { inventory: inventory as ShopperProducts.schemas['Inventory'] } : {}),
+    ...(withWidths ? { variationAttributes: [WIDTH_ATTRIBUTE] } : {}),
+});
+
+const createMockVariant = (
+    width: string,
+    inventory: Partial<ShopperProducts.schemas['Inventory']>
+): VariantWithInventory => ({
+    productId: `footwear-trail-runner-123-${width}`,
+    variationValues: { width },
+    inventory: inventory as ShopperProducts.schemas['Inventory'],
+});
+
+/**
+ * Footwear overlay of the canonical Inventory Message component. Identical props to canonical,
+ * plus a width-aware low-stock message ("Few items left in width D" / "1 item left in width D")
+ * derived internally from `product.variationAttributes` + `currentVariant.variationValues.width`
+ * — the qualifier never turns into an exact stock count.
  */
 const meta: Meta<typeof InventoryMessage> = {
-    title: 'Products/Inventory Message',
+    title: 'Footwear/Product/Inventory Message',
     component: InventoryMessage,
     tags: ['autodocs', 'interaction'],
     parameters: {
@@ -152,26 +74,30 @@ const meta: Meta<typeof InventoryMessage> = {
         docs: {
             description: {
                 component: `
-The Inventory Message component displays real-time inventory status for products on the Product Detail Page (PDP).
+Footwear overlay of the canonical Inventory Message component. Displays inventory status for
+products on the Product Detail Page (PDP), with an additional width-qualified low-stock message
+for shoe widths.
 
 **Features:**
-- **In Stock**: Green badge indicating product availability
-- **Pre-Order**: Blue badge for pre-orderable items
-- **Back Order**: Orange badge for back-orderable items  
-- **Out of Stock**: Red badge when product is unavailable
+- **In Stock**: Green message
+- **Low Stock**: Warning message, bucketed ("Few items left" / "1 item left"); on footwear PDPs
+  with a width selected, names the width ("Few items left in width D" / "1 item left in width D")
+- **Pre-Order**: Blue message for pre-orderable items
+- **Back Order**: Orange message for back-orderable items
+- **Out of Stock**: Red message when the product is unavailable
+- **Unknown**: Hidden by default (\`showUnknownStatus\`), used while awaiting variant selection
 
-The component uses variant inventory when available, falling back to product-level inventory.
+Stock levels are always bucketed, never surfaced as exact counts — the width qualifier only
+names which width the bucketed message refers to.
                 `,
             },
         },
     },
     decorators: [
-        (Story: React.ComponentType) => (
-            <ActionLogger>
-                <div className="p-8">
-                    <Story />
-                </div>
-            </ActionLogger>
+        (Story: React.ComponentType): ReactElement => (
+            <div className="p-8">
+                <Story />
+            </div>
         ),
     ],
     argTypes: {
@@ -187,108 +113,189 @@ The component uses variant inventory when available, falling back to product-lev
             description: 'Additional CSS classes to apply',
             control: 'text',
         },
+        lowStockThreshold: {
+            description: 'Stock level at or below which the item is considered "low stock"',
+            control: 'number',
+        },
+        showUnknownStatus: {
+            description: 'Whether to show unknown inventory status messages',
+            control: 'boolean',
+        },
     },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Helper function to create mock product data
-const createMockProduct = (
-    inventory?: Partial<ShopperProducts.schemas['Inventory']>
-): ShopperProducts.schemas['Product'] => ({
-    id: 'test-product-123',
-    name: 'Test Product',
-    ...(inventory ? { inventory: inventory as ShopperProducts.schemas['Inventory'] } : {}),
-});
-
 /**
- * All badge variants in one composite: In Stock, Pre-Order, Back Order, Out of Stock, Unknown
+ * In stock: green bucketed message, no exact count.
  */
-export const AllVariants: Story = {
-    render: () => (
-        <div className="flex flex-wrap gap-4">
-            <InventoryMessage
-                product={createMockProduct({
-                    orderable: true,
-                    ats: 10,
-                    backorderable: false,
-                    preorderable: false,
-                })}
-            />
-            <InventoryMessage
-                product={createMockProduct({
-                    orderable: true,
-                    preorderable: true,
-                    backorderable: false,
-                    ats: 0,
-                })}
-            />
-            <InventoryMessage
-                product={createMockProduct({
-                    orderable: true,
-                    preorderable: false,
-                    backorderable: true,
-                    ats: 0,
-                })}
-            />
-            <InventoryMessage
-                product={createMockProduct({
-                    orderable: false,
-                    preorderable: false,
-                    backorderable: false,
-                    ats: 0,
-                })}
-            />
-            <InventoryMessage product={createMockProduct()} showUnknownStatus={true} />
-        </div>
-    ),
-    parameters: {
-        docs: {
-            description: {
-                story: 'All inventory badge variants: In Stock, Pre-Order, Back Order, Out of Stock, and Unknown status.',
-            },
-        },
-    },
-    play: async ({ canvasElement }) => {
-        await waitForStorybookReady(canvasElement);
-        const canvas = within(canvasElement);
-        // Assert the exact visible message text — the sr-only status prefixes ("Pre-order: ",
-        // "Back order: ") would otherwise double-match a loose regex.
-        await expect(canvas.getByText('In stock')).toBeInTheDocument();
-        await expect(canvas.getByText('Available for pre-order')).toBeInTheDocument();
-        await expect(canvas.getByText('Available for back order')).toBeInTheDocument();
-        await expect(canvas.getByText('Out of stock')).toBeInTheDocument();
-        await expect(canvas.getByText('Inventory unavailable')).toBeInTheDocument();
-    },
-};
-
-/**
- * Perpetual inventory: SCAPI returns ats=999999 for items the merchant has flagged as
- * never-out-of-stock. The PDP renders the same bucketed "In stock" message and never
- * surfaces the underlying count.
- */
-export const Perpetual: Story = {
+export const InStock: Story = {
     args: {
         product: createMockProduct({
             orderable: true,
-            ats: 999999,
+            ats: 25,
             backorderable: false,
             preorderable: false,
         }),
     },
-    parameters: {
-        docs: {
-            description: {
-                story: 'Perpetual inventory variant. Renders "In stock" without leaking the underlying 999999 sentinel.',
-            },
-        },
-    },
     play: async ({ canvasElement }) => {
         await waitForStorybookReady(canvasElement);
         const canvas = within(canvasElement);
         await expect(canvas.getByText('In stock')).toBeInTheDocument();
-        await expect(canvas.queryByText(/999999/)).not.toBeInTheDocument();
-        await expect(canvas.queryByText(/units/)).not.toBeInTheDocument();
+    },
+};
+
+/**
+ * Low stock with no width selected — generic bucketed message, same as canonical.
+ */
+export const LowStock: Story = {
+    args: {
+        product: createMockProduct({
+            orderable: true,
+            ats: 3,
+            backorderable: false,
+            preorderable: false,
+        }),
+        lowStockThreshold: 5,
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('Few items left')).toBeInTheDocument();
+    },
+};
+
+/**
+ * Low stock with a selected width — names the width without exposing the exact count.
+ */
+export const LowStockWithWidth: Story = {
+    args: {
+        product: createMockProduct(undefined, true),
+        currentVariant: createMockVariant('D', {
+            orderable: true,
+            ats: 3,
+            backorderable: false,
+            preorderable: false,
+        }),
+        lowStockThreshold: 5,
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('Few items left in width D')).toBeInTheDocument();
+        await expect(canvas.queryByText(/^Few items left$/)).not.toBeInTheDocument();
+    },
+};
+
+/**
+ * Low stock with a selected width and exactly one unit left — singular copy ("1 item left in
+ * width D"), still no exact count beyond the singular/plural distinction.
+ */
+export const LowStockWithWidthOneLeft: Story = {
+    args: {
+        product: createMockProduct(undefined, true),
+        currentVariant: createMockVariant('D', {
+            orderable: true,
+            ats: 1,
+            backorderable: false,
+            preorderable: false,
+        }),
+        lowStockThreshold: 5,
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('1 item left in width D')).toBeInTheDocument();
+    },
+};
+
+/**
+ * Pre-order: blue message for pre-orderable items.
+ */
+export const PreOrder: Story = {
+    args: {
+        product: createMockProduct({
+            orderable: true,
+            preorderable: true,
+            backorderable: false,
+            ats: 0,
+        }),
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('Available for pre-order')).toBeInTheDocument();
+    },
+};
+
+/**
+ * Back order: orange message for back-orderable items.
+ */
+export const BackOrder: Story = {
+    args: {
+        product: createMockProduct({
+            orderable: true,
+            preorderable: false,
+            backorderable: true,
+            ats: 0,
+        }),
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('Available for back order')).toBeInTheDocument();
+    },
+};
+
+/**
+ * Out of stock: red message when the product is not orderable.
+ */
+export const OutOfStock: Story = {
+    args: {
+        product: createMockProduct({
+            orderable: false,
+            preorderable: false,
+            backorderable: false,
+            ats: 0,
+        }),
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('Out of stock')).toBeInTheDocument();
+    },
+};
+
+/**
+ * Unknown status, hidden (default): the live region stays in the a11y tree but renders empty
+ * while awaiting inventory data (e.g. a master product before a variant is chosen).
+ */
+export const UnknownHidden: Story = {
+    args: {
+        product: createMockProduct(),
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        const region = canvas.getByRole('status');
+        await expect(region).toBeEmptyDOMElement();
+        await expect(canvas.queryByText('Inventory unavailable')).not.toBeInTheDocument();
+    },
+};
+
+/**
+ * Unknown status, shown via `showUnknownStatus`: used for surfaces that want an explicit
+ * "inventory unavailable" message instead of hiding it.
+ */
+export const UnknownVisible: Story = {
+    args: {
+        product: createMockProduct(),
+        showUnknownStatus: true,
+    },
+    play: async ({ canvasElement }) => {
+        await waitForStorybookReady(canvasElement);
+        const canvas = within(canvasElement);
+        await expect(canvas.getByText('Inventory unavailable')).toBeInTheDocument();
     },
 };

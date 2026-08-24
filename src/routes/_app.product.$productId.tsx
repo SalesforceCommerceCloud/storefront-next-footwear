@@ -28,6 +28,12 @@ import CategoryBreadcrumbs from '@/components/category-breadcrumbs';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import ProductRecommendations from '@/components/product-recommendations';
 import { EINSTEIN_RECOMMENDERS } from '@/lib/product/einstein-recommenders';
+import type { Recommendation } from '@/hooks/recommenders/use-recommenders';
+import {
+    fetchActivityCandidatePool,
+    deriveActivityMatched,
+    derivePerformanceMatched,
+} from '@/lib/pdp-recommendations.server';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/hooks/use-analytics';
 import { Region } from '@/components/region';
@@ -112,6 +118,10 @@ export type ProductPageData = {
     pageKey: string;
     pageUrl: string;
     productSchema: Promise<ReturnType<typeof generateProductSchema> | null>;
+    /** "Also in this activity" rail: other products under the same activity category. */
+    activityMatchedRecommendations: Promise<Recommendation>;
+    /** "Similar performance" rail: activity-scoped products sharing a performance-spec attribute. */
+    performanceMatchedRecommendations: Promise<Recommendation>;
     // @sfdc-extension-block-start SFDC_EXT_BNPL
     bnplMessage: Promise<BuyNowPayLaterMessageData>;
     bnplLearnMore: Promise<BuyNowPayLaterLearnMoreData>;
@@ -245,12 +255,18 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
     const writeReviewForm = getWriteReviewForm(productLookupId);
     // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
 
+    // One activity-category search feeds both footwear rails; resolve it once and derive each rail
+    // from the shared pool so the PDP issues a single SCAPI search instead of one per rail.
+    const candidatePool = fetchActivityCandidatePool(context, product);
+
     return {
         product,
         page,
         pageKey: productId,
         pageUrl,
         productSchema: productSchemaPromise,
+        activityMatchedRecommendations: candidatePool.then((hits) => deriveActivityMatched(hits, product)),
+        performanceMatchedRecommendations: candidatePool.then((hits) => derivePerformanceMatched(hits, product)),
         // @sfdc-extension-block-start SFDC_EXT_BNPL
         bnplMessage: getBuyNowPayLaterMessage(productLookupId),
         bnplLearnMore: getBuyNowPayLaterLearnMore(productLookupId),
@@ -409,31 +425,42 @@ function ProductDetailView({ loaderData }: { loaderData: ProductPageData }) {
                     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
                 />
 
-                {/* Engagement Content Region - Shows page content or recommendations */}
-                <Region
-                    className="mt-16"
-                    page={loaderData.page}
-                    regionId="engagementContent"
-                    errorElement={
-                        <div className="mt-16 space-y-16">
-                            <ProductRecommendations
-                                recommenderName={EINSTEIN_RECOMMENDERS.PDP_COMPLETE_SET}
-                                recommenderTitle={t('recommendations.completeTheLook')}
-                                className="max-w-none px-0"
-                            />
-                            <ProductRecommendations
-                                recommenderName={EINSTEIN_RECOMMENDERS.PDP_MIGHT_ALSO_LIKE}
-                                recommenderTitle={t('recommendations.youMightAlsoLike')}
-                                className="max-w-none px-0"
-                            />
-                            <ProductRecommendations
-                                recommenderName={EINSTEIN_RECOMMENDERS.PDP_RECENTLY_VIEWED}
-                                recommenderTitle={t('recommendations.recentlyViewed')}
-                                className="max-w-none px-0"
-                            />
-                        </div>
-                    }
-                />
+                {/* Always-on recommendation carousels. Each ProductRecommendations fails closed to
+                    null (no title / empty recs / fetch error), so an empty recommender collapses
+                    without leaving a headless carousel. */}
+                <div className="mt-16 space-y-16">
+                    <ProductRecommendations
+                        data={loaderData.activityMatchedRecommendations}
+                        recommenderTitle={t('recommendations.alsoInThisActivity')}
+                        className="max-w-none px-0"
+                    />
+                    <ProductRecommendations
+                        data={loaderData.performanceMatchedRecommendations}
+                        recommenderTitle={t('recommendations.similarPerformance')}
+                        className="max-w-none px-0"
+                    />
+                    <ProductRecommendations
+                        recommenderName={EINSTEIN_RECOMMENDERS.PDP_COMPLETE_SET}
+                        recommenderTitle={t('recommendations.completeTheLook')}
+                        className="max-w-none px-0"
+                    />
+                    <ProductRecommendations
+                        recommenderName={EINSTEIN_RECOMMENDERS.PDP_MIGHT_ALSO_LIKE}
+                        recommenderTitle={t('recommendations.youMightAlsoLike')}
+                        className="max-w-none px-0"
+                    />
+                    <ProductRecommendations
+                        recommenderName={EINSTEIN_RECOMMENDERS.PDP_RECENTLY_VIEWED}
+                        recommenderTitle={t('recommendations.recentlyViewed')}
+                        className="max-w-none px-0"
+                    />
+                </div>
+
+                {/* Engagement Content Region - PD-authored engagement content below the always-on
+                    recommendations above, for further rails a merchant may want to add. No
+                    errorElement: when the region is empty (no assigned page) it renders nothing
+                    rather than substituting the recommendations, since those now render statically. */}
+                <Region className="mt-16" page={loaderData.page} regionId="engagementContent" />
             </div>
         </div>
     );

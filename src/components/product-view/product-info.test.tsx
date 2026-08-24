@@ -186,20 +186,38 @@ describe('ProductInfo', () => {
             expect(screen.getByRole('radio', { name: /^regular$/i })).toBeInTheDocument();
         });
 
-        test('should update URL when swatch is clicked', async () => {
+        test('should update selection locally (not the URL) when a size is clicked', async () => {
             const user = userEvent.setup();
             const { router } = renderProductInfo({ product: mockProduct });
+            const urlBefore = router.state.location.search;
 
             // Click on size 38 radio (SizeGrid button, no href attribute)
             const size38Radio = screen.getByRole('radio', { name: /size 38, available/i });
             await user.click(size38Radio);
 
-            // After clicking, verify the location was updated
+            // Size/width resolve client-side from a local override so the route never
+            // revalidates: the radio flips to checked, but the URL search string is unchanged.
             await waitFor(() => {
-                // In tests using createMemoryRouter (or RouterProvider in framework mode),
-                // navigation happens entirely in memory, not in the real browser environment
-                expect(router.state.location.search).toContain('size=038');
+                expect(size38Radio).toHaveAttribute('aria-checked', 'true');
             });
+            expect(router.state.location.search).toBe(urlBefore);
+        });
+
+        test('should update selection locally (not the URL) when a width is clicked', async () => {
+            const user = userEvent.setup();
+            const { router } = renderProductInfo({ product: mockProduct });
+            const urlBefore = router.state.location.search;
+
+            // Click on the "Regular" width radio (WidthSelector button, no href attribute)
+            const regularWidthRadio = screen.getByRole('radio', { name: /^regular$/i });
+            await user.click(regularWidthRadio);
+
+            // Width resolves client-side from a local override, same as size: the radio
+            // flips to checked, but the URL search string is unchanged.
+            await waitFor(() => {
+                expect(regularWidthRadio).toHaveAttribute('aria-checked', 'true');
+            });
+            expect(router.state.location.search).toBe(urlBefore);
         });
 
         test('should show swatch as selected when URL contains its value', () => {
@@ -234,6 +252,56 @@ describe('ProductInfo', () => {
             // Size 36 radio should not be selected
             const size36Radio = screen.getByRole('radio', { name: /size 36, available/i });
             expect(size36Radio).toHaveAttribute('aria-checked', 'false');
+        });
+    });
+
+    describe('cross-control availability (uncontrolled size/width)', () => {
+        // Master product where the "Wide" width is orderable for size 36 but out of stock for
+        // size 40. Width availability must recompute from the client-side size pick, not only the
+        // URL: the bug was that useVariationAttributes read URL selections only, so a local size
+        // pick never disabled the now-unavailable width, letting a shopper add an unorderable SKU.
+        const sizeDependentWidthProduct = {
+            ...mockProduct,
+            id: 'size-dependent-width',
+            variationAttributes: [
+                {
+                    id: 'size',
+                    name: 'Size',
+                    values: [
+                        { name: '36', value: '036', orderable: true },
+                        { name: '40', value: '040', orderable: true },
+                    ],
+                },
+                {
+                    id: 'width',
+                    name: 'Width',
+                    values: [
+                        { name: 'Regular', value: 'V', orderable: true },
+                        { name: 'Wide', value: 'W', orderable: true },
+                    ],
+                },
+            ],
+            variants: [
+                { productId: 'v-036-V', price: 29.99, orderable: true, variationValues: { size: '036', width: 'V' } },
+                { productId: 'v-036-W', price: 29.99, orderable: true, variationValues: { size: '036', width: 'W' } },
+                { productId: 'v-040-V', price: 29.99, orderable: true, variationValues: { size: '040', width: 'V' } },
+                { productId: 'v-040-W', price: 29.99, orderable: false, variationValues: { size: '040', width: 'W' } },
+            ],
+        } as ShopperProducts.schemas['Product'];
+
+        test('disables the Wide width after picking a size for which it is out of stock', async () => {
+            const user = userEvent.setup();
+            renderProductInfo({ product: sizeDependentWidthProduct });
+
+            // No size chosen yet: Wide is orderable for size 36, so it starts enabled.
+            expect(screen.getByRole('radio', { name: /wide/i })).not.toHaveAttribute('aria-disabled', 'true');
+
+            await user.click(screen.getByRole('radio', { name: /size 40, available/i }));
+
+            // Wide is out of stock for size 40; availability must follow the client-side size pick.
+            await waitFor(() => {
+                expect(screen.getByRole('radio', { name: /wide/i })).toHaveAttribute('aria-disabled', 'true');
+            });
         });
     });
 
@@ -711,6 +779,30 @@ describe('ProductInfo (footwear overlay)', () => {
             await userEvent.click(screen.getByRole('button', { name: /close/i }));
 
             await waitFor(() => expect(screen.queryByText('Size guide')).not.toBeInTheDocument());
+        });
+
+        test('returns focus to the Size Guide trigger when dismissed via the Close button', async () => {
+            renderProductInfo({ product: mockProduct });
+            const trigger = screen.getByRole('button', { name: 'Size Guide' });
+            await userEvent.click(trigger);
+            await screen.findByText('Size guide');
+
+            await userEvent.click(screen.getByRole('button', { name: /close/i }));
+
+            await waitFor(() => expect(screen.queryByText('Size guide')).not.toBeInTheDocument());
+            await waitFor(() => expect(trigger).toHaveFocus());
+        });
+
+        test('returns focus to the Size Guide trigger when dismissed via Escape', async () => {
+            renderProductInfo({ product: mockProduct });
+            const trigger = screen.getByRole('button', { name: 'Size Guide' });
+            await userEvent.click(trigger);
+            await screen.findByText('Size guide');
+
+            await userEvent.keyboard('{Escape}');
+
+            await waitFor(() => expect(screen.queryByText('Size guide')).not.toBeInTheDocument());
+            await waitFor(() => expect(trigger).toHaveFocus());
         });
     });
 });

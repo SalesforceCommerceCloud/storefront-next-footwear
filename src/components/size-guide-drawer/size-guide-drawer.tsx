@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type { ReactElement } from 'react';
+import type { ReactElement, RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -30,6 +30,12 @@ export interface SizeGuideDrawerProps {
     brandSizeNotes?: string;
     /** The shopper's currently-selected US size on the PDP, if any (soft-dependent on PDP size selection state) */
     highlightSize?: string;
+    /**
+     * The "Size Guide" trigger button; focus returns here when the drawer closes. The trigger is
+     * rendered outside this component's own tree (in the PDP's product-info overlay), so Radix has
+     * no internal reference to it and would otherwise drop focus to `<body>` on close.
+     */
+    triggerRef?: RefObject<HTMLButtonElement | null>;
 }
 
 /**
@@ -59,12 +65,24 @@ export function SizeGuideDrawer({
     brandName,
     brandSizeNotes,
     highlightSize,
+    triggerRef,
 }: SizeGuideDrawerProps): ReactElement {
     const { t } = useTranslation('product');
 
     return (
         <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-            <SheetContent className={RESPONSIVE_SHEET_CLASSES}>
+            <SheetContent
+                className={RESPONSIVE_SHEET_CLASSES}
+                onCloseAutoFocus={(event) => {
+                    // Radix's default focus-restore relies on an internally-tracked trigger ref,
+                    // populated only by a mounted `SheetTrigger`. This drawer's trigger is a plain
+                    // externally-rendered button, so restore focus to it manually -- otherwise focus
+                    // drops to `<body>` on close (Close button, Escape, or overlay click).
+                    if (triggerRef?.current) {
+                        event.preventDefault();
+                        triggerRef.current.focus();
+                    }
+                }}>
                 <SheetHeader>
                     <SheetTitle>{t('sizeGuide.title', { defaultValue: 'Size Guide' })}</SheetTitle>
                     <SheetDescription>

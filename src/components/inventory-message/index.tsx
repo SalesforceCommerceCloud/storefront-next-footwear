@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { type ReactElement } from 'react';
+import { type ReactElement, useMemo } from 'react';
 import type { ShopperProducts } from '@/scapi';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
@@ -108,12 +108,15 @@ type InventoryStatusInfo = { message: string; className: string };
  *
  * Uses semantic status tokens for consistent theming. Stock levels are bucketed,
  * not surfaced as exact counts — perpetual-inventory items render the same
- * "In stock" message as any other plentiful variant.
+ * "In stock" message as any other plentiful variant. `widthLabel`, when provided,
+ * only qualifies WHICH width the bucketed message refers to — it never turns into
+ * an exact count.
  */
 function getInventoryMessage(
     status: InventoryStatusType,
     t: TFunction<'product'>,
-    stockLevel?: number
+    stockLevel?: number,
+    widthLabel?: string
 ): InventoryStatusInfo {
     switch (status) {
         case InventoryStatus.IN_STOCK:
@@ -122,6 +125,25 @@ function getInventoryMessage(
                 className: 'text-status-positive',
             };
         case InventoryStatus.LOW_STOCK:
+            if (widthLabel) {
+                // `defaultValue` widens the i18next key type to `string` (same pattern as
+                // size-guide-content.tsx) since these footwear-only keys aren't in canonical
+                // translations, and doubles as the real fallback for any locale without a
+                // footwear overrides file.
+                return {
+                    message:
+                        stockLevel === 1
+                            ? t('inventory.oneItemLeftInWidth', {
+                                  width: widthLabel,
+                                  defaultValue: '1 item left in width {{width}}',
+                              })
+                            : t('inventory.fewItemsLeftInWidth', {
+                                  width: widthLabel,
+                                  defaultValue: 'Few items left in width {{width}}',
+                              }),
+                    className: 'text-status-warning',
+                };
+            }
             return {
                 message: stockLevel === 1 ? t('oneItemLeft') : t('fewItemsLeft'),
                 className: 'text-status-warning',
@@ -151,7 +173,13 @@ function getInventoryMessage(
 }
 
 /**
- * Inventory Message Component
+ * Footwear overlay of InventoryMessage: identical props to canonical, plus a LOW_STOCK message
+ * that names the selected width ("Few items left in width D"). See {@link getInventoryMessage} —
+ * the qualifier never exposes an exact count.
+ *
+ * The width label is derived from `product`/`currentVariant` internally (not accepted as a prop)
+ * so this override's exported Props stay identical to canonical — callers reaching this component
+ * via the shared `@/components/inventory-message` alias type-check under every vertical.
  *
  * Displays inventory status messages for products on the PDP:
  * - In stock: Green message
@@ -172,6 +200,13 @@ export default function InventoryMessage({
     const inventory = currentVariant?.inventory || product.inventory;
     const stockLevel = inventory?.ats;
 
+    const widthLabel = useMemo(() => {
+        const widthAttribute = product.variationAttributes?.find((attribute) => attribute.id === 'width');
+        const selectedValue = currentVariant?.variationValues?.width;
+        if (!widthAttribute || !selectedValue) return undefined;
+        return widthAttribute.values?.find((value) => value.value === selectedValue)?.name;
+    }, [product.variationAttributes, currentVariant?.variationValues]);
+
     let status = customGetInventoryStatus
         ? customGetInventoryStatus(product, currentVariant)
         : getInventoryStatus(product, currentVariant, lowStockThreshold);
@@ -188,8 +223,21 @@ export default function InventoryMessage({
         }
 
         if (variantResolvedWithoutInventory) {
+            // The selected width/size resolved to a different SKU than the one whose inventory the
+            // loader currently holds. `product.inventory` describes the previously loaded SKU, so
+            // any stock-level or width-qualified message built from it would mislabel this variant.
+            const selectedSkuNotYetLoaded = currentVariant.productId != null && currentVariant.productId !== product.id;
+
             if (currentVariant.orderable === false) {
+                // A definitively non-orderable variant is out of stock regardless of which SKU's
+                // inventory is loaded — `orderable` is a reliable per-variant flag.
                 status = InventoryStatus.OUT_OF_STOCK;
+            } else if (selectedSkuNotYetLoaded) {
+                // Report UNKNOWN and leave the live region empty until this SKU's own inventory
+                // arrives. The route's pid-sync navigation revalidates the loader for the selected
+                // variant, after which currentVariant.productId === product.id and the real
+                // per-width status is announced.
+                status = InventoryStatus.UNKNOWN;
             } else if (currentVariant.orderable === true && status === InventoryStatus.OUT_OF_STOCK) {
                 // Master rollup can say OOS while the selected variant is orderable and inventory is not on the variant yet
                 status = InventoryStatus.IN_STOCK;
@@ -197,7 +245,7 @@ export default function InventoryMessage({
         }
     }
 
-    const statusInfo = getInventoryMessage(status, t, stockLevel);
+    const statusInfo = getInventoryMessage(status, t, stockLevel, widthLabel);
     const isUnknown = status === InventoryStatus.UNKNOWN;
     const hideContent = isUnknown && !showUnknownStatus;
 

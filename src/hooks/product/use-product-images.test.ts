@@ -15,370 +15,228 @@
  */
 
 /**
- * useProductImages Hook Tests
+ * Footwear overlay of useProductImages: covers the added thumbnail angle-labeling behavior only.
+ * Image resolution/filtering itself is exercised by the canonical hook's own test suite.
  *
- * Tests the useProductImages hook functionality including image filtering,
- * attribute-based selection, and gallery image transformation.
+ * The angle is surfaced only via `thumbnailLabel` (the thumbnail button's accessible name) and is
+ * derived exclusively from the merchant's own alt text with boundary-safe matching. The `alt` text
+ * itself is always left untouched — no inferred or positional angle is ever written into it.
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { createElement, type ReactNode } from 'react';
-import { useProductImages } from './use-product-images';
+import { useProductImages, detectAngle } from './use-product-images';
 import { ConfigProvider } from '@salesforce/storefront-next-runtime/config';
 import { mockConfig } from '@/test-utils/config';
 import type { ShopperProducts } from '@/scapi';
 
+// Drives the hook's active catalog language. `t` echoes the `defaultValue` (as i18next does with no
+// footwear override loaded), so the English-label expectations below still hold; only `i18n.language`
+// is made controllable, which is what the hook forwards into `detectAngle`.
+const langRef = vi.hoisted(() => ({ current: 'en' }));
+
+vi.mock('react-i18next', async () => {
+    const actual = await vi.importActual<typeof import('react-i18next')>('react-i18next');
+    return {
+        ...actual,
+        useTranslation: () => ({
+            t: (_key: string, opts?: { defaultValue?: string }) => opts?.defaultValue ?? _key,
+            i18n: { language: langRef.current },
+        }),
+    };
+});
+
+beforeEach(() => {
+    langRef.current = 'en';
+});
+
 const wrapper = ({ children }: { children: ReactNode }) =>
     createElement(ConfigProvider, { config: mockConfig, children } as never);
 
-const createMockProduct = (
-    imageGroups?: ShopperProducts.schemas['ImageGroup'][]
-): ShopperProducts.schemas['Product'] => {
-    return {
-        id: 'test-product-id',
-        name: 'Test Product',
-        imageGroups,
-    } as ShopperProducts.schemas['Product'];
-};
+const createMockImage = (link: string, alt?: string): ShopperProducts.schemas['Image'] => ({
+    link,
+    disBaseLink: link,
+    alt,
+});
 
-const createMockImageGroup = (
-    viewType: string,
-    images: ShopperProducts.schemas['Image'][],
-    variationAttributes?: Record<string, string>
-): ShopperProducts.schemas['ImageGroup'] => {
-    // Convert variationAttributes object to array format expected by findImageGroupBy
-    // The structure should be: [{ id: 'color', values: [{ value: 'red' }] }]
-    const variationAttributesArray = variationAttributes
-        ? Object.entries(variationAttributes).map(([id, value]) => ({
-              id,
-              values: [{ value }],
-          }))
-        : [];
+const createMockProduct = (images: ShopperProducts.schemas['Image'][]): ShopperProducts.schemas['Product'] =>
+    ({
+        id: 'test-shoe',
+        name: 'Test Shoe',
+        imageGroups: [{ viewType: 'large', images }],
+    }) as ShopperProducts.schemas['Product'];
 
-    return {
-        viewType,
-        images,
-        variationAttributes: variationAttributesArray,
-    } as ShopperProducts.schemas['ImageGroup'];
-};
+describe('useProductImages (footwear)', () => {
+    it('leaves the merchant alt untouched — never folds an inferred angle into it', () => {
+        const product = createMockProduct([
+            createMockImage('https://example.com/1.jpg', 'Trail runner, heel view'),
+            createMockImage('https://example.com/2.jpg', 'Trail runner, front view'),
+            createMockImage('https://example.com/3.jpg', 'Trail runner'),
+        ]);
 
-const createMockImage = (link: string, alt?: string): ShopperProducts.schemas['Image'] => {
-    return {
-        link,
-        disBaseLink: link,
-        alt: alt || 'Test Image',
-    } as ShopperProducts.schemas['Image'];
-};
+        const { result } = renderHook(() => useProductImages({ product }), { wrapper });
 
-describe('useProductImages', () => {
-    describe('default images', () => {
-        it('should return default images when no attributes are selected', () => {
-            const defaultImages = [
-                createMockImage('https://example.com/image1.jpg'),
-                createMockImage('https://example.com/image2.jpg'),
-            ];
-            const product = createMockProduct([createMockImageGroup('large', defaultImages)]);
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                        selectedAttributes: undefined,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toHaveLength(2);
-            expect(result.current.galleryImages[0].src).toBe('https://example.com/image1.jpg');
-            expect(result.current.galleryImages[1].src).toBe('https://example.com/image2.jpg');
-        });
-
-        it('should return empty array when no image groups exist', () => {
-            const product = createMockProduct();
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toEqual([]);
-        });
-
-        it('should return empty array when no images in default group', () => {
-            const product = createMockProduct([createMockImageGroup('large', [])]);
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toEqual([]);
-        });
+        expect(result.current.galleryImages.map((image) => image.alt)).toEqual([
+            'Trail runner, heel view',
+            'Trail runner, front view',
+            'Trail runner',
+        ]);
     });
 
-    describe('attribute-based filtering', () => {
-        it('should return images matching selected attributes', () => {
-            const colorRedImages = [
-                createMockImage('https://example.com/red1.jpg'),
-                createMockImage('https://example.com/red2.jpg'),
-            ];
-            const defaultImages = [createMockImage('https://example.com/default.jpg')];
+    it('exposes a localized view label as the thumbnail name when the merchant alt names an angle', () => {
+        const product = createMockProduct([
+            createMockImage('https://example.com/1.jpg', 'Trail runner, front angle'),
+            createMockImage('https://example.com/2.jpg', 'Trail runner, side profile'),
+            createMockImage('https://example.com/3.jpg', 'Trail runner, heel view'),
+            createMockImage('https://example.com/4.jpg', 'Trail runner, outsole close-up'),
+        ]);
 
-            const product = createMockProduct([
-                createMockImageGroup('large', defaultImages),
-                createMockImageGroup('large', colorRedImages, { color: 'red' }),
-            ]);
+        const { result } = renderHook(() => useProductImages({ product }), { wrapper });
 
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                        selectedAttributes: { color: 'red' },
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toHaveLength(2);
-            expect(result.current.galleryImages[0].src).toBe('https://example.com/red1.jpg');
-        });
-
-        it('should fallback to default images when no matching group found', () => {
-            const defaultImages = [createMockImage('https://example.com/default.jpg')];
-
-            const product = createMockProduct([
-                createMockImageGroup('large', defaultImages),
-                createMockImageGroup('large', [], { color: 'blue' }),
-            ]);
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                        selectedAttributes: { color: 'red' },
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toHaveLength(1);
-            expect(result.current.galleryImages[0].src).toBe('https://example.com/default.jpg');
-        });
+        // "heel" maps to the Back view; "outsole" to the Sole view — the merchant word is the source.
+        expect(result.current.galleryImages.map((image) => image.thumbnailLabel)).toEqual([
+            'Front view',
+            'Side view',
+            'Back view',
+            'Sole view',
+        ]);
     });
 
-    describe('view type filtering', () => {
-        it('should return images for specified view type', () => {
-            const largeImages = [createMockImage('https://example.com/large.jpg')];
-            const mediumImages = [createMockImage('https://example.com/medium.jpg')];
+    it('does not infer an angle from keywords embedded in unrelated words', () => {
+        const product = createMockProduct([
+            createMockImage('https://example.com/1.jpg', 'Inside cushioning detail'),
+            createMockImage('https://example.com/2.jpg', 'Feedback technology closeup'),
+            createMockImage('https://example.com/3.jpg', 'Runner on treadmill'),
+        ]);
 
-            const product = createMockProduct([
-                createMockImageGroup('large', largeImages),
-                createMockImageGroup('medium', mediumImages),
-            ]);
+        const { result } = renderHook(() => useProductImages({ product }), { wrapper });
 
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                        viewType: 'medium',
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toHaveLength(1);
-            expect(result.current.galleryImages[0].src).toBe('https://example.com/medium.jpg');
-        });
-
-        it('should default to large view type', () => {
-            const largeImages = [createMockImage('https://example.com/large.jpg')];
-            const mediumImages = [createMockImage('https://example.com/medium.jpg')];
-
-            const product = createMockProduct([
-                createMockImageGroup('large', largeImages),
-                createMockImageGroup('medium', mediumImages),
-            ]);
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toHaveLength(1);
-            expect(result.current.galleryImages[0].src).toBe('https://example.com/large.jpg');
-        });
+        // "Inside"/"Feedback"/"treadmill" must not be read as side/back/sole. With no reliable angle,
+        // no thumbnail label is exposed and the alt is preserved verbatim.
+        expect(result.current.galleryImages.map((image) => image.thumbnailLabel)).toEqual([
+            undefined,
+            undefined,
+            undefined,
+        ]);
+        expect(result.current.galleryImages.map((image) => image.alt)).toEqual([
+            'Inside cushioning detail',
+            'Feedback technology closeup',
+            'Runner on treadmill',
+        ]);
     });
 
-    describe('image transformation', () => {
-        it('should transform images to gallery format', () => {
-            const images = [
-                createMockImage('https://example.com/image1.jpg', 'Image 1'),
-                createMockImage('https://example.com/image2.jpg', 'Image 2'),
-            ];
+    it('exposes no angle and falls back to the product name when the merchant supplies no alt', () => {
+        const product = createMockProduct([
+            createMockImage('https://example.com/1.jpg'),
+            createMockImage('https://example.com/2.jpg'),
+        ]);
 
-            const product = createMockProduct([createMockImageGroup('large', images)]);
+        const { result } = renderHook(() => useProductImages({ product }), { wrapper });
 
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages[0]).toEqual({
-                src: 'https://example.com/image1.jpg',
-                alt: 'Image 1',
-                thumbSrc: 'https://example.com/image1.jpg',
-            });
-        });
-
-        it('should use product name as alt text fallback', () => {
-            // Create image without alt text to test fallback
-            const image = {
-                link: 'https://example.com/image1.jpg',
-                disBaseLink: 'https://example.com/image1.jpg',
-                alt: undefined,
-            } as ShopperProducts.schemas['Image'];
-
-            const images = [image];
-
-            const product = createMockProduct([createMockImageGroup('large', images)]);
-            product.name = 'Test Product Name';
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages[0].alt).toBe('Test Product Name');
-        });
-
-        it('should use disBaseLink over link when available', () => {
-            const image = {
-                link: 'https://example.com/link.jpg',
-                disBaseLink: 'https://example.com/disBaseLink.jpg',
-                alt: 'Test',
-            } as ShopperProducts.schemas['Image'];
-
-            const product = createMockProduct([createMockImageGroup('large', [image])]);
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages[0].src).toBe('https://example.com/disBaseLink.jpg');
-        });
-
-        it('should drop entries whose link/disBaseLink lack a DIS-supported extension', () => {
-            const image = {
-                link: '',
-                disBaseLink: '',
-                alt: 'Test',
-            } as ShopperProducts.schemas['Image'];
-
-            const product = createMockProduct([createMockImageGroup('large', [image])]);
-
-            const { result } = renderHook(
-                () =>
-                    useProductImages({
-                        product,
-                    }),
-                { wrapper }
-            );
-
-            expect(result.current.galleryImages).toEqual([]);
-        });
+        expect(result.current.galleryImages[0]).toMatchObject({ alt: 'Test Shoe' });
+        expect(result.current.galleryImages[0].thumbnailLabel).toBeUndefined();
+        expect(result.current.galleryImages[1].thumbnailLabel).toBeUndefined();
     });
 
-    // Restrict the gallery to assets DIS can transform. Anything else (videos, 3D models, opaque blobs SFCC merchants
-    // sometimes attach to image_groups) cannot flow through the <picture>/<DynamicImage> pipeline, so we drop it at the
-    // hook boundary rather than carrying a media-type discriminator through the UI.
-    describe('non-image filtering', () => {
-        it.each(['mp4', 'webm', 'ogg', 'mov'])('drops entries with video extension .%s', (ext) => {
-            const videoEntry = {
-                link: `https://example.com/product.${ext}`,
-                disBaseLink: `https://example.com/product.${ext}`,
-                alt: 'Product Video',
-            } as ShopperProducts.schemas['Image'];
+    it('never reorders the images themselves while labeling', () => {
+        const product = createMockProduct([
+            createMockImage('https://example.com/1.jpg', 'Sole tread'),
+            createMockImage('https://example.com/2.jpg', 'Front'),
+        ]);
 
-            const product = createMockProduct([createMockImageGroup('large', [videoEntry])]);
+        const { result } = renderHook(() => useProductImages({ product }), { wrapper });
 
-            const { result } = renderHook(() => useProductImages({ product }), { wrapper });
+        expect(result.current.galleryImages.map((image) => image.src)).toEqual([
+            'https://example.com/1.jpg',
+            'https://example.com/2.jpg',
+        ]);
+    });
 
-            expect(result.current.galleryImages).toEqual([]);
-        });
+    it('labels localized alt copy by forwarding the active catalog language into detection', () => {
+        // The reported gap: under the English vocabulary an Italian catalog's "Vista laterale" alt
+        // exposed no label. With the catalog language wired through, the hook detects the Italian
+        // angle and surfaces a label, while alt copy naming no angle ("Dettaglio tessuto") still
+        // exposes none. This exercises the hook's `i18n.language -> detectAngle` wiring end to end,
+        // not just the vocabulary the standalone `detectAngle` tests cover.
+        langRef.current = 'it-IT';
+        const product = createMockProduct([
+            createMockImage('https://example.com/1.jpg', 'Vista laterale'),
+            createMockImage('https://example.com/2.jpg', 'Dettaglio tessuto'),
+        ]);
 
-        it.each([
-            'jpg',
-            'jpeg',
-            'png',
-            'webp',
-            'gif',
-            'avif',
-            'jp2',
-            'tif',
-            'tiff',
-        ])('keeps entries with DIS-supported extension .%s', (ext) => {
-            const image = {
-                link: `https://example.com/product.${ext}`,
-                disBaseLink: `https://example.com/product.${ext}`,
-                alt: 'Product Image',
-            } as ShopperProducts.schemas['Image'];
+        const { result } = renderHook(() => useProductImages({ product }), { wrapper });
 
-            const product = createMockProduct([createMockImageGroup('large', [image])]);
+        expect(result.current.galleryImages[0].thumbnailLabel).toBeDefined();
+        expect(result.current.galleryImages[1].thumbnailLabel).toBeUndefined();
+        // The alt itself is still left exactly as the merchant authored it.
+        expect(result.current.galleryImages.map((image) => image.alt)).toEqual(['Vista laterale', 'Dettaglio tessuto']);
+    });
+});
 
-            const { result } = renderHook(() => useProductImages({ product }), { wrapper });
+describe('detectAngle (per-language vocabulary)', () => {
+    it('detects angles from English alt copy by default', () => {
+        expect(detectAngle('Trail runner, front angle')).toBe('front');
+        expect(detectAngle('Trail runner, side profile')).toBe('side');
+        expect(detectAngle('Trail runner, heel view')).toBe('back');
+        expect(detectAngle('Trail runner, outsole close-up')).toBe('sole');
+    });
 
-            expect(result.current.galleryImages).toHaveLength(1);
-        });
+    it('detects angles from Italian alt copy when the catalog language is Italian', () => {
+        expect(detectAngle('Vista frontale', 'it')).toBe('front');
+        expect(detectAngle('Vista laterale', 'it')).toBe('side');
+        expect(detectAngle('Vista posteriore', 'it')).toBe('back');
+        expect(detectAngle('Vista della suola', 'it')).toBe('sole');
+    });
 
-        it('keeps only the image entries when image groups mix images and unsupported assets', () => {
-            const mixedMedia = [
-                createMockImage('https://example.com/image1.jpg'),
-                {
-                    link: 'https://example.com/demo.mp4',
-                    disBaseLink: 'https://example.com/demo.mp4',
-                    alt: 'Demo Video',
-                } as ShopperProducts.schemas['Image'],
-                createMockImage('https://example.com/image2.png'),
-            ];
+    it('surfaces no angle for localized alt copy under the English vocabulary (the reported gap)', () => {
+        // Before the fix, detection was English-only, so an Italian catalog's "Vista laterale" alt
+        // exposed no thumbnail label. Passing the catalog language is what closes that gap.
+        expect(detectAngle('Vista laterale')).toBeUndefined();
+    });
 
-            const product = createMockProduct([createMockImageGroup('large', mixedMedia)]);
+    it('falls back to the English vocabulary for a language without its own keywords', () => {
+        expect(detectAngle('side profile', 'de')).toBe('side');
+    });
 
-            const { result } = renderHook(() => useProductImages({ product }), { wrapper });
+    it('preserves boundary-safe matching per language', () => {
+        // English substrings that must not trigger a match.
+        expect(detectAngle('Inside cushioning detail')).toBeUndefined();
+        expect(detectAngle('Runner on treadmill')).toBeUndefined();
+        // Italian: "profilo" (side) matches, but only as a whole word.
+        expect(detectAngle('profilo laterale', 'it')).toBe('side');
+    });
 
-            expect(result.current.galleryImages).toHaveLength(2);
-            expect(result.current.galleryImages[0].src).toContain('image1');
-            expect(result.current.galleryImages[1].src).toContain('image2');
-        });
+    it('does not match a keyword abutting a precomposed (single-code-point) accent', () => {
+        // JavaScript `\b` is ASCII-only, so `\bside\b` would match "side" inside a word carrying an
+        // accented neighbour and fabricate a "Side view". A precomposed accent is a single letter
+        // (e-acute is U+00E9, e-grave U+00E8), which `\p{L}` in the boundary already blocks, whether it
+        // precedes the keyword ("re[side]") or follows it ("[front]e"). Strings are built from code
+        // points so the source stays pure ASCII and the literals are guaranteed precomposed (NFC).
+        const eAcute = String.fromCodePoint(0x00e9);
+        const eGrave = String.fromCodePoint(0x00e8);
+        expect(detectAngle(`r${eAcute}side dans la collection`)).toBeUndefined();
+        expect(detectAngle(`vue front${eAcute}e du mod${eGrave}le`)).toBeUndefined();
+    });
 
-        it('drops entries whose path lacks any extension', () => {
-            const blob = {
-                link: 'https://example.com/media/asset',
-                disBaseLink: 'https://example.com/media/asset',
-                alt: 'Opaque blob',
-            } as ShopperProducts.schemas['Image'];
+    it('does not match a keyword abutting a decomposed (combining-mark) accent', () => {
+        // The same accents decomposed: a base letter followed by a standalone combining mark
+        // (U+0301, Unicode category `\p{M}`), not a letter. A letters-only boundary would let "side"
+        // match inside "reside"-with-accent and fabricate a "Side view" — the exact regression this
+        // guards. `detectAngle` normalizes to NFC (folding "e" + U+0301 into U+00E9) and the boundary
+        // class also excludes `\p{M}` for any mark NFC cannot fold. Built from a code point so the
+        // source is pure ASCII and no formatter or NFC-normalizing tool can fold these strings back
+        // into precomposed form and silently drop the coverage.
+        const acute = String.fromCodePoint(0x0301);
+        // Leading case: the mark sits between "re" and the keyword "side".
+        expect(detectAngle(`re${acute}side dans la collection`)).toBeUndefined();
+        // Trailing case: a mark directly follows the keyword. "t" + U+0301 has no precomposed form, so
+        // it survives NFC and only the `\p{M}` boundary class rejects it.
+        expect(detectAngle(`front${acute} lacing detail`)).toBeUndefined();
+    });
 
-            const product = createMockProduct([createMockImageGroup('large', [blob])]);
-
-            const { result } = renderHook(() => useProductImages({ product }), { wrapper });
-
-            expect(result.current.galleryImages).toEqual([]);
-        });
+    it('returns undefined for absent alt regardless of language', () => {
+        expect(detectAngle(undefined, 'it')).toBeUndefined();
+        expect(detectAngle('')).toBeUndefined();
     });
 });
