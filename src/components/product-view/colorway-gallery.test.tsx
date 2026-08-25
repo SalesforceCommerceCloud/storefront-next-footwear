@@ -21,7 +21,9 @@ import type { ShopperProducts } from '@/scapi';
 import ProductView from '@/components/product-view';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
 import { masterProduct } from '@/components/__mocks__/master-variant-product';
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
 import StoreLocatorProvider from '@/extensions/store-locator/providers/store-locator';
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
 
 const galleryProps: { images: Array<{ src: string }> } = { images: [] };
 let isVariantInventoryPending = false;
@@ -159,6 +161,7 @@ describe('Footwear colorway gallery integration', () => {
         expect(loadVariantInventory).toHaveBeenCalledWith('blue-variant');
     });
 
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
     test('requests selected-store inventory for the resolved colorway SKU', async () => {
         const user = userEvent.setup();
         const router = createMemoryRouter(
@@ -189,6 +192,7 @@ describe('Footwear colorway gallery integration', () => {
             expect(requestedInventoryIds).toEqual(['selected-store-inventory']);
         });
     });
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
 
     test('does not show a different colorway in the gallery when its media is missing', async () => {
         const user = userEvent.setup();
@@ -385,8 +389,8 @@ describe('Footwear colorway gallery integration', () => {
 
         await waitFor(() => {
             expect(screen.getByTestId('add-to-cart')).toBeEnabled();
-            expect(screen.getByText(/Deliver to/i)).toBeInTheDocument();
-            expect(screen.getByText(/Free pickup in/i)).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: 'Delivery' })).toBeEnabled();
+            expect(screen.getByRole('radio', { name: 'Free pickup in' })).toBeEnabled();
         });
     });
 
@@ -470,8 +474,8 @@ describe('Footwear colorway gallery integration', () => {
             expect(size36).toHaveAttribute('aria-checked', 'false');
             expect(regularWidth).toHaveAttribute('aria-checked', 'false');
             expect(screen.getByTestId('add-to-cart')).toBeDisabled();
-            expect(screen.queryByText(/Deliver to/i)).not.toBeInTheDocument();
-            expect(screen.queryByText(/Free pickup in/i)).not.toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: 'Delivery' })).toBeEnabled();
+            expect(screen.getByRole('radio', { name: 'Free pickup in' })).toBeEnabled();
         });
 
         const size36 = screen.getAllByRole('radio').find((control) => control.textContent === '36');

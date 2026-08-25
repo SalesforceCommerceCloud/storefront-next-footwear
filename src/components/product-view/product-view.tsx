@@ -23,7 +23,9 @@ import { useProductImages } from '@/hooks/product/use-product-images';
 import { useSelectedVariations } from '@/hooks/product/use-selected-variations';
 import { useCurrentVariant } from '@/hooks/product/use-current-variant';
 import { useScapiFetcher } from '@/hooks/use-scapi-fetcher';
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
 import { useStoreLocator } from '@/extensions/store-locator/providers/store-locator';
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +49,9 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);
     const urlVariationValues = useSelectedVariations({ product });
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
     const selectedStoreInfo = useStoreLocator((store) => store.selectedStoreInfo);
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
     const [selectedColorway, setSelectedColorway] = useState(urlVariationValues.color);
     const productIdRef = useRef(product.id);
     const urlColorwayRef = useRef(urlVariationValues.color);
@@ -79,13 +83,17 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
     const selectedVariant = useCurrentVariant({ product, selectionsOverride: variationValues });
     const selectedVariantId = selectedVariant?.productId;
     const hasVariantSelection = product.type?.master === true && (product.variants?.length ?? 0) > 0;
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
     const inventoryIds = selectedStoreInfo?.inventoryId ? [selectedStoreInfo.inventoryId] : undefined;
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
     const variantFetcher = useScapiFetcher('shopperProducts', 'getProduct', {
         params: {
             path: { id: selectedVariantId ?? '' },
             query: {
                 expand: ['availability', 'prices', 'variations'],
+                // @sfdc-extension-block-start SFDC_EXT_BOPIS
                 ...(inventoryIds ? { inventoryIds } : {}),
+                // @sfdc-extension-block-end SFDC_EXT_BOPIS
             },
         },
     });
@@ -124,11 +132,15 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
             stockLevel: 0,
         };
 
-        const requestedStoreId = selectedStoreInfo?.inventoryId;
-        const inventories =
-            requestedStoreId && !fetchedInventories.some((inv) => inv.id === requestedStoreId)
-                ? [...fetchedInventories, { id: requestedStoreId, orderable: false, ats: 0, stockLevel: 0 }]
-                : fetchedInventories;
+        const inventories = [
+            ...fetchedInventories,
+            // @sfdc-extension-block-start SFDC_EXT_BOPIS
+            ...(selectedStoreInfo?.inventoryId &&
+            !fetchedInventories.some((inv) => inv.id === selectedStoreInfo.inventoryId)
+                ? [{ id: selectedStoreInfo.inventoryId, orderable: false, ats: 0, stockLevel: 0 }]
+                : []),
+            // @sfdc-extension-block-end SFDC_EXT_BOPIS
+        ];
 
         return {
             ...selectedVariant,
@@ -136,7 +148,14 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
             inventories,
             orderable: siteInventory.orderable ?? false,
         };
-    }, [selectedVariant, hasSelectedVariantInventory, variantFetcher.data, selectedStoreInfo?.inventoryId]);
+    }, [
+        selectedVariant,
+        hasSelectedVariantInventory,
+        variantFetcher.data,
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+        selectedStoreInfo?.inventoryId,
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
+    ]);
 
     const handleColorwayChange = (_attributeId: string, value: string) => {
         if (selectedColorway === value) return;
@@ -217,9 +236,6 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
                     />
                     <ProductCartActions product={product} />
                     <UITarget targetId="sfcc.pdp.returnsWarranty" />
-                    {/* @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY */}
-                    <UITarget targetId="sfcc.pdp.estimatedDelivery" />
-                    {/* @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY */}
                     <UITarget targetId="sfcc.pdp.collapsibles" />
                 </div>
             </div>

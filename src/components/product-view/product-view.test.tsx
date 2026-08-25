@@ -26,7 +26,9 @@ import type { ShopperProducts } from '@/scapi';
 import ProductView from '@/components/product-view';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
 import { masterProduct } from '@/components/__mocks__/master-variant-product';
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
 import StoreLocatorProvider from '@/extensions/store-locator/providers/store-locator';
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
 
 const SELECTED_STORE_INVENTORY_ID = 'store-a-inventory';
 
@@ -37,6 +39,10 @@ let variantStoreInventories: ShopperProducts.schemas['Inventory'][] | null;
 
 vi.mock('@/components/image-gallery', () => ({
     default: () => <div data-testid="image-gallery" />,
+}));
+
+vi.mock('@/extensions/shipping-delivery/components/target/delivery-estimate-summary-target', () => ({
+    default: () => <div data-testid="delivery-estimate" />,
 }));
 
 vi.mock('@/hooks/use-scapi-fetcher', () => ({
@@ -91,24 +97,13 @@ const product = {
     ],
 } as ShopperProducts.schemas['Product'];
 
-const renderOverlay = (withSelectedStore: boolean) => {
+const renderOverlay = () => {
     const overlay = <ProductView product={product} />;
     const router = createMemoryRouter(
         [
             {
                 path: '/:siteId/:localeId/product/:productId',
-                element: (
-                    <AllProvidersWrapper>
-                        {withSelectedStore ? (
-                            <StoreLocatorProvider
-                                selectedStoreInfo={{ id: 'store-a', inventoryId: SELECTED_STORE_INVENTORY_ID }}>
-                                {overlay}
-                            </StoreLocatorProvider>
-                        ) : (
-                            overlay
-                        )}
-                    </AllProvidersWrapper>
-                ),
+                element: <AllProvidersWrapper>{overlay}</AllProvidersWrapper>,
             },
         ],
         { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
@@ -123,35 +118,61 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
         variantStoreInventories = null;
     });
 
+    test('mounts the delivery estimate once', async () => {
+        renderOverlay();
+
+        await waitFor(() => {
+            expect(screen.getAllByTestId('delivery-estimate')).toHaveLength(1);
+        });
+    });
+
     test('blocks purchase when the SKU fetch omits site inventory (does not borrow the master)', async () => {
         // SCAPI returned no site inventory record for this SKU -- treat as out of stock, do not fall
         // back to the master's orderable site inventory.
         variantSiteInventory = null;
 
-        renderOverlay(false);
+        renderOverlay();
 
         await waitFor(() => {
             expect(screen.getByTestId('add-to-cart')).toBeDisabled();
             expect(screen.getByText('Out of stock')).toBeInTheDocument();
         });
-        // Delivery options only render for an in-stock item; a borrowed master would have kept them.
-        expect(screen.queryByText(/Deliver to/i)).not.toBeInTheDocument();
+        // The shared picker stays visible, but the selected SKU's unavailable site inventory disables delivery.
+        expect(screen.getByRole('radio', { name: 'Delivery' })).toBeDisabled();
     });
 
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
     test('disables pickup when the SKU fetch omits the selected store (does not borrow the master store)', async () => {
         // Site inventory present (delivery works), but the SKU has no record at the selected store.
         variantStoreInventories = null;
 
-        renderOverlay(true);
+        const overlay = <ProductView product={product} />;
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/:siteId/:localeId/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <StoreLocatorProvider
+                                selectedStoreInfo={{ id: 'store-a', inventoryId: SELECTED_STORE_INVENTORY_ID }}>
+                                {overlay}
+                            </StoreLocatorProvider>
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
+        );
+        render(<RouterProvider router={router} />);
 
         await waitFor(() => {
             // Delivery stays available for the in-stock site inventory.
             expect(screen.getByTestId('add-to-cart')).toBeEnabled();
-            expect(screen.getByText(/Deliver to/i)).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: 'Delivery' })).toBeEnabled();
             // Pickup at the selected store is unavailable -- the master's in-stock store record is not borrowed.
-            expect(screen.getByText(/Pickup unavailable at/i)).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: 'Pickup unavailable at' })).toBeDisabled();
         });
-        expect(screen.queryByText(/Free pickup in/i)).not.toBeInTheDocument();
+        expect(screen.queryByRole('radio', { name: 'Free pickup in' })).not.toBeInTheDocument();
     });
 
     test('keeps pickup available when the SKU fetch reports the selected store in stock', async () => {
@@ -159,12 +180,30 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
         // orderable record for the selected store, pickup stays available.
         variantStoreInventories = [{ ats: 12, id: SELECTED_STORE_INVENTORY_ID, orderable: true, stockLevel: 12 }];
 
-        renderOverlay(true);
+        const overlay = <ProductView product={product} />;
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/:siteId/:localeId/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <StoreLocatorProvider
+                                selectedStoreInfo={{ id: 'store-a', inventoryId: SELECTED_STORE_INVENTORY_ID }}>
+                                {overlay}
+                            </StoreLocatorProvider>
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
+        );
+        render(<RouterProvider router={router} />);
 
         await waitFor(() => {
             expect(screen.getByTestId('add-to-cart')).toBeEnabled();
-            expect(screen.getByText(/Free pickup in/i)).toBeInTheDocument();
+            expect(screen.getByRole('radio', { name: 'Free pickup in' })).toBeEnabled();
         });
-        expect(screen.queryByText(/Pickup unavailable at/i)).not.toBeInTheDocument();
+        expect(screen.queryByRole('radio', { name: 'Pickup unavailable at' })).not.toBeInTheDocument();
     });
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
 });

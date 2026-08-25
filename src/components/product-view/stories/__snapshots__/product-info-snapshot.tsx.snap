@@ -86,7 +86,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
     class="relative mt-2 inline-block"
   >
     <div
-      aria-controls="radix-_r_19_"
+      aria-controls="radix-_r_1i_"
       aria-haspopup="dialog"
       class="relative inline-block"
       data-slot="popover-trigger"
@@ -220,351 +220,278 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
   </div>
   <div
     class="space-y-3"
+    data-slot="colorway-strip"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_1f_"
-      class="flex flex-col gap-3"
-      role="radiogroup"
+      class="flex items-center justify-between gap-2"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_1f_"
+      <p
+        class="text-base font-semibold leading-6 text-card-foreground"
+        id="_r_1o_"
       >
-        <span>
-          Color
-          :
-        </span>
-        <span>
-          Blue
-        </span>
-      </div>
-      <div
-        class="flex flex-wrap gap-[var(--swatch-pill-gap,0.5rem)] focus:outline-none"
-        data-slot="swatch-container"
+        Colour
+      </p>
+      <span
+        class="text-sm text-secondary-foreground"
       >
-        <button
-          aria-checked="false"
-          aria-label="Red"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-labeled="true"
-          data-swatch-type="color"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-          type="button"
+        3 colours
+      </span>
+    </div>
+    <div
+      aria-labelledby="_r_1o_"
+      class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+      data-max-visible="8"
+      data-slot="colorway-strip-list"
+      data-testid="colorway-strip-list"
+      role="radiogroup"
+      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Red"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Red swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: red; background-image: url("https://placehold.co/50x50/ff0000/ffffff?text=R"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Red
-            </span>
-          </div>
-        </button>
-        <button
-          aria-checked="true"
-          aria-label="Blue"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border-selected,black)] bg-[var(--swatch-color-bg-selected,transparent)] text-[var(--swatch-color-text-selected,inherit)] shadow-[var(--swatch-color-shadow,none)]"
-          data-labeled="true"
-          data-swatch-type="color"
-          position="relative"
-          role="radio"
-          tabindex="0"
-          type="button"
+          R
+        </span>
+      </button>
+      <button
+        aria-checked="true"
+        aria-label="Blue"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Blue swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: blue; background-image: url("https://placehold.co/50x50/0000ff/ffffff?text=B"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Blue
-            </span>
-          </div>
-        </button>
-        <button
-          aria-checked="false"
-          aria-label="Green"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-labeled="true"
-          data-swatch-type="color"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-          type="button"
+          B
+        </span>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Green"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Green swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: green; background-image: url("https://placehold.co/50x50/00ff00/ffffff?text=G"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Green
-            </span>
-          </div>
-        </button>
-      </div>
+          G
+        </span>
+      </button>
     </div>
   </div>
   <div
-    class="space-y-3"
+    class="space-y-2"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_1g_"
-      class="inline-flex flex-col gap-3"
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="size-grid-label-_r_1p_"
+    >
+      Size
+    </div>
+    <div
+      aria-labelledby="size-grid-label-_r_1p_"
+      class="flex flex-wrap gap-2 focus:outline-none"
       role="radiogroup"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_1g_"
+      <button
+        aria-checked="false"
+        aria-label="Size Small, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <span>
-          Size
-          :
-        </span>
-        <span>
-          Medium
-        </span>
-      </div>
-      <div
-        class="inline-flex flex-wrap gap-2 focus:outline-none bg-swatch-group-bg p-1"
-        data-slot="swatch-container"
+        Small
+      </button>
+      <button
+        aria-checked="true"
+        aria-label="Size Medium, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary bg-primary text-primary-foreground cursor-pointer"
+        role="radio"
+        tabindex="0"
+        type="button"
       >
-        <button
-          aria-checked="false"
-          aria-label="Small"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-labeled="true"
-          data-swatch-type="label"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-          type="button"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Small
-            </span>
-          </div>
-        </button>
-        <button
-          aria-checked="true"
-          aria-label="Medium"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg-selected border border-swatch-border-selected text-swatch-text-selected shadow-2xs"
-          data-labeled="true"
-          data-swatch-type="label"
-          position="relative"
-          role="radio"
-          tabindex="0"
-          type="button"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Medium
-            </span>
-          </div>
-        </button>
-        <button
-          aria-checked="false"
-          aria-label="Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-labeled="true"
-          data-swatch-type="label"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-          type="button"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Large
-            </span>
-          </div>
-        </button>
-        <button
-          aria-checked="false"
-          aria-label="Extra Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-labeled="true"
-          data-swatch-type="label"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-          type="button"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Extra Large
-            </span>
-          </div>
-        </button>
-      </div>
+        Medium
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Large
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Extra Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Extra Large
+      </button>
     </div>
+  </div>
+  <div
+    class="grid gap-3"
+  >
+    <button
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ui transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 py-2 has-[>svg]:px-3 justify-self-start px-0 text-sm font-medium underline"
+      data-size="default"
+      data-slot="button"
+      data-variant="link"
+      type="button"
+    >
+      Size Guide
+    </button>
   </div>
   <div
     class="mt-6"
   >
     <div
-      class="space-y-4"
+      class="w-full"
     >
       <div
-        class="w-full"
+        aria-label="Fulfillment method"
+        aria-required="false"
+        class="grid gap-2 grid-cols-2"
+        data-slot="radio-group"
+        data-testid="delivery-option-select"
+        dir="ltr"
+        role="radiogroup"
+        style="outline: none;"
+        tabindex="0"
       >
         <div
-          aria-required="false"
-          class="grid grid-cols-2 gap-2"
-          data-slot="radio-group"
-          data-testid="delivery-option-select"
-          dir="ltr"
-          role="radiogroup"
-          style="outline: none;"
-          tabindex="0"
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
         >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-delivery"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="delivery"
+          />
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs cursor-pointer border-muted-foreground/20 hover:border-primary/50"
-            data-slot="label"
-            for="delivery-option-test-product-123"
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              id="delivery-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="delivery"
-            />
-            <div
-              class="mt-0.5 shrink-0"
+            <span
+              class="sr-only"
             >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Deliver to
-                </span>
-                <p
-                  class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-                >
-                  Enter ZIP code to see delivery estimate
-                </p>
-              </div>
-            </div>
+              Delivery
+            </span>
           </label>
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="pickup-option-test-product-123"
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="pickup-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="pickup"
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Pickup unavailable at
-                </span>
-                <div
-                  class="mt-0.5"
-                >
-                  <button
-                    class="text-xs text-primary hover:underline cursor-pointer"
-                    type="button"
-                  />
-                  <p
-                    class="text-xs font-normal text-destructive mt-1"
-                  >
-                    Try another store
-                  </p>
-                </div>
-              </div>
-            </div>
           </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Delivery
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-delivery-description"
+            >
+              <p>
+                Enter postal code to see delivery estimate
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
+        >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-pickup"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="pickup"
+          />
+          <label
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <span
+              class="sr-only"
+            >
+              Free pickup in
+            </span>
+          </label>
+          <label
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
+            />
+          </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Free pickup in
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-pickup-description"
+            >
+              <p>
+                Select Store
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -575,7 +502,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
     <label
       class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
       data-slot="label"
-      for="quantity-_r_1j_"
+      for="quantity-_r_1v_"
     >
       Quantity
     </label>
@@ -594,7 +521,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
       </button>
       <input
         class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        id="quantity-_r_1j_"
+        id="quantity-_r_1v_"
         min="1"
         step="1"
         type="number"
@@ -611,7 +538,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
     <div
       aria-atomic="true"
       aria-live="polite"
-      id="quantity-_r_1j_-inventory-msg"
+      id="quantity-_r_1v_-inventory-msg"
       role="status"
     />
   </div>
@@ -709,7 +636,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
     class="relative mt-2 inline-block"
   >
     <div
-      aria-controls="radix-_r_1m_"
+      aria-controls="radix-_r_22_"
       aria-haspopup="dialog"
       class="relative inline-block"
       data-slot="popover-trigger"
@@ -843,352 +770,278 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
   </div>
   <div
     class="space-y-3"
+    data-slot="colorway-strip"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_1s_"
-      class="flex flex-col gap-3"
-      role="radiogroup"
+      class="flex items-center justify-between gap-2"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_1s_"
+      <p
+        class="text-base font-semibold leading-6 text-card-foreground"
+        id="_r_28_"
       >
-        <span>
-          Color
-          :
+        Colour
+      </p>
+      <span
+        class="text-sm text-secondary-foreground"
+      >
+        3 colours
+      </span>
+    </div>
+    <div
+      aria-labelledby="_r_28_"
+      class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+      data-max-visible="8"
+      data-slot="colorway-strip-list"
+      data-testid="colorway-strip-list"
+      role="radiogroup"
+      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Red"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
+        >
+          R
         </span>
-      </div>
-      <div
-        class="flex flex-wrap gap-[var(--swatch-pill-gap,0.5rem)] focus:outline-none"
-        data-slot="swatch-container"
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Blue"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Red"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=red"
-          position="relative"
-          role="radio"
-          tabindex="0"
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Red swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: red; background-image: url("https://placehold.co/50x50/ff0000/ffffff?text=R"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Red
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Blue"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=blue"
-          position="relative"
-          role="radio"
-          tabindex="-1"
+          B
+        </span>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Green"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Blue swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: blue; background-image: url("https://placehold.co/50x50/0000ff/ffffff?text=B"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Blue
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Green"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=green"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Green swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: green; background-image: url("https://placehold.co/50x50/00ff00/ffffff?text=G"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Green
-            </span>
-          </div>
-        </a>
-      </div>
+          G
+        </span>
+      </button>
     </div>
   </div>
   <div
-    class="space-y-3"
+    class="space-y-2"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_1t_"
-      class="inline-flex flex-col gap-3"
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="size-grid-label-_r_29_"
+    >
+      Size
+    </div>
+    <div
+      aria-labelledby="size-grid-label-_r_29_"
+      class="flex flex-wrap gap-2 focus:outline-none"
       role="radiogroup"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_1t_"
+      <button
+        aria-checked="false"
+        aria-label="Size Small, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="0"
+        type="button"
       >
-        <span>
-          Size
-          :
-        </span>
-      </div>
-      <div
-        class="inline-flex flex-wrap gap-2 focus:outline-none bg-swatch-group-bg p-1"
-        data-slot="swatch-container"
+        Small
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Medium, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Small"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=S"
-          position="relative"
-          role="radio"
-          tabindex="0"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Small
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Medium"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=M"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Medium
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=L"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Large
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Extra Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=XL"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Extra Large
-            </span>
-          </div>
-        </a>
-      </div>
+        Medium
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Large
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Extra Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Extra Large
+      </button>
     </div>
+  </div>
+  <div
+    class="grid gap-3"
+  >
+    <button
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ui transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 py-2 has-[>svg]:px-3 justify-self-start px-0 text-sm font-medium underline"
+      data-size="default"
+      data-slot="button"
+      data-variant="link"
+      type="button"
+    >
+      Size Guide
+    </button>
   </div>
   <div
     class="mt-6"
   >
     <div
-      class="space-y-4"
+      class="w-full"
     >
       <div
-        class="w-full"
+        aria-label="Fulfillment method"
+        aria-required="false"
+        class="grid gap-2 grid-cols-2"
+        data-slot="radio-group"
+        data-testid="delivery-option-select"
+        dir="ltr"
+        role="radiogroup"
+        style="outline: none;"
+        tabindex="0"
       >
         <div
-          aria-required="false"
-          class="grid grid-cols-2 gap-2"
-          data-slot="radio-group"
-          data-testid="delivery-option-select"
-          dir="ltr"
-          role="radiogroup"
-          style="outline: none;"
-          tabindex="0"
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
         >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-delivery"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="delivery"
+          />
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs cursor-pointer border-muted-foreground/20 hover:border-primary/50"
-            data-slot="label"
-            for="delivery-option-test-product-123"
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              id="delivery-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="delivery"
-            />
-            <div
-              class="mt-0.5 shrink-0"
+            <span
+              class="sr-only"
             >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Deliver to
-                </span>
-                <p
-                  class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-                >
-                  Enter ZIP code to see delivery estimate
-                </p>
-              </div>
-            </div>
+              Delivery
+            </span>
           </label>
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="pickup-option-test-product-123"
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="pickup-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="pickup"
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Pickup unavailable at
-                </span>
-                <div
-                  class="mt-0.5"
-                >
-                  <button
-                    class="text-xs text-primary hover:underline cursor-pointer"
-                    type="button"
-                  />
-                  <p
-                    class="text-xs font-normal text-destructive mt-1"
-                  >
-                    Try another store
-                  </p>
-                </div>
-              </div>
-            </div>
           </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Delivery
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-delivery-description"
+            >
+              <p>
+                Enter postal code to see delivery estimate
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
+        >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-pickup"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="pickup"
+          />
+          <label
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <span
+              class="sr-only"
+            >
+              Free pickup in
+            </span>
+          </label>
+          <label
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
+            />
+          </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Free pickup in
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-pickup-description"
+            >
+              <p>
+                Select Store
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1199,7 +1052,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
     <label
       class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
       data-slot="label"
-      for="quantity-_r_20_"
+      for="quantity-_r_2f_"
     >
       Quantity
     </label>
@@ -1218,7 +1071,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
       </button>
       <input
         class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        id="quantity-_r_20_"
+        id="quantity-_r_2f_"
         min="1"
         step="1"
         type="number"
@@ -1235,516 +1088,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
     <div
       aria-atomic="true"
       aria-live="polite"
-      id="quantity-_r_20_-inventory-msg"
-      role="status"
-    />
-  </div>
-</div>
-`;
-
-exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story renders and matches snapshot 1`] = `
-<div
-  class="relative grid gap-4"
->
-  <div
-    class="flex items-start justify-between gap-4"
-  >
-    <div
-      class="sm:pr-20 min-w-0"
-    >
-      <h1
-        class="text-3xl font-bold text-card-foreground tracking-tight break-words"
-        data-testid="product-title"
-      >
-        Modular Fabric Sofa
-      </h1>
-      <p
-        class="mt-2 text-xs leading-none text-secondary-foreground"
-      >
-        SKU:
-         
-        test-product-123
-      </p>
-      <p
-        class="mt-2 text-base font-normal leading-6 text-accent-foreground"
-      >
-        Soft, breathable cotton t-shirt perfect for everyday wear
-      </p>
-    </div>
-  </div>
-  <div
-    class="sm:absolute sm:top-0 sm:right-0 flex items-center gap-2 z-10"
-  >
-    <button
-      aria-label="Add to Wishlist"
-      class="absolute top-2 right-2 z-10 w-9 h-9 p-2 shadow-md flex items-center justify-center rounded-ui transition-all duration-200 ease-in-out cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed !static border border-border bg-background/90 hover:border-muted-foreground/50 hover:bg-background"
-    >
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4 transition-all duration-200 ease-in-out text-muted-foreground scale-100"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-        />
-      </svg>
-    </button>
-    <button
-      aria-label="Share"
-      class="w-9 h-9 p-2 shadow-md flex items-center justify-center rounded-ui transition-all duration-200 ease-in-out cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 !static border border-border bg-background/90 hover:bg-background hover:border-muted-foreground/50 [&_svg]:stroke-[2]"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4 text-muted-foreground transition-all duration-200 ease-in-out"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"
-        />
-        <polyline
-          points="16 6 12 2 8 6"
-        />
-        <line
-          x1="12"
-          x2="12"
-          y1="2"
-          y2="15"
-        />
-      </svg>
-    </button>
-  </div>
-  <div
-    class="relative mt-2 inline-block"
-  >
-    <div
-      aria-controls="radix-_r_23_"
-      aria-haspopup="dialog"
-      class="relative inline-block"
-      data-slot="popover-trigger"
-      data-state="closed"
-      type="button"
-    >
-      <div
-        class="flex items-center gap-2"
-      >
-        <div
-          class="flex flex-col gap-1"
-        >
-          <div
-            class="flex items-center gap-2"
-          >
-            <div
-              aria-label="0 out of 5 stars, 0 reviews"
-              class="flex items-center gap-0.5"
-              role="group"
-            >
-              <svg
-                aria-hidden="true"
-                class="shrink-0 w-4 h-4"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  fill="white"
-                  stroke="var(--color-border-subtle)"
-                  stroke-width="1"
-                />
-              </svg>
-              <svg
-                aria-hidden="true"
-                class="shrink-0 w-4 h-4"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  fill="white"
-                  stroke="var(--color-border-subtle)"
-                  stroke-width="1"
-                />
-              </svg>
-              <svg
-                aria-hidden="true"
-                class="shrink-0 w-4 h-4"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  fill="white"
-                  stroke="var(--color-border-subtle)"
-                  stroke-width="1"
-                />
-              </svg>
-              <svg
-                aria-hidden="true"
-                class="shrink-0 w-4 h-4"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  fill="white"
-                  stroke="var(--color-border-subtle)"
-                  stroke-width="1"
-                />
-              </svg>
-              <svg
-                aria-hidden="true"
-                class="shrink-0 w-4 h-4"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  fill="white"
-                  stroke="var(--color-border-subtle)"
-                  stroke-width="1"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="space-y-3"
-  >
-    <div
-      class="items-center gap-2"
-    >
-      <span
-        aria-hidden="true"
-        class="[&:not(:first-child)]:mt-6 text-left text-2xl font-bold text-card-foreground leading-[120%] tracking-[-0.6px]"
-      >
-        £29.99
-      </span>
-      <span
-        aria-atomic="true"
-        aria-live="polite"
-        class="sr-only"
-      >
-        Modular Fabric Sofa
-         
-        Current price: £29.99
-      </span>
-       
-    </div>
-  </div>
-  <div
-    aria-atomic="true"
-    class="flex items-center gap-2"
-    data-slot="inventory-message"
-    role="status"
-  >
-    <span
-      aria-hidden="true"
-      class="h-2 w-2 shrink-0 rounded-full bg-current text-status-positive"
-    />
-    <p
-      class="text-sm font-medium text-status-positive"
-    >
-      <span
-        class="sr-only"
-      >
-        Available: 
-      </span>
-      In stock
-    </p>
-  </div>
-  <div
-    class="space-y-3"
-  >
-    <div
-      aria-labelledby="swatch-group-label-_r_29_"
-      class="inline-flex flex-col gap-3"
-      role="radiogroup"
-    >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_29_"
-      >
-        <span>
-          Fabric
-          :
-        </span>
-      </div>
-      <div
-        class="inline-flex flex-wrap gap-2 focus:outline-none bg-swatch-group-bg p-1"
-        data-slot="swatch-container"
-      >
-        <a
-          aria-checked="false"
-          aria-label="Linen"
-          class="text-foreground flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-image-tile-size,3rem)] h-[var(--swatch-image-tile-size,3rem)] p-0 overflow-hidden rounded-ui bg-muted cursor-pointer !w-[var(--swatch-image-tile-size,3rem)] !h-[var(--swatch-image-tile-size,3rem)] !min-w-[var(--swatch-image-tile-size,3rem)] !min-h-[var(--swatch-image-tile-size,3rem)] !p-0 border-2 border-border shadow-2xs hover:border-primary/60"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="image"
-          href="/RefArchGlobal/en-GB/product/test-product?fabric=linen"
-          position="relative"
-          role="radio"
-          tabindex="0"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <div
-              class="absolute inset-0 h-full w-full"
-            >
-              <img
-                alt="Linen fabric swatch"
-                class="h-full w-full object-cover"
-                fetchpriority="auto"
-                loading="lazy"
-                src="https://placehold.co/72x72/e4d5b7/333333?text=Linen"
-              />
-            </div>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Velvet"
-          class="text-foreground flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-image-tile-size,3rem)] h-[var(--swatch-image-tile-size,3rem)] p-0 overflow-hidden rounded-ui bg-muted cursor-pointer !w-[var(--swatch-image-tile-size,3rem)] !h-[var(--swatch-image-tile-size,3rem)] !min-w-[var(--swatch-image-tile-size,3rem)] !min-h-[var(--swatch-image-tile-size,3rem)] !p-0 border-2 border-border shadow-2xs hover:border-primary/60"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="image"
-          href="/RefArchGlobal/en-GB/product/test-product?fabric=velvet"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <div
-              class="absolute inset-0 h-full w-full"
-            >
-              <img
-                alt="Velvet fabric swatch"
-                class="h-full w-full object-cover"
-                fetchpriority="auto"
-                loading="lazy"
-                src="https://placehold.co/72x72/6b2d5c/ffffff?text=Velvet"
-              />
-            </div>
-            <span
-              class="ml-1 text-[length:var(--swatch-description-size,0.75rem)] text-muted-foreground"
-              data-slot="swatch-description"
-            >
-              +US$200
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Leather"
-          class="text-foreground flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-image-tile-size,3rem)] h-[var(--swatch-image-tile-size,3rem)] p-0 overflow-hidden rounded-ui bg-muted cursor-pointer !w-[var(--swatch-image-tile-size,3rem)] !h-[var(--swatch-image-tile-size,3rem)] !min-w-[var(--swatch-image-tile-size,3rem)] !min-h-[var(--swatch-image-tile-size,3rem)] !p-0 border-2 border-border shadow-2xs hover:border-primary/60"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="image"
-          href="/RefArchGlobal/en-GB/product/test-product?fabric=leather"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <div
-              class="absolute inset-0 h-full w-full"
-            >
-              <img
-                alt="Leather fabric swatch"
-                class="h-full w-full object-cover"
-                fetchpriority="auto"
-                loading="lazy"
-                src="https://placehold.co/72x72/6b4423/ffffff?text=Leather"
-              />
-            </div>
-            <span
-              class="ml-1 text-[length:var(--swatch-description-size,0.75rem)] text-muted-foreground"
-              data-slot="swatch-description"
-            >
-              +US$450
-            </span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div
-    class="mt-6"
-  >
-    <div
-      class="space-y-4"
-    >
-      <div
-        class="w-full"
-      >
-        <div
-          aria-required="false"
-          class="grid grid-cols-2 gap-2"
-          data-slot="radio-group"
-          data-testid="delivery-option-select"
-          dir="ltr"
-          role="radiogroup"
-          style="outline: none;"
-          tabindex="0"
-        >
-          <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs cursor-pointer border-muted-foreground/20 hover:border-primary/50"
-            data-slot="label"
-            for="delivery-option-test-product-123"
-          >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              id="delivery-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="delivery"
-            />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Deliver to
-                </span>
-                <p
-                  class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-                >
-                  Enter ZIP code to see delivery estimate
-                </p>
-              </div>
-            </div>
-          </label>
-          <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="pickup-option-test-product-123"
-          >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="pickup-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="pickup"
-            />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Pickup unavailable at
-                </span>
-                <div
-                  class="mt-0.5"
-                >
-                  <button
-                    class="text-xs text-primary hover:underline cursor-pointer"
-                    type="button"
-                  />
-                  <p
-                    class="text-xs font-normal text-destructive mt-1"
-                  >
-                    Try another store
-                  </p>
-                </div>
-              </div>
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="space-y-2"
-  >
-    <label
-      class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
-      data-slot="label"
-      for="quantity-_r_2c_"
-    >
-      Quantity
-    </label>
-    <div
-      aria-label="Quantity for Modular Fabric Sofa"
-      class="inline-flex items-center border border-input rounded-ui overflow-hidden"
-      role="group"
-    >
-      <button
-        aria-label="Decrement Quantity for Modular Fabric Sofa"
-        class="px-2.5 py-1.5 text-base font-semibold leading-normal text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
-        data-testid="quantity-decrement"
-        disabled=""
-      >
-        −
-      </button>
-      <input
-        class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        id="quantity-_r_2c_"
-        min="1"
-        step="1"
-        type="number"
-        value="1"
-      />
-      <button
-        aria-label="Increment Quantity for Modular Fabric Sofa"
-        class="px-2.5 py-1.5 text-base font-semibold leading-normal text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
-        data-testid="quantity-increment"
-      >
-        +
-      </button>
-    </div>
-    <div
-      aria-atomic="true"
-      aria-live="polite"
-      id="quantity-_r_2c_-inventory-msg"
+      id="quantity-_r_2f_-inventory-msg"
       role="status"
     />
   </div>
@@ -1837,7 +1181,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
     class="relative mt-2 inline-block"
   >
     <div
-      aria-controls="radix-_r_f_"
+      aria-controls="radix-_r_i_"
       aria-haspopup="dialog"
       class="relative inline-block"
       data-slot="popover-trigger"
@@ -1971,354 +1315,280 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
   </div>
   <div
     class="space-y-3"
+    data-slot="colorway-strip"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_l_"
-      class="flex flex-col gap-3"
-      role="radiogroup"
+      class="flex items-center justify-between gap-2"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_l_"
+      <p
+        class="text-base font-semibold leading-6 text-card-foreground"
+        id="_r_o_"
       >
-        <span>
-          Color
-          :
+        Colour
+      </p>
+      <span
+        class="text-sm text-secondary-foreground"
+      >
+        3 colours
+      </span>
+    </div>
+    <div
+      aria-labelledby="_r_o_"
+      class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+      data-max-visible="8"
+      data-slot="colorway-strip-list"
+      data-testid="colorway-strip-list"
+      role="radiogroup"
+      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Red"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
+        >
+          R
         </span>
-      </div>
-      <div
-        class="flex flex-wrap gap-[var(--swatch-pill-gap,0.5rem)] focus:outline-none"
-        data-slot="swatch-container"
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Blue"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Red"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=red"
-          position="relative"
-          role="radio"
-          tabindex="0"
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Red swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: red; background-image: url("https://placehold.co/50x50/ff0000/ffffff?text=R"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Red
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Blue"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=blue"
-          position="relative"
-          role="radio"
-          tabindex="-1"
+          B
+        </span>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Green"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Blue swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: blue; background-image: url("https://placehold.co/50x50/0000ff/ffffff?text=B"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Blue
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Green"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=green"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Green swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: green; background-image: url("https://placehold.co/50x50/00ff00/ffffff?text=G"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Green
-            </span>
-          </div>
-        </a>
-      </div>
+          G
+        </span>
+      </button>
     </div>
   </div>
   <div
-    class="space-y-3"
+    class="space-y-2"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_m_"
-      class="inline-flex flex-col gap-3"
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="size-grid-label-_r_p_"
+    >
+      Size
+    </div>
+    <div
+      aria-labelledby="size-grid-label-_r_p_"
+      class="flex flex-wrap gap-2 focus:outline-none"
       role="radiogroup"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_m_"
+      <button
+        aria-checked="false"
+        aria-label="Size Small, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="0"
+        type="button"
       >
-        <span>
-          Size
-          :
-        </span>
-      </div>
-      <div
-        class="inline-flex flex-wrap gap-2 focus:outline-none bg-swatch-group-bg p-1"
-        data-slot="swatch-container"
+        Small
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Medium, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Small"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=S"
-          position="relative"
-          role="radio"
-          tabindex="0"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Small
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Medium"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=M"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Medium
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=L"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Large
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Extra Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=XL"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Extra Large
-            </span>
-          </div>
-        </a>
-      </div>
+        Medium
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Large
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Extra Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Extra Large
+      </button>
     </div>
+  </div>
+  <div
+    class="grid gap-3"
+  >
+    <button
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ui transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 py-2 has-[>svg]:px-3 justify-self-start px-0 text-sm font-medium underline"
+      data-size="default"
+      data-slot="button"
+      data-variant="link"
+      type="button"
+    >
+      Size Guide
+    </button>
   </div>
   <div
     class="mt-6"
   >
     <div
-      class="space-y-4"
+      class="w-full"
     >
       <div
-        class="w-full"
+        aria-label="Fulfillment method"
+        aria-required="false"
+        class="grid gap-2 grid-cols-2"
+        data-slot="radio-group"
+        data-testid="delivery-option-select"
+        dir="ltr"
+        role="radiogroup"
+        style="outline: none;"
+        tabindex="0"
       >
         <div
-          aria-required="false"
-          class="grid grid-cols-2 gap-2"
-          data-slot="radio-group"
-          data-testid="delivery-option-select"
-          dir="ltr"
-          role="radiogroup"
-          style="outline: none;"
-          tabindex="-1"
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50 bg-muted/50 cursor-not-allowed"
         >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-disabled=""
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            disabled=""
+            id="fulfillment-option-test-product-123-delivery"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="delivery"
+          />
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="delivery-option-test-product-123"
+            class="absolute inset-0 cursor-not-allowed"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="delivery-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="delivery"
-            />
-            <div
-              class="mt-0.5 shrink-0"
+            <span
+              class="sr-only"
             >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Deliver to
-                </span>
-                <p
-                  class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-                >
-                  Enter ZIP code to see delivery estimate
-                </p>
-              </div>
-            </div>
+              Delivery
+            </span>
           </label>
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="pickup-option-test-product-123"
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="pickup-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="pickup"
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Pickup unavailable at
-                </span>
-                <div
-                  class="mt-0.5"
-                >
-                  <button
-                    class="text-xs text-primary hover:underline cursor-pointer"
-                    type="button"
-                  />
-                  <p
-                    class="text-xs font-normal text-destructive mt-1"
-                  >
-                    Try another store
-                  </p>
-                </div>
-              </div>
-            </div>
           </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-not-allowed"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Delivery
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-delivery-description"
+            >
+              <p>
+                Enter postal code to see delivery estimate
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
+        >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-pickup"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="pickup"
+          />
+          <label
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <span
+              class="sr-only"
+            >
+              Free pickup in
+            </span>
+          </label>
+          <label
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
+            />
+          </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Free pickup in
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-pickup-description"
+            >
+              <p>
+                Select Store
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2329,7 +1599,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
     <label
       class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
       data-slot="label"
-      for="quantity-_r_p_"
+      for="quantity-_r_v_"
     >
       Quantity
     </label>
@@ -2348,7 +1618,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
       </button>
       <input
         class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        id="quantity-_r_p_"
+        id="quantity-_r_v_"
         min="1"
         step="1"
         type="number"
@@ -2365,7 +1635,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
     <div
       aria-atomic="true"
       aria-live="polite"
-      id="quantity-_r_p_-inventory-msg"
+      id="quantity-_r_v_-inventory-msg"
       role="status"
     />
   </div>
@@ -2597,352 +1867,278 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
   </div>
   <div
     class="space-y-3"
+    data-slot="colorway-strip"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_8_"
-      class="flex flex-col gap-3"
-      role="radiogroup"
+      class="flex items-center justify-between gap-2"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_8_"
+      <p
+        class="text-base font-semibold leading-6 text-card-foreground"
+        id="_r_8_"
       >
-        <span>
-          Color
-          :
+        Colour
+      </p>
+      <span
+        class="text-sm text-secondary-foreground"
+      >
+        3 colours
+      </span>
+    </div>
+    <div
+      aria-labelledby="_r_8_"
+      class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+      data-max-visible="8"
+      data-slot="colorway-strip-list"
+      data-testid="colorway-strip-list"
+      role="radiogroup"
+      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Red"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
+        >
+          R
         </span>
-      </div>
-      <div
-        class="flex flex-wrap gap-[var(--swatch-pill-gap,0.5rem)] focus:outline-none"
-        data-slot="swatch-container"
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Blue"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Red"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=red"
-          position="relative"
-          role="radio"
-          tabindex="0"
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Red swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: red; background-image: url("https://placehold.co/50x50/ff0000/ffffff?text=R"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Red
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Blue"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=blue"
-          position="relative"
-          role="radio"
-          tabindex="-1"
+          B
+        </span>
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Green"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Blue swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: blue; background-image: url("https://placehold.co/50x50/0000ff/ffffff?text=B"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Blue
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Green"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=green"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Green swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: green; background-image: url("https://placehold.co/50x50/00ff00/ffffff?text=G"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Green
-            </span>
-          </div>
-        </a>
-      </div>
+          G
+        </span>
+      </button>
     </div>
   </div>
   <div
-    class="space-y-3"
+    class="space-y-2"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_9_"
-      class="inline-flex flex-col gap-3"
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="size-grid-label-_r_9_"
+    >
+      Size
+    </div>
+    <div
+      aria-labelledby="size-grid-label-_r_9_"
+      class="flex flex-wrap gap-2 focus:outline-none"
       role="radiogroup"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_9_"
+      <button
+        aria-checked="false"
+        aria-label="Size Small, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="0"
+        type="button"
       >
-        <span>
-          Size
-          :
-        </span>
-      </div>
-      <div
-        class="inline-flex flex-wrap gap-2 focus:outline-none bg-swatch-group-bg p-1"
-        data-slot="swatch-container"
+        Small
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Medium, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Small"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=S"
-          position="relative"
-          role="radio"
-          tabindex="0"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Small
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Medium"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=M"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Medium
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=L"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Large
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Extra Large"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=XL"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Extra Large
-            </span>
-          </div>
-        </a>
-      </div>
+        Medium
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Large
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Extra Large, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        Extra Large
+      </button>
     </div>
+  </div>
+  <div
+    class="grid gap-3"
+  >
+    <button
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ui transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 py-2 has-[>svg]:px-3 justify-self-start px-0 text-sm font-medium underline"
+      data-size="default"
+      data-slot="button"
+      data-variant="link"
+      type="button"
+    >
+      Size Guide
+    </button>
   </div>
   <div
     class="mt-6"
   >
     <div
-      class="space-y-4"
+      class="w-full"
     >
       <div
-        class="w-full"
+        aria-label="Fulfillment method"
+        aria-required="false"
+        class="grid gap-2 grid-cols-2"
+        data-slot="radio-group"
+        data-testid="delivery-option-select"
+        dir="ltr"
+        role="radiogroup"
+        style="outline: none;"
+        tabindex="0"
       >
         <div
-          aria-required="false"
-          class="grid grid-cols-2 gap-2"
-          data-slot="radio-group"
-          data-testid="delivery-option-select"
-          dir="ltr"
-          role="radiogroup"
-          style="outline: none;"
-          tabindex="0"
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
         >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-delivery"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="delivery"
+          />
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs cursor-pointer border-muted-foreground/20 hover:border-primary/50"
-            data-slot="label"
-            for="delivery-option-test-product-123"
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              id="delivery-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="delivery"
-            />
-            <div
-              class="mt-0.5 shrink-0"
+            <span
+              class="sr-only"
             >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Deliver to
-                </span>
-                <p
-                  class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-                >
-                  Enter ZIP code to see delivery estimate
-                </p>
-              </div>
-            </div>
+              Delivery
+            </span>
           </label>
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="pickup-option-test-product-123"
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="pickup-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="pickup"
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Pickup unavailable at
-                </span>
-                <div
-                  class="mt-0.5"
-                >
-                  <button
-                    class="text-xs text-primary hover:underline cursor-pointer"
-                    type="button"
-                  />
-                  <p
-                    class="text-xs font-normal text-destructive mt-1"
-                  >
-                    Try another store
-                  </p>
-                </div>
-              </div>
-            </div>
           </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Delivery
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-delivery-description"
+            >
+              <p>
+                Enter postal code to see delivery estimate
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
+        >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-pickup"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="pickup"
+          />
+          <label
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <span
+              class="sr-only"
+            >
+              Free pickup in
+            </span>
+          </label>
+          <label
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
+            />
+          </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Free pickup in
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-pickup-description"
+            >
+              <p>
+                Select Store
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2953,7 +2149,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
     <label
       class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
       data-slot="label"
-      for="quantity-_r_c_"
+      for="quantity-_r_f_"
     >
       Quantity
     </label>
@@ -2972,7 +2168,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
       </button>
       <input
         class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        id="quantity-_r_c_"
+        id="quantity-_r_f_"
         min="1"
         step="1"
         type="number"
@@ -2989,7 +2185,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
     <div
       aria-atomic="true"
       aria-live="polite"
-      id="quantity-_r_c_-inventory-msg"
+      id="quantity-_r_f_-inventory-msg"
       role="status"
     />
   </div>
@@ -3082,7 +2278,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
     class="relative mt-2 inline-block"
   >
     <div
-      aria-controls="radix-_r_s_"
+      aria-controls="radix-_r_12_"
       aria-haspopup="dialog"
       class="relative inline-block"
       data-slot="popover-trigger"
@@ -3201,307 +2397,259 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
   />
   <div
     class="space-y-3"
+    data-slot="colorway-strip"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_12_"
-      class="flex flex-col gap-3"
-      role="radiogroup"
+      class="flex items-center justify-between gap-2"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_12_"
+      <p
+        class="text-base font-semibold leading-6 text-card-foreground"
+        id="_r_18_"
       >
-        <span>
-          Color
-          :
+        Colour
+      </p>
+      <span
+        class="text-sm text-secondary-foreground"
+      >
+        3 colours
+      </span>
+    </div>
+    <div
+      aria-labelledby="_r_18_"
+      class="grid w-[calc(var(--colorway-mobile-visible)*4rem+(var(--colorway-mobile-visible)-1)*0.5rem+0.5rem)] max-w-full grid-flow-col auto-cols-16 grid-rows-1 gap-2 overflow-x-auto p-1 [scrollbar-width:thin] md:w-[calc(var(--colorway-desktop-visible)*4rem+(var(--colorway-desktop-visible)-1)*0.5rem+0.5rem)]"
+      data-max-visible="8"
+      data-slot="colorway-strip-list"
+      data-testid="colorway-strip-list"
+      role="radiogroup"
+      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    >
+      <button
+        aria-checked="false"
+        aria-label="Red"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
+        >
+          R
         </span>
-      </div>
-      <div
-        class="flex flex-wrap gap-[var(--swatch-pill-gap,0.5rem)] focus:outline-none"
-        data-slot="swatch-container"
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Blue"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Red"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=red"
-          position="relative"
-          role="radio"
-          tabindex="0"
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Red swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: red; background-image: url("https://placehold.co/50x50/ff0000/ffffff?text=R"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Red
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Blue"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=blue"
-          position="relative"
-          role="radio"
-          tabindex="-1"
+          B
+        </span>
+      </button>
+      <button
+        aria-checked="false"
+        aria-disabled="true"
+        aria-label="Green (out of stock)"
+        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
+        role="radio"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+          class="flex size-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground"
         >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Blue swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: blue; background-image: url("https://placehold.co/50x50/0000ff/ffffff?text=B"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Blue
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-disabled="true"
-          aria-label="Green (out of stock)"
-          class="border-[length:var(--swatch-border-width)] flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 w-[var(--swatch-pill-size)] h-[var(--swatch-pill-size)] p-[var(--swatch-pill-padding)] cursor-not-allowed before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:h-[32px] before:w-[1px] before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45 before:bg-black before:z-[1] !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] gap-[var(--swatch-color-gap,0px)] border-[var(--swatch-color-border,transparent)] bg-[var(--swatch-color-bg,transparent)] text-[var(--swatch-color-text,inherit)] opacity-50"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="color"
-          href="/RefArchGlobal/en-GB/product/test-product?color=green"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              aria-label="Green swatch"
-              class="bg-cover bg-center bg-no-repeat"
-              data-slot="swatch-dot"
-              style="width: var(--swatch-color-dot, 100%); height: var(--swatch-color-dot, 100%); background-color: green; background-image: url("https://placehold.co/50x50/00ff00/ffffff?text=G"); border: var(--swatch-color-dot-border, none);"
-            />
-            <span
-              class="text-xs font-medium capitalize ml-1"
-              data-slot="swatch-text"
-              style="display: var(--swatch-color-label);"
-            >
-              Green
-            </span>
-          </div>
-        </a>
-      </div>
+          G
+        </span>
+      </button>
     </div>
   </div>
   <div
-    class="space-y-3"
+    class="space-y-2"
   >
     <div
-      aria-labelledby="swatch-group-label-_r_13_"
-      class="inline-flex flex-col gap-3"
+      class="text-base font-semibold leading-6 text-card-foreground"
+      id="size-grid-label-_r_19_"
+    >
+      Size
+    </div>
+    <div
+      aria-labelledby="size-grid-label-_r_19_"
+      class="flex flex-wrap gap-2 focus:outline-none"
       role="radiogroup"
     >
-      <div
-        class="flex items-center gap-2 text-base font-semibold leading-6 text-card-foreground"
-        id="swatch-group-label-_r_13_"
+      <button
+        aria-checked="false"
+        aria-label="Size Small, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="0"
+        type="button"
       >
-        <span>
-          Size
-          :
-        </span>
-      </div>
-      <div
-        class="inline-flex flex-wrap gap-2 focus:outline-none bg-swatch-group-bg p-1"
-        data-slot="swatch-container"
+        Small
+      </button>
+      <button
+        aria-checked="false"
+        aria-label="Size Medium, available"
+        class="min-w-11 min-h-11 px-2 flex items-center justify-center border rounded-md text-sm font-medium leading-5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-border bg-background text-foreground hover:border-border-subtle cursor-pointer"
+        role="radio"
+        tabindex="-1"
+        type="button"
       >
-        <a
-          aria-checked="false"
-          aria-label="Small"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=S"
-          position="relative"
-          role="radio"
-          tabindex="0"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Small
-            </span>
-          </div>
-        </a>
-        <a
-          aria-checked="false"
-          aria-label="Medium"
-          class="flex-shrink-0 relative group transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-8 min-h-8 px-3 py-1 cursor-pointer !w-auto !h-auto !min-w-[var(--swatch-labeled-min-size)] !min-h-[var(--swatch-labeled-min-size)] !p-[var(--swatch-labeled-padding)] bg-swatch-bg border border-swatch-border text-swatch-text shadow-2xs hover:border-[var(--swatch-color-border-hover,transparent)]"
-          data-discover="true"
-          data-labeled="true"
-          data-swatch-type="label"
-          href="/RefArchGlobal/en-GB/product/test-product?size=M"
-          position="relative"
-          role="radio"
-          tabindex="-1"
-        >
-          <div
-            class="flex items-center justify-center w-full h-full text-sm font-medium leading-5"
-            data-slot="swatch-content"
-          >
-            <span
-              class="text-xs font-medium"
-            >
-              Medium
-            </span>
-          </div>
-        </a>
-      </div>
+        Medium
+      </button>
     </div>
+  </div>
+  <div
+    class="grid gap-3"
+  >
+    <button
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ui transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary underline-offset-4 hover:underline h-9 py-2 has-[>svg]:px-3 justify-self-start px-0 text-sm font-medium underline"
+      data-size="default"
+      data-slot="button"
+      data-variant="link"
+      type="button"
+    >
+      Size Guide
+    </button>
   </div>
   <div
     class="mt-6"
   >
     <div
-      class="space-y-4"
+      class="w-full"
     >
       <div
-        class="w-full"
+        aria-label="Fulfillment method"
+        aria-required="false"
+        class="grid gap-2 grid-cols-2"
+        data-slot="radio-group"
+        data-testid="delivery-option-select"
+        dir="ltr"
+        role="radiogroup"
+        style="outline: none;"
+        tabindex="0"
       >
         <div
-          aria-required="false"
-          class="grid grid-cols-2 gap-2"
-          data-slot="radio-group"
-          data-testid="delivery-option-select"
-          dir="ltr"
-          role="radiogroup"
-          style="outline: none;"
-          tabindex="0"
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
         >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-delivery-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-delivery"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="delivery"
+          />
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs cursor-pointer border-muted-foreground/20 hover:border-primary/50"
-            data-slot="label"
-            for="delivery-option-test-product-123"
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              id="delivery-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="delivery"
-            />
-            <div
-              class="mt-0.5 shrink-0"
+            <span
+              class="sr-only"
             >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Deliver to
-                </span>
-                <p
-                  class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
-                >
-                  Enter ZIP code to see delivery estimate
-                </p>
-              </div>
-            </div>
+              Delivery
+            </span>
           </label>
           <label
-            class="text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs border-muted-foreground/20 hover:border-primary/50 opacity-50 cursor-not-allowed"
-            data-slot="label"
-            for="pickup-option-test-product-123"
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-delivery"
           >
-            <button
-              aria-checked="false"
-              class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only"
-              data-disabled=""
-              data-radix-collection-item=""
-              data-slot="radio-group-item"
-              data-state="unchecked"
-              disabled=""
-              id="pickup-option-test-product-123"
-              role="radio"
-              tabindex="-1"
-              type="button"
-              value="pickup"
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
             />
-            <div
-              class="mt-0.5 shrink-0"
-            >
-              <div
-                class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
-              />
-            </div>
-            <div
-              class="flex-1 min-w-0"
-            >
-              <div
-                class="flex flex-col"
-              >
-                <span
-                  class="text-sm font-medium leading-none text-foreground"
-                >
-                  Pickup unavailable at
-                </span>
-                <div
-                  class="mt-0.5"
-                >
-                  <button
-                    class="text-xs text-primary hover:underline cursor-pointer"
-                    type="button"
-                  />
-                  <p
-                    class="text-xs font-normal text-destructive mt-1"
-                  >
-                    Try another store
-                  </p>
-                </div>
-              </div>
-            </div>
           </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Delivery
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-delivery-description"
+            >
+              <p>
+                Enter postal code to see delivery estimate
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative flex items-start gap-2 rounded-ui p-3 border transition-colors text-left shadow-xs focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 border-muted-foreground/20 hover:border-primary/50"
+        >
+          <button
+            aria-checked="false"
+            aria-describedby="fulfillment-option-test-product-123-pickup-description"
+            class="border-input text-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-ui transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 sr-only peer"
+            data-radix-collection-item=""
+            data-slot="radio-group-item"
+            data-state="unchecked"
+            id="fulfillment-option-test-product-123-pickup"
+            role="radio"
+            tabindex="-1"
+            type="button"
+            value="pickup"
+          />
+          <label
+            class="absolute inset-0 cursor-pointer"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <span
+              class="sr-only"
+            >
+              Free pickup in
+            </span>
+          </label>
+          <label
+            aria-hidden="true"
+            class="mt-0.5 shrink-0"
+            for="fulfillment-option-test-product-123-pickup"
+          >
+            <div
+              class="w-4 h-4 border-2 flex items-center justify-center transition-colors border-muted-foreground/20"
+            />
+          </label>
+          <div
+            class="relative z-10 flex-1 min-w-0 pointer-events-none"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <span
+                class="text-sm font-medium leading-none text-foreground"
+              >
+                Free pickup in
+              </span>
+            </div>
+            <div
+              class="text-xs font-normal leading-4 tracking-[0.12px] text-muted-foreground mt-0.5"
+              id="fulfillment-option-test-product-123-pickup-description"
+            >
+              <p>
+                Select Store
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3512,7 +2660,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
     <label
       class="flex items-center gap-2 select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-semibold leading-6 text-card-foreground"
       data-slot="label"
-      for="quantity-_r_16_"
+      for="quantity-_r_1f_"
     >
       Quantity
     </label>
@@ -3531,7 +2679,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
       </button>
       <input
         class="w-9 min-w-[2ch] text-center text-sm font-semibold leading-normal text-foreground border-0 bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] disabled:opacity-50 disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        id="quantity-_r_16_"
+        id="quantity-_r_1f_"
         min="1"
         step="1"
         type="number"
@@ -3548,7 +2696,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
     <div
       aria-atomic="true"
       aria-live="polite"
-      id="quantity-_r_16_-inventory-msg"
+      id="quantity-_r_1f_-inventory-msg"
       role="status"
     />
   </div>

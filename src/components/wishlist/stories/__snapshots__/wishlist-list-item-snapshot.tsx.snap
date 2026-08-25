@@ -60,22 +60,7 @@ exports[`WishlistListItem stories snapshot > Default renders and matches snapsho
           class="flex items-center gap-2 text-xs px-2 py-0.5"
           data-slot="inventory-message"
           role="status"
-        >
-          <span
-            aria-hidden="true"
-            class="h-2 w-2 shrink-0 rounded-full bg-current text-status-positive"
-          />
-          <p
-            class="text-sm font-medium text-status-positive"
-          >
-            <span
-              class="sr-only"
-            >
-              Available: 
-            </span>
-            In stock
-          </p>
-        </div>
+        />
         <button
           aria-label="Remove from wishlist."
           class="block text-sm text-muted-foreground hover:text-destructive disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-2 cursor-pointer"

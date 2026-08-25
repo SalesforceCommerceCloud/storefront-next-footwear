@@ -25,6 +25,7 @@ import { toImageUrl } from '@/lib/images/dynamic-image';
 import { useConfig } from '@salesforce/storefront-next-runtime/config';
 import ProductPrice from '@/components/product-price';
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
+import { getInventoryForResolvedSelection, hasDeferredAvailability } from '@/lib/product/inventory-utils';
 import InventoryMessage, { InventoryStatus } from '@/components/inventory-message';
 // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
 import { ProductRatingSummary } from '@/components/product-view/product-rating-summary';
@@ -36,8 +37,7 @@ import { useTranslation } from 'react-i18next';
 import { WishlistButton } from '@/components/buttons/wishlist-button';
 import { ShareButton } from '@/components/buttons/share-button';
 import { UITarget } from '@/targets/ui-target';
-// @sfdc-extension-line SFDC_EXT_BOPIS
-import DeliveryOptions from '@/extensions/bopis/components/delivery-options/delivery-options';
+import DeliveryOptions from '@/components/fulfillment/delivery-options';
 import { Button } from '@/components/ui/button';
 import { SizeGuideDrawer, parseSizeChart, deriveGenderFromCategory } from '@/components/size-guide-drawer';
 import { FitConfidenceIndicator, parseFitFeedback } from '@/components/fit-confidence-indicator';
@@ -261,6 +261,9 @@ export default function ProductInfo({
     // controlled selection, then the local/URL-merged variant, then pure URL-based as fallback.
     const currentVariant =
         currentVariantOverride || controlledCurrentVariant || localOverrideVariant || urlCurrentVariant;
+    // Selected-SKU inventory can be pending in two flows: the controlled quick-add modal passes the
+    // flag as a prop, while the real PDP hydrates it inside the shared provider (useProductActions).
+    const variantInventoryLoading = isVariantInventoryLoading || (productView?.isVariantInventoryLoading ?? false);
     const productForPrice = useMemo(() => {
         if (!currentVariant) return product;
         // Build a variant-like product shape so ProductPrice does not treat it as master range pricing.
@@ -272,6 +275,7 @@ export default function ProductInfo({
         } as ShopperProducts.schemas['Product'];
     }, [product, currentVariant]);
     const productForDeliveryOptions = useMemo(() => {
+        if (variantInventoryLoading) return { ...product, inventories: undefined };
         if (!currentVariant) return product;
         // Prefer the provider-hydrated selected-SKU inventory (authoritative site + per-store) when
         // available; otherwise any inventory carried on the resolved variant; otherwise the master.
@@ -291,7 +295,15 @@ export default function ProductInfo({
             inventories: variantWithInventory.inventories ?? product.inventories,
             currentVariant,
         };
-    }, [product, currentVariant, productView?.hydratedVariant]);
+    }, [product, currentVariant, productView?.hydratedVariant, variantInventoryLoading]);
+    const inventoryForResolvedSelection = getInventoryForResolvedSelection(
+        product,
+        productView?.hydratedVariant ?? currentVariant
+    );
+    const deliveryAvailabilityIsUnknown =
+        inventoryForResolvedSelection == null ||
+        (typeof inventoryForResolvedSelection.ats !== 'number' && inventoryForResolvedSelection.orderable !== false);
+    const hasDeferredAvailabilityForSelection = hasDeferredAvailability(inventoryForResolvedSelection);
     // Get currency from context (automatically derived from locale)
     const { currency } = useSite();
     const [standaloneQuantity, setStandaloneQuantity] = useState(1);
@@ -303,12 +315,7 @@ export default function ProductInfo({
     const mode = productView?.mode ?? 'add';
     // @sfdc-extension-line SFDC_EXT_BOPIS
     const basketPickupStore = productView?.basketPickupStore;
-
-    // Selected-SKU inventory can be pending in two flows: the controlled quick-add modal passes the
-    // flag as a prop, while the real PDP hydrates it inside the shared provider (useProductActions).
-    // Honor both so the inventory message reads "unknown" -- rather than a master-fallback status --
-    // while the selected SKU's authoritative inventory is still resolving.
-    const variantInventoryLoading = isVariantInventoryLoading || (productView?.isVariantInventoryLoading ?? false);
+    const showFulfillmentOptions = mode !== 'edit';
 
     const { t } = useTranslation('product');
 
@@ -823,21 +830,21 @@ export default function ProductInfo({
                 triggerRef={sizeGuideTriggerRef}
             />
 
-            {/* @sfdc-extension-block-start SFDC_EXT_BOPIS */}
-            {/* Delivery Options - For individual products */}
-            {/* Hide for non-pickup items when opened from cart page */}
-            {!isVariantInventoryLoading &&
-                !isOutOfStock &&
-                (mode !== 'edit' || basketPickupStore) &&
-                !(isProductABundle || isProductASet) && (
-                    <DeliveryOptions
-                        product={productForDeliveryOptions}
-                        quantity={quantity}
-                        basketPickupStore={basketPickupStore}
-                        className="mt-6"
-                    />
-                )}
-            {/* @sfdc-extension-block-end SFDC_EXT_BOPIS */}
+            {showFulfillmentOptions && !(isProductABundle || isProductASet) && (
+                <DeliveryOptions
+                    product={productForDeliveryOptions}
+                    quantity={quantity}
+                    deliveryAvailable={deliveryAvailabilityIsUnknown ? true : undefined}
+                    // @sfdc-extension-line SFDC_EXT_BOPIS
+                    pickupLocation={basketPickupStore}
+                    onSelectionChange={productView?.setFulfillmentSelection}
+                    className="mt-6"
+                />
+            )}
+
+            {/* @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY */}
+            {!hasDeferredAvailabilityForSelection && <UITarget targetId="sfcc.pdp.estimatedDelivery" />}
+            {/* @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY */}
 
             {/* Quantity Selector - for non-set/bundle when not edit mode, or when showQuantityInEditMode in edit mode */}
             {showQuantity && (

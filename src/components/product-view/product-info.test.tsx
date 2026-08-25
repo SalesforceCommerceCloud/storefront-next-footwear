@@ -16,25 +16,21 @@
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { describe, test, expect, vi } from 'vitest';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import ProductInfo from './product-info';
-import ProductViewProvider from '@/providers/product-view';
+import ProductViewProvider, { useProductView } from '@/providers/product-view';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
 import { masterProduct as mockProduct } from '@/components/__mocks__/master-variant-product';
 import { standardProd } from '@/components/__mocks__/standard-product-2';
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
+import StoreLocatorProvider from '@/extensions/store-locator/providers/store-locator';
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
 import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
 import type { ShopperProducts } from '@/scapi';
 
 const { t } = getTranslation();
-
-vi.mock('@/extensions/bopis/components/delivery-options/delivery-options', () => ({
-    default: ({ product }: { product: ShopperProducts.schemas['Product'] }) => (
-        <div data-testid="delivery-options-variant-id">
-            {(product.currentVariant as { productId?: string } | undefined)?.productId}
-        </div>
-    ),
-}));
 
 // Footwear-vertical strings aren't in the canonical resources vitest.setup.ts initializes
 // (VERTICAL isn't set for `pnpm test`), so layer a fallback mock over react-i18next's
@@ -676,6 +672,85 @@ describe('ProductInfo', () => {
             expect(screen.getByText(t('product:inStock'))).toBeInTheDocument();
         });
 
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+        test('keeps fulfillment options and the selected option visible while variant inventory is loading', async () => {
+            const user = userEvent.setup();
+            const productWithStaleMasterInventory = {
+                ...mockProduct,
+                inventories: [{ id: 'store-inventory', stockLevel: 0, orderable: false }],
+            };
+            const availableVariant = {
+                productId: 'selected-variant',
+                inventory: { id: 'site-inventory', ats: 10, orderable: true },
+                inventories: [{ id: 'store-inventory', stockLevel: 10, orderable: true }],
+            } as ShopperProducts.schemas['Variant'] & {
+                inventory: ShopperProducts.schemas['Inventory'];
+                inventories: ShopperProducts.schemas['Inventory'][];
+            };
+
+            function Harness() {
+                const [isLoading, setIsLoading] = useState(false);
+                const { fulfillmentSelection } = useProductView();
+                const currentVariant = isLoading ? undefined : availableVariant;
+                return (
+                    <>
+                        <button type="button" onClick={() => setIsLoading((loading) => !loading)}>
+                            Toggle inventory loading
+                        </button>
+                        <output data-testid="fulfillment-selection">{fulfillmentSelection?.optionId}</output>
+                        <ProductInfo
+                            product={productWithStaleMasterInventory}
+                            currentVariantOverride={currentVariant}
+                            isVariantInventoryLoading={isLoading}
+                        />
+                    </>
+                );
+            }
+
+            const router = createMemoryRouter(
+                [
+                    {
+                        path: '/product/:productId',
+                        element: (
+                            <AllProvidersWrapper>
+                                <StoreLocatorProvider
+                                    selectedStoreInfo={{
+                                        id: 'store-1',
+                                        name: 'Store 1',
+                                        inventoryId: 'store-inventory',
+                                    }}>
+                                    <ProductViewProvider product={productWithStaleMasterInventory}>
+                                        <Harness />
+                                    </ProductViewProvider>
+                                </StoreLocatorProvider>
+                            </AllProvidersWrapper>
+                        ),
+                    },
+                ],
+                { initialEntries: ['/product/test-product'] }
+            );
+            render(<RouterProvider router={router} />);
+
+            const pickupOption = screen.getByRole('radio', { name: /pickup in/i });
+            const deliveryOptions = screen.getByTestId('delivery-option-select').parentElement?.parentElement;
+            expect(deliveryOptions).not.toBeNull();
+
+            await user.click(pickupOption);
+            expect(pickupOption).toBeChecked();
+            expect(screen.getByTestId('fulfillment-selection')).toHaveTextContent('pickup');
+
+            await user.click(screen.getByRole('button', { name: 'Toggle inventory loading' }));
+            expect(screen.getByTestId('delivery-option-select').parentElement?.parentElement).toBe(deliveryOptions);
+            expect(screen.getByRole('radio', { name: /pickup in/i })).toBeChecked();
+            expect(screen.getByTestId('fulfillment-selection')).toHaveTextContent('pickup');
+
+            await user.click(screen.getByRole('button', { name: 'Toggle inventory loading' }));
+            expect(screen.getByTestId('delivery-option-select').parentElement?.parentElement).toBe(deliveryOptions);
+            expect(screen.getByRole('radio', { name: /pickup in/i })).toBeChecked();
+            expect(screen.getByTestId('fulfillment-selection')).toHaveTextContent('pickup');
+        });
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
+
         test('should display pre-order inventory message when product is preorderable', () => {
             const preOrderProduct = {
                 ...mockProduct,
@@ -732,17 +807,17 @@ describe('ProductInfo', () => {
     });
 
     describe('delivery options', () => {
-        test('passes the selected variant to delivery options', () => {
+        test('uses the selected variant inventory for delivery availability', () => {
             const currentVariant = {
                 productId: 'selected-variant',
-                orderable: true,
-                inventory: { ats: 10, id: 'selected-inventory', orderable: true },
+                orderable: false,
+                inventory: { ats: 0, id: 'selected-inventory', orderable: false },
                 variationValues: { color: 'CHARCWL', size: '036', width: 'S' },
             } as ShopperProducts.schemas['Variant'];
 
             renderProductInfo({ product: mockProduct, currentVariantOverride: currentVariant });
 
-            expect(screen.getByTestId('delivery-options-variant-id')).toHaveTextContent('selected-variant');
+            expect(screen.getByRole('radio', { name: 'Delivery' })).toBeDisabled();
         });
     });
 
