@@ -174,7 +174,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero01,
             imageAlt: t('hero.slide1.imageAlt'),
             ctaText: t('hero.slide1.ctaText'),
-            ctaLink: '/category/root',
+            ctaLink: '/category/activity',
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -185,7 +185,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero02,
             imageAlt: t('hero.slide2.imageAlt'),
             ctaText: t('hero.slide2.ctaText'),
-            ctaLink: '/category/root',
+            ctaLink: '/category/activity',
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -196,7 +196,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero03,
             imageAlt: t('hero.slide3.imageAlt'),
             ctaText: t('hero.slide3.ctaText'),
-            ctaLink: '/category/root',
+            ctaLink: '/category/activity',
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -207,7 +207,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero04,
             imageAlt: t('hero.slide4.imageAlt'),
             ctaText: t('hero.slide4.ctaText'),
-            ctaLink: '/category/root',
+            ctaLink: '/category/activity',
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -268,25 +268,25 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                 <div className="section-container">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <ContentCard
-                            title={t('featuredContent.women.title')}
-                            description={t('featuredContent.women.description')}
-                            imageUrl={hero03}
-                            imageAlt={t('featuredContent.women.imageAlt')}
-                            buttonText={t('featuredContent.women.ctaText')}
-                            buttonAriaLabel={t('featuredContent.women.ctaAriaLabel')}
-                            buttonLink="/category/womens"
+                            title={t('featuredContent.running.title')}
+                            description={t('featuredContent.running.description')}
+                            imageUrl={hero04}
+                            imageAlt={t('featuredContent.running.imageAlt')}
+                            buttonText={t('featuredContent.running.ctaText')}
+                            buttonAriaLabel={t('featuredContent.running.ctaAriaLabel')}
+                            buttonLink={routeHref(routes.category, { categoryId: 'running' })}
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"
                         />
                         <ContentCard
-                            title={t('featuredContent.men.title')}
-                            description={t('featuredContent.men.description')}
-                            imageUrl={hero04}
-                            imageAlt={t('featuredContent.men.imageAlt')}
-                            buttonText={t('featuredContent.men.ctaText')}
-                            buttonAriaLabel={t('featuredContent.men.ctaAriaLabel')}
-                            buttonLink="/category/mens"
+                            title={t('featuredContent.casual.title')}
+                            description={t('featuredContent.casual.description')}
+                            imageUrl={hero02}
+                            imageAlt={t('featuredContent.casual.imageAlt')}
+                            buttonText={t('featuredContent.casual.ctaText')}
+                            buttonAriaLabel={t('featuredContent.casual.ctaAriaLabel')}
+                            buttonLink={routeHref(routes.category, { categoryId: 'casual' })}
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"

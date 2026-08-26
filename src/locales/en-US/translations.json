@@ -1375,32 +1375,32 @@
     "home": {
         "hero": {
             "slide1": {
-                "title": "The New Season",
-                "subtitle": "A new collection shaped by contrast, proportion, and modern attitude. Introducing key pieces for the season ahead.",
-                "ctaText": "Discover the Collection",
+                "title": "Find your stride",
+                "subtitle": "Performance and everyday shoes built for how you move.",
+                "ctaText": "Shop the collection",
                 "ctaAriaLabel": "Discover the Collection: The New Season",
-                "imageAlt": "Women's Slacks Jackets and Purses"
+                "imageAlt": "A group of friends in casual sneakers laughing together on a city ledge."
             },
             "slide2": {
-                "title": "The Modern Wardrobe",
-                "subtitle": "Elevated silhouettes, refined textures, and a bold approach to everyday dressing. Designed to move with you.",
-                "ctaText": "Shop the Look",
+                "title": "Move through the city",
+                "subtitle": "Everyday sneakers that keep up with your pace.",
+                "ctaText": "Explore by activity",
                 "ctaAriaLabel": "Shop the Look: The Modern Wardrobe",
-                "imageAlt": "Women's White Linen Dress"
+                "imageAlt": "A person carrying a skateboard through a downtown plaza in black low-top sneakers."
             },
             "slide3": {
-                "title": "After Hours",
-                "subtitle": "Statement pieces and refined layers designed for nights out, late moments, and everything in between.",
-                "ctaText": "Explore the Collection",
+                "title": "Ready for every day",
+                "subtitle": "Versatile shoes that keep pace from morning to night.",
+                "ctaText": "Explore by activity",
                 "ctaAriaLabel": "Explore the Collection: After Hours",
-                "imageAlt": "Women's Black Suit"
+                "imageAlt": "A couple sitting on city steps wearing casual low-top sneakers."
             },
             "slide4": {
-                "title": "New Perspectives",
-                "subtitle": "A curated drop of standout pieces that redefine contemporary fashion. Confident. Expressive. Uncompromising.",
-                "ctaText": "Shop Now",
+                "title": "Step into performance",
+                "subtitle": "Responsive cushioning built for every mile.",
+                "ctaText": "Explore by activity",
                 "ctaAriaLabel": "Shop Now: New Perspectives",
-                "imageAlt": "Women's Grey Dress"
+                "imageAlt": "Close-up of white and red sneakers mid-stride on a city sidewalk."
             }
         },
         "meta": {
@@ -1436,8 +1436,22 @@
                 "imageAlt": "Men's Collection"
             },
             "styleForRealLife": {
-                "title": "Style for Real Life",
+                "title": "Footwear for Real Life",
                 "description": "At Footwear Next, we believe footwear should move with you. Our collections are built for fit confidence, versatility, and everyday performance.\n\nDiscover pairs that keep pace with your day, from the first stride to the last mile."
+            },
+            "running": {
+                "title": "Built for the run",
+                "description": "Responsive cushioning and grip tuned for every mile, from the first stride to the finish line.",
+                "imageAlt": "White and red running sneakers mid-stride on a city sidewalk.",
+                "ctaText": "Shop running",
+                "ctaAriaLabel": "Shop running shoes"
+            },
+            "casual": {
+                "title": "Made for the street",
+                "description": "Low-profile sneakers with all-day comfort and a look that goes anywhere.",
+                "imageAlt": "A person in black low-top sneakers walking through a downtown plaza with a skateboard.",
+                "ctaText": "Shop casual",
+                "ctaAriaLabel": "Shop casual shoes"
             }
         },
         "activityDiscovery": {

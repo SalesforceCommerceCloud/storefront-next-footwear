@@ -1239,28 +1239,28 @@
     "home": {
         "hero": {
             "slide1": {
-                "title": "La nuova stagione",
-                "subtitle": "Una nuova collezione caratterizzata da contrasti, proporzioni e spirito moderno. Ecco i capi imperdibili della prossima stagione.",
+                "title": "Trova il tuo passo",
+                "subtitle": "Scarpe performanti e da tutti i giorni, pensate per come ti muovi.",
                 "ctaText": "Scopri la collezione",
-                "imageAlt": "Pantaloni da donna, giacche e borse"
+                "imageAlt": "Un gruppo di amici con sneaker casual ride insieme su un muretto in città."
             },
             "slide2": {
-                "title": "Il guardaroba moderno",
-                "subtitle": "Silhouette in gran stile, texture raffinate e un approccio audace al vestire di tutti i giorni. Ideato per muoversi con te.",
-                "ctaText": "Acquista il look",
-                "imageAlt": "Abito da donna in lino bianco"
+                "title": "Muoviti in città",
+                "subtitle": "Sneaker da tutti i giorni che stanno al passo con te.",
+                "ctaText": "Esplora per attività",
+                "imageAlt": "Una persona attraversa una piazza del centro con uno skateboard, in sneaker basse nere."
             },
             "slide3": {
-                "title": "A fine giornata",
-                "subtitle": "Capi di tendenza e proposte raffinate per le serate fuori, i momenti a fine giornata e ogni occasione speciale.",
-                "ctaText": "Esplora la collezione",
-                "imageAlt": "Abito nero da donna"
+                "title": "Pronte per ogni giorno",
+                "subtitle": "Scarpe versatili che tengono il passo dalla mattina alla sera.",
+                "ctaText": "Esplora per attività",
+                "imageAlt": "Una coppia seduta sui gradini in città indossa sneaker basse casual."
             },
             "slide4": {
-                "title": "Nuove prospettive",
-                "subtitle": "Una selezione curata di capi straordinari che ridefiniscono la moda contemporanea. Sicura. Espressiva. Senza compromessi.",
-                "ctaText": "Acquista ora",
-                "imageAlt": "Abito grigio da donna"
+                "title": "Entra nella performance",
+                "subtitle": "Ammortizzazione reattiva, costruita per ogni chilometro.",
+                "ctaText": "Esplora per attività",
+                "imageAlt": "Primo piano di sneaker bianche e rosse in movimento su un marciapiede cittadino."
             }
         },
         "meta": {
@@ -1293,14 +1293,33 @@
                 "imageAlt": "Collezione Uomo"
             },
             "styleForRealLife": {
-                "title": "Stile per la vita reale",
-                "description": "Noi di Market Street crediamo che la moda debba essere semplice, autentica e accessibile. Le nostre collezioni sono progettate per le persone moderne che apprezzano la qualità, la versatilità e lo stile senza tempo.\n\nScopri capi che si muovono con te, si adattano alla tua vita e diventano la base di un guardaroba che funziona, ogni giorno e ovunque."
+                "title": "Scarpe per la vita reale",
+                "description": "Da Footwear Next crediamo che le scarpe debbano muoversi con te. Le nostre collezioni sono pensate per una calzata sicura, versatilità e prestazioni di ogni giorno.\n\nScopri modelli che tengono il passo con la tua giornata, dal primo passo all’ultimo chilometro."
+            },
+            "running": {
+                "title": "Nate per correre",
+                "description": "Ammortizzazione reattiva e grip calibrati per ogni chilometro, dal primo passo al traguardo.",
+                "imageAlt": "Sneaker da running bianche e rosse in movimento su un marciapiede cittadino.",
+                "ctaText": "Scopri il running",
+                "ctaAriaLabel": "Scopri le scarpe da running"
+            },
+            "casual": {
+                "title": "Fatte per la strada",
+                "description": "Sneaker dal profilo basso, comode tutto il giorno e con uno stile che sta bene ovunque.",
+                "imageAlt": "Una persona con sneaker basse nere cammina in una piazza del centro con uno skateboard.",
+                "ctaText": "Scopri il casual",
+                "ctaAriaLabel": "Scopri le scarpe casual"
             }
         },
         "newArrivals": {
             "title": "Nuovi arrivi",
             "description": "Scopra le ultime aggiunte alla nostra collezione. Dai pezzi di tendenza agli essenziali quotidiani.",
             "ctaText": "ACQUISTA I NUOVI ARRIVI"
+        },
+        "activityDiscovery": {
+            "title": "Ce n'è un paio per tutti.",
+            "subtitle": "Trova le scarpe pensate per come ti muovi.",
+            "viewAll": "Vedi tutte le attività →"
         }
     },
     "footer": {

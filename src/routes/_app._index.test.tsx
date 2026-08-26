@@ -22,7 +22,7 @@
  * no shop-all link).
  */
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import type { ShopperExperience, ShopperProducts, ShopperSearch } from '@/scapi';
 import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
@@ -133,19 +133,36 @@ vi.mock('@/components/home/popular-categories', () => ({
     ),
 }));
 
-// Mock the ContentCard component
+// Mock the ContentCard component. Surface buttonLink/buttonAriaLabel so tests can assert the
+// spotlight cards point at real categories (the activity spotlights replaced apparel women/men
+// cards that linked to gender categories the footwear catalog does not have).
 vi.mock('@/components/content-card', () => ({
-    default: ({ title, description }: any) => (
+    default: ({ title, description, buttonLink, buttonText, buttonAriaLabel }: any) => (
         <div data-testid="content-card">
             <h3>{title}</h3>
             <p>{description}</p>
+            {buttonLink && (
+                <a href={buttonLink} aria-label={buttonAriaLabel}>
+                    {buttonText}
+                </a>
+            )}
         </div>
     ),
 }));
 
-// Mock HeroCarousel component
+// Mock HeroCarousel component. Surface each slide's CTA as a link so tests can assert where the
+// hero CTAs point (they replaced apparel slides that linked to /category/root). The real component
+// renders <Link to={slide.ctaLink} aria-label={slide.ctaAriaLabel}>{slide.ctaText}</Link>.
 vi.mock('@/components/hero-carousel', () => ({
-    default: () => <div data-testid="hero-carousel">Hero Carousel</div>,
+    default: ({ slides }: any) => (
+        <div data-testid="hero-carousel">
+            {slides?.map((slide: any) => (
+                <a key={slide.id} href={slide.ctaLink} aria-label={slide.ctaAriaLabel}>
+                    {slide.ctaText}
+                </a>
+            ))}
+        </div>
+    ),
 }));
 
 // Mock ProductCarousel components
@@ -195,16 +212,19 @@ vi.mock('react-i18next', async () => {
                     'activityDiscovery.title': 'Shop by Activity',
                     'activityDiscovery.subtitle': 'Find the right shoe for how you move',
                     'activityDiscovery.viewAll': 'View all activities',
-                    'featuredContent.women.title': 'Women',
-                    'featuredContent.women.description':
-                        'Discover our curated collection of sophisticated footwear designed for the modern woman.',
-                    'featuredContent.women.imageAlt': "Women's Collection",
-                    'featuredContent.women.ctaText': 'EXPLORE COLLECTION',
-                    'featuredContent.men.title': 'Men',
-                    'featuredContent.men.description':
-                        "Timeless craftsmanship meets contemporary style in our men's footwear collection.",
-                    'featuredContent.men.imageAlt': "Men's Collection",
-                    'featuredContent.men.ctaText': 'EXPLORE COLLECTION',
+                    'featuredContent.running.title': 'Built for the run',
+                    'featuredContent.running.description':
+                        'Responsive cushioning and grip tuned for every mile, from the first stride to the finish line.',
+                    'featuredContent.running.imageAlt': 'White and red running trainers mid-stride on a city pavement.',
+                    'featuredContent.running.ctaText': 'Shop running',
+                    'featuredContent.running.ctaAriaLabel': 'Shop running shoes',
+                    'featuredContent.casual.title': 'Made for the street',
+                    'featuredContent.casual.description':
+                        'Low-profile trainers with all-day comfort and a look that goes anywhere.',
+                    'featuredContent.casual.imageAlt':
+                        'A person in black low-top trainers walking through a downtown plaza with a skateboard.',
+                    'featuredContent.casual.ctaText': 'Shop casual',
+                    'featuredContent.casual.ctaAriaLabel': 'Shop casual shoes',
                     'featuredContent.styleForRealLife.title': 'Style for Real Life',
                     'featuredContent.styleForRealLife.description':
                         'We believe style should be effortless, authentic, and accessible.',
@@ -285,10 +305,35 @@ describe('Footwear HomePage overlay', () => {
     });
 
     describe('Basic Rendering', () => {
-        test('renders featured content cards', () => {
+        test('renders the activity spotlight cards linking to real footwear categories', () => {
             renderComponent();
-            expect(screen.getByText(t('home:featuredContent.women.title'))).toBeInTheDocument();
-            expect(screen.getByText(t('home:featuredContent.men.title'))).toBeInTheDocument();
+            expect(screen.getByText(t('home:featuredContent.running.title'))).toBeInTheDocument();
+            expect(screen.getByText(t('home:featuredContent.casual.title'))).toBeInTheDocument();
+
+            // The spotlights must point at categories that exist in the footwear catalog. They replaced
+            // apparel women/men cards that linked to /category/womens and /category/mens (both 404 here).
+            const running = screen.getByRole('link', { name: 'Shop running shoes' });
+            expect(running).toHaveAttribute('href', expect.stringContaining('/category/running'));
+            const casual = screen.getByRole('link', { name: 'Shop casual shoes' });
+            expect(casual).toHaveAttribute('href', expect.stringContaining('/category/casual'));
+
+            // No card links to the gender categories the footwear catalog does not have.
+            for (const link of screen.getAllByRole('link')) {
+                expect(link.getAttribute('href')).not.toContain('/category/womens');
+                expect(link.getAttribute('href')).not.toContain('/category/mens');
+            }
+        });
+
+        test('points every hero CTA at the activity hub, not the apparel root category', () => {
+            renderComponent();
+            // The hero slides replaced apparel slides whose CTAs all pointed at /category/root. The
+            // footwear catalog browses by activity, so every hero CTA must point at the activity hub.
+            const heroLinks = within(screen.getByTestId('hero-carousel')).getAllByRole('link');
+            expect(heroLinks).toHaveLength(4);
+            for (const link of heroLinks) {
+                expect(link).toHaveAttribute('href', '/category/activity');
+                expect(link.getAttribute('href')).not.toContain('/category/root');
+            }
         });
 
         test('renders the activity rail as static content', async () => {
@@ -326,7 +371,7 @@ describe('Footwear HomePage overlay', () => {
             // ...and the static sections still render alongside them, rather than being replaced.
             expect(screen.getByTestId('hero-carousel')).toBeInTheDocument();
             expect(screen.getByTestId('popular-categories')).toBeInTheDocument();
-            expect(screen.getByText(t('home:featuredContent.women.title'))).toBeInTheDocument();
+            expect(screen.getByText(t('home:featuredContent.running.title'))).toBeInTheDocument();
             expect(await screen.findByTestId('product-carousel')).toBeInTheDocument();
         });
 
@@ -352,7 +397,7 @@ describe('Footwear HomePage overlay', () => {
         test('renders all content cards with correct count', () => {
             renderComponent();
             const contentCards = screen.getAllByTestId('content-card');
-            expect(contentCards).toHaveLength(3); // Women, Men, and Style for Real Life card
+            expect(contentCards).toHaveLength(3); // Running, Casual, and Style for Real Life card
         });
     });
 
