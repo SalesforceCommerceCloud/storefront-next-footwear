@@ -97,7 +97,7 @@ function FeaturedProductsError() {
 }
 
 export type HomePageData = {
-    page: ReturnType<typeof fetchPageWithComponentData>;
+    page: Awaited<ReturnType<typeof fetchPageWithComponentData>>;
     searchResult: Promise<ShopperSearch.schemas['ProductSearchResult']>;
     /** Children of the `activity` parent category — the activity discovery rail (PopularCategories). */
     categories: Promise<ShopperProducts.schemas['Category'][]>;
@@ -110,7 +110,7 @@ export type HomePageData = {
  * This function runs on the server during SSR and prepares data for the home page.
  * @returns Promise that resolves to an object containing search result promise
  */
-export function loader(args: Route.LoaderArgs): HomePageData {
+export async function loader(args: Route.LoaderArgs): Promise<HomePageData> {
     const logger = getLogger(args.context);
     logger.debug('HomePage: loader starting');
 
@@ -133,19 +133,26 @@ export function loader(args: Route.LoaderArgs): HomePageData {
     const currency = (args.context.get(siteContext) as SiteContext).currency;
     const pageUrl = buildCanonicalUrl(requestUrl.origin, requestUrl.pathname, requestUrl.search);
 
+    const page = fetchPageWithComponentData(args, {
+        pageId: 'homepage',
+    });
+    const searchResult = fetchCarouselProducts(args.context, {
+        categoryId: 'root',
+        limit: config.pages.home.featuredProductsCount,
+        currency: currency ?? undefined,
+    });
+    // Activity discovery rail — the children of the `activity` parent category (footwear browses
+    // by activity, not the `root` categories the canonical home uses). Non-critical (below the
+    // fold), so returned as an unresolved promise and resolved inside <PopularCategories>.
+    const categories = fetchCategories(args.context, 'activity', 1);
+
+    // These requests remain deferred, but must be observed if the blocking page request rejects.
+    void Promise.allSettled([searchResult, categories]);
+
     return {
-        page: fetchPageWithComponentData(args, {
-            pageId: 'homepage',
-        }),
-        searchResult: fetchCarouselProducts(args.context, {
-            categoryId: 'root',
-            limit: config.pages.home.featuredProductsCount,
-            currency: currency ?? undefined,
-        }),
-        // Activity discovery rail — the children of the `activity` parent category (footwear browses
-        // by activity, not the `root` categories the canonical home uses). Non-critical (below the
-        // fold), so returned as an unresolved promise and resolved inside <PopularCategories>.
-        categories: fetchCategories(args.context, 'activity', 1),
+        page: await page,
+        searchResult,
+        categories,
         pageUrl,
         ogImageUrl: new URL(hero01, requestUrl.origin).href,
     };
@@ -222,7 +229,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                 }}
             />
 
-            <Region page={loaderData.page} regionId="headerbanner" />
+            <Region page={loaderData.page} regionId="headerbanner" critical={true} />
 
             <HeroCarousel
                 slides={heroSlides}

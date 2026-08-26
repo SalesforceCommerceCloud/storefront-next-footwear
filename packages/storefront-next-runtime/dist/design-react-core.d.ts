@@ -112,6 +112,7 @@ type ReactDesignComponentType<TProps> = React$1.ComponentType<TProps> | React$1.
  * for the framework-agnostic component registry.
  */
 declare class ReactAdapter<TProps> implements FrameworkAdapter<TProps, ReactDesignComponentType<TProps>> {
+  private readonly decoratedComponents;
   /**
    * Creates a React lazy component from an importer function.
    */

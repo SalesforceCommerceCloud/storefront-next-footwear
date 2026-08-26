@@ -29,6 +29,7 @@ import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
 import HomePage, { HomePageMetadata, type HomePageData, loader } from './_app._index';
 import { createTestContext } from '@/lib/test-utils';
 import { fetchPageWithComponentData } from '@/lib/page-designer/page-loader.server';
+import { fetchSearchProducts } from '@/lib/api/search.server';
 import { fetchCategories } from '@/lib/api/categories.server';
 import { getConfig } from '@salesforce/storefront-next-runtime/config';
 import type { AppConfig } from '@/types/config';
@@ -92,14 +93,15 @@ const createMockPage = (regions: any[] = []): ShopperExperience.schemas['Page'] 
 vi.mock('@/components/region', async () => {
     const { Suspense } = await import('react');
     const { Await } = await import('react-router');
-    const renderRegion = (regionId: string, errorElement: unknown, fallbackElement: unknown) =>
+    const renderRegion = (regionId: string, errorElement: unknown, fallbackElement: unknown, critical: boolean) =>
         function ResolvedRegion(resolvedPage: any) {
             const components = resolvedPage?.regions?.find((region: any) => region.id === regionId)?.components ?? [];
             return (
                 <div
                     data-testid={`region-${regionId}`}
                     data-has-error-element={String(errorElement !== undefined)}
-                    data-has-fallback-element={String(fallbackElement !== undefined)}>
+                    data-has-fallback-element={String(fallbackElement !== undefined)}
+                    data-critical={String(critical)}>
                     {components.map((component: any) => (
                         <div key={component.id} data-testid={`region-component-${component.id}`}>
                             {component.typeId}
@@ -109,13 +111,13 @@ vi.mock('@/components/region', async () => {
             );
         };
     return {
-        Region: ({ page, regionId, errorElement, fallbackElement }: any) =>
+        Region: ({ page, regionId, errorElement, fallbackElement, critical = false }: any) =>
             page && typeof page.then === 'function' ? (
                 <Suspense fallback={<div data-testid={`region-${regionId}-pending`} />}>
-                    <Await resolve={page}>{renderRegion(regionId, errorElement, fallbackElement)}</Await>
+                    <Await resolve={page}>{renderRegion(regionId, errorElement, fallbackElement, critical)}</Await>
                 </Suspense>
             ) : (
-                renderRegion(regionId, errorElement, fallbackElement)(page)
+                renderRegion(regionId, errorElement, fallbackElement, critical)(page)
             ),
     };
 });
@@ -257,10 +259,10 @@ vi.mock('@/middlewares/auth.server', () => ({
 
 const renderComponent = (loaderDataOverrides?: Partial<HomePageData>) => {
     const defaultData: HomePageData = {
-        page: Promise.resolve({
+        page: {
             ...createMockPage([]),
             componentData: {},
-        }),
+        },
         searchResult: Promise.resolve(mockSearchResult),
         categories: Promise.resolve(mockCategories),
 
@@ -309,13 +311,13 @@ describe('Footwear HomePage overlay', () => {
 
         test('stacks authored Page Designer content on top of the static marketing sections', async () => {
             renderComponent({
-                page: Promise.resolve({
+                page: {
                     ...createMockPage([
                         { id: 'headerbanner', components: [{ id: 'top-slot', typeId: 'hero' }] },
                         { id: 'main', components: [{ id: 'main-slot', typeId: 'banner' }] },
                     ]),
                     componentData: {},
-                }),
+                },
             });
 
             // Authored components render inside their slots...
@@ -336,6 +338,13 @@ describe('Footwear HomePage overlay', () => {
                 expect(region).toHaveAttribute('data-has-error-element', 'false');
                 expect(region).toHaveAttribute('data-has-fallback-element', 'false');
             }
+        });
+
+        test('marks only the above-the-fold header region as critical', async () => {
+            renderComponent();
+
+            expect(await screen.findByTestId('region-headerbanner')).toHaveAttribute('data-critical', 'true');
+            expect(screen.getByTestId('region-main')).toHaveAttribute('data-critical', 'false');
         });
     });
 
@@ -384,7 +393,24 @@ describe('Footwear HomePage overlay', () => {
             } as Parameters<typeof loader>[0];
         });
 
-        test('returns home page data with fetchPageWithComponentData', () => {
+        test('starts independent data requests before the critical page resolves', async () => {
+            let resolvePage!: (page: ShopperExperience.schemas['Page']) => void;
+            vi.mocked(fetchPageWithComponentData).mockReturnValue(
+                new Promise((resolve) => {
+                    resolvePage = resolve;
+                })
+            );
+
+            const result = loader(baseLoaderArgs);
+
+            expect(fetchSearchProducts).toHaveBeenCalled();
+            expect(fetchCategories).toHaveBeenCalled();
+
+            resolvePage(createMockPage([]));
+            await result;
+        });
+
+        test('awaits home page data with fetchPageWithComponentData', async () => {
             const mockPageWithData = {
                 ...createMockPage([]),
                 componentData: { test: Promise.resolve('data') },
@@ -393,27 +419,44 @@ describe('Footwear HomePage overlay', () => {
 
             vi.mocked(fetchPageWithComponentData).mockReturnValue(pagePromise);
 
-            const result = loader(baseLoaderArgs);
+            const result = await loader(baseLoaderArgs);
 
             expect(vi.mocked(fetchPageWithComponentData)).toHaveBeenCalledWith(baseLoaderArgs, {
                 pageId: 'homepage',
             });
-            expect(result.page).toBe(pagePromise);
+            expect(result.page).toBe(mockPageWithData);
             expect(result.searchResult).toBeInstanceOf(Promise);
             expect(result.categories).toBeInstanceOf(Promise);
         });
 
-        test('fetches the children of the `activity` parent category for the rail', () => {
-            loader(baseLoaderArgs);
+        test('fetches the children of the `activity` parent category for the rail', async () => {
+            await loader(baseLoaderArgs);
             expect(vi.mocked(fetchCategories)).toHaveBeenCalledWith(mockContext, 'activity', 1);
         });
 
-        test('loader handles API errors gracefully', () => {
+        test('loader propagates page API errors', async () => {
             const error = new Error('API Error');
             vi.mocked(fetchPageWithComponentData).mockRejectedValue(error);
 
-            expect(() => loader(baseLoaderArgs)).not.toThrow();
-            expect(loader(baseLoaderArgs)).toHaveProperty('page');
+            await expect(loader(baseLoaderArgs)).rejects.toThrow('API Error');
+        });
+
+        test('observes deferred request failures when the page request rejects', async () => {
+            const pageError = new Error('Page failed');
+            const searchPromise = Promise.reject(new Error('Search failed'));
+            const categoriesPromise = Promise.reject(new Error('Categories failed'));
+            const allSettledSpy = vi.spyOn(Promise, 'allSettled');
+
+            vi.mocked(fetchPageWithComponentData).mockRejectedValueOnce(pageError);
+            vi.mocked(fetchSearchProducts).mockReturnValueOnce(searchPromise);
+            vi.mocked(fetchCategories).mockReturnValueOnce(categoriesPromise);
+
+            try {
+                await expect(loader(baseLoaderArgs)).rejects.toBe(pageError);
+                expect(allSettledSpy).toHaveBeenCalledWith([searchPromise, categoriesPromise]);
+            } finally {
+                allSettledSpy.mockRestore();
+            }
         });
     });
 
