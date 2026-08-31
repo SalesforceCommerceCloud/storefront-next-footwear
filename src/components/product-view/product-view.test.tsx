@@ -36,14 +36,38 @@ const SELECTED_STORE_INVENTORY_ID = 'store-a-inventory';
 // SCAPI drops `inventory` / `inventories` when the SKU has no record at the site or requested store.
 let variantSiteInventory: ShopperProducts.schemas['Inventory'] | null;
 let variantStoreInventories: ShopperProducts.schemas['Inventory'][] | null;
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
+// @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+const capturedProductInfoProps: { last: Record<string, unknown> | null } = { last: null };
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
 
 vi.mock('@/components/image-gallery', () => ({
     default: () => <div data-testid="image-gallery" />,
 }));
 
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
+// @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
+vi.mock('@/components/product-view/product-info', async () => {
+    const actual = await vi.importActual<typeof import('@/components/product-view/product-info')>(
+        '@/components/product-view/product-info'
+    );
+    return {
+        ...actual,
+        default: (props: React.ComponentProps<typeof actual.default>) => {
+            capturedProductInfoProps.last = props;
+            const ProductInfo = actual.default;
+            return <ProductInfo {...props} />;
+        },
+    };
+});
+// @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
+
+// @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
 vi.mock('@/extensions/shipping-delivery/components/target/delivery-estimate-summary-target', () => ({
     default: () => <div data-testid="delivery-estimate" />,
 }));
+// @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
 
 vi.mock('@/hooks/use-scapi-fetcher', () => ({
     useScapiFetcher: (_client: string, _method: string, options: { params: { path: { id: string } } }) => {
@@ -113,18 +137,29 @@ const renderOverlay = () => {
 
 describe('Footwear PDP selected-variant inventory fallback', () => {
     beforeEach(() => {
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+        // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+        capturedProductInfoProps.last = null;
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
         // Default: SKU is fully in stock at the site (store record left to each test).
         variantSiteInventory = { ats: 50, id: 'blue-site-inventory', orderable: true, stockLevel: 50 };
         variantStoreInventories = null;
     });
 
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
     test('mounts the delivery estimate once', async () => {
         renderOverlay();
 
         await waitFor(() => {
             expect(screen.getAllByTestId('delivery-estimate')).toHaveLength(1);
         });
+        expect(capturedProductInfoProps.last).toEqual(
+            expect.objectContaining({ enableDeliveryEstimatePresentation: true })
+        );
     });
+    // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
 
     test('blocks purchase when the SKU fetch omits site inventory (does not borrow the master)', async () => {
         // SCAPI returned no site inventory record for this SKU -- treat as out of stock, do not fall
