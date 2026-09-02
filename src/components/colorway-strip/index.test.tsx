@@ -122,6 +122,16 @@ describe('ColorwayStrip', () => {
         expect(strip.getAttribute('style')).toContain('--colorway-desktop-visible: 8');
     });
 
+    test('reserves grid width for the actual colorway count, not the maxVisible default', () => {
+        render(<ColorwayStrip colorways={colorways} selectedColorwayId="blue" onColorwayChange={vi.fn()} />);
+
+        // 3 colorways with the default maxVisible=8 previously reserved 8 slots' worth of width,
+        // stretching the swatches apart with large gaps instead of sitting close together.
+        const strip = screen.getByTestId('colorway-strip-list');
+        expect(strip.getAttribute('style')).toContain('--colorway-mobile-visible: 3');
+        expect(strip.getAttribute('style')).toContain('--colorway-desktop-visible: 3');
+    });
+
     test('uses a singular color count for one colorway', () => {
         render(<ColorwayStrip colorways={[colorways[0]]} selectedColorwayId="blue" onColorwayChange={vi.fn()} />);
 

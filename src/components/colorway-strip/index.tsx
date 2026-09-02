@@ -32,10 +32,17 @@ interface ColorwayStripProps {
     maxVisible?: number;
 }
 
-const colorwayStripVisibleCount = (maxVisible: number) => ({
-    mobile: Math.min(maxVisible, 4),
-    desktop: maxVisible,
-});
+// Reserves grid width for the smaller of maxVisible and the actual colorway count, so a product
+// with fewer colorways than maxVisible doesn't get a track sized for slots that don't exist —
+// which left big empty gaps between swatches. Products at or above maxVisible are unaffected;
+// the container still reserves exactly maxVisible slots and overflows the rest into horizontal scroll.
+const colorwayStripVisibleCount = (maxVisible: number, colorwayCount: number) => {
+    const visible = Math.min(maxVisible, colorwayCount);
+    return {
+        mobile: Math.min(visible, 4),
+        desktop: visible,
+    };
+};
 
 /**
  * Footwear PDP color selector. Product thumbnails expose the complete colorway before selection;
@@ -46,7 +53,7 @@ export function ColorwayStrip({ colorways, selectedColorwayId, onColorwayChange,
     // Appended to the accessible name of unavailable colorways so screen-reader users hear the
     // out-of-stock state, matching the sibling size and width selectors.
     const outOfStockSuffix = t('outOfStockSuffix', { defaultValue: '(out of stock)' });
-    const visibleCount = colorwayStripVisibleCount(maxVisible);
+    const visibleCount = colorwayStripVisibleCount(maxVisible, colorways.length);
     const labelId = useId();
     const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
     const selectedIndex = colorways.findIndex(({ colorwayId }) => colorwayId === selectedColorwayId);

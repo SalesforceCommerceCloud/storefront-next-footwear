@@ -54,33 +54,12 @@ function normalizeSpecValues(value: unknown): string[] {
     return [];
 }
 
-/**
- * Reads one performance-spec attribute off a product or search hit, tolerating both shapes it can
- * arrive in: a flat `c_<name>` key — the raw Shopper Search/Products payload, where custom attributes
- * surface directly on the object under the `custom_properties` expansion — and a normalized
- * `customProperties: [{ id, value }]` array (the product-content adapter shape). The flat key is the
- * common path, so it wins; the array is consulted only when the flat key is absent, keeping the rail
- * matched even when a hit carries its specs in the array form instead.
- */
-function readSpecValues(source: Record<string, unknown>, key: PerformanceSpecKey): string[] {
-    const flat = normalizeSpecValues(source[key]);
-    if (flat.length) return flat;
-
-    const custom = source.customProperties;
-    if (Array.isArray(custom)) {
-        const entry = (custom as Array<{ id?: unknown; value?: unknown }>).find((prop) => prop?.id === key);
-        if (entry) return normalizeSpecValues(entry.value);
-    }
-
-    return [];
-}
-
 function readPerformanceSpecs(product: ShopperProducts.schemas['Product']): Map<PerformanceSpecKey, Set<string>> {
     const record = product as unknown as Record<string, unknown>;
     const specs = new Map<PerformanceSpecKey, Set<string>>();
 
     for (const key of PERFORMANCE_SPEC_ATTRIBUTES) {
-        const values = readSpecValues(record, key);
+        const values = normalizeSpecValues(record[key]);
         if (values.length) specs.set(key, new Set(values));
     }
 
@@ -92,10 +71,18 @@ function hasMatchingPerformanceSpec(
     productSpecs: Map<PerformanceSpecKey, Set<string>>
 ): boolean {
     const record = hit as unknown as Record<string, unknown>;
+    // Master/variation-group hits carry the matched variant's custom attributes on
+    // `representedProduct`, not the hit itself — same shape product-badges.ts relies on for c_isSale.
+    const represented = hit.representedProduct as unknown as Record<string, unknown> | undefined;
 
     for (const [key, values] of productSpecs) {
-        const hitValues = readSpecValues(record, key);
+        const hitValues = normalizeSpecValues(record[key]);
         if (hitValues.some((value) => values.has(value))) return true;
+
+        if (represented) {
+            const representedValues = normalizeSpecValues(represented[key]);
+            if (representedValues.some((value) => values.has(value))) return true;
+        }
     }
 
     return false;

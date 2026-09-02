@@ -27,7 +27,7 @@ exports[`ColorwayStrip stories snapshot > Default story renders and matches snap
     data-slot="colorway-strip-list"
     data-testid="colorway-strip-list"
     role="radiogroup"
-    style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
   >
     <button
       aria-checked="true"
@@ -121,7 +121,7 @@ exports[`ColorwayStrip stories snapshot > KeyboardNavigation story renders and m
     data-slot="colorway-strip-list"
     data-testid="colorway-strip-list"
     role="radiogroup"
-    style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
   >
     <button
       aria-checked="true"

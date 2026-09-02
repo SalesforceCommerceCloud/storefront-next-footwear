@@ -20,7 +20,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
         class="mt-2 text-xs leading-none text-secondary-foreground"
       >
         SKU:
-
+         
         test-product-123
       </p>
       <p
@@ -244,7 +244,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
@@ -430,7 +430,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
               id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
-                Enter postal code to see delivery estimate
+                Deliver to shipping address
               </p>
             </div>
           </div>
@@ -568,6 +568,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
         class="mt-2 text-xs leading-none text-secondary-foreground"
       >
         SKU:
+         
         test-product-123
       </p>
       <p
@@ -791,7 +792,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
@@ -977,7 +978,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
               id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
-                Enter postal code to see delivery estimate
+                Deliver to shipping address
               </p>
             </div>
           </div>
@@ -1110,6 +1111,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
         class="mt-2 text-xs leading-none text-secondary-foreground"
       >
         SKU:
+         
         test-product-123
       </p>
       <p
@@ -1280,9 +1282,10 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
         class="sr-only"
       >
         Modular Fabric Sofa
+         
         Current price: £29.99
       </span>
-
+       
     </div>
   </div>
   <div
@@ -1301,7 +1304,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
       <span
         class="sr-only"
       >
-        Available:
+        Available: 
       </span>
       In stock
     </p>
@@ -1504,7 +1507,7 @@ exports[`ProductInfo stories snapshot > ImageSwatchesOnNonColorAxis story render
               id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
-                Enter postal code to see delivery estimate
+                Deliver to shipping address
               </p>
             </div>
           </div>
@@ -1811,6 +1814,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
          
         Current price: £29.99
       </span>
+       
     </div>
   </div>
   <div
@@ -1860,7 +1864,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
@@ -2048,7 +2052,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
               id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
-                Enter postal code to see delivery estimate
+                Deliver to shipping address
               </p>
             </div>
           </div>
@@ -2410,7 +2414,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
@@ -2596,7 +2600,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
               id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
-                Enter postal code to see delivery estimate
+                Deliver to shipping address
               </p>
             </div>
           </div>
@@ -2938,7 +2942,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
@@ -3105,7 +3109,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
               id="fulfillment-option-test-product-123-pdp-delivery-options-delivery-description"
             >
               <p>
-                Enter postal code to see delivery estimate
+                Deliver to shipping address
               </p>
             </div>
           </div>
