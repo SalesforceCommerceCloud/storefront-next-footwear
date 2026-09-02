@@ -89,7 +89,12 @@ export default function CategoryRefinements({
             if (refines.includes(refinePair)) {
                 nextRefines = refines.filter((r) => r !== refinePair);
             } else {
-                const exclusiveRefinements = ['price', 'cgid', /* @sfdc-extension-line SFDC_EXT_BOPIS */ 'ilids'];
+                const exclusiveRefinements = [
+                    'price',
+                    'cgid',
+                    // @sfdc-extension-line SFDC_EXT_BOPIS
+                    'ilids',
+                ];
                 if (exclusiveRefinements.includes(attributeId)) {
                     nextRefines = [...refines.filter((r) => !r.startsWith(`${attributeId}=`)), refinePair];
                 } else {

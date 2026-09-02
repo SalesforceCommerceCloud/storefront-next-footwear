@@ -69,6 +69,12 @@ type ProductInfoBaseProps = {
     colorwaysIgnoreSelectedAttributes?: boolean;
     /** Limits controlled behavior to these variation attributes. Defaults to all attributes. */
     controlledAttributeIds?: string[];
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    // @sfdc-extension-block-start SFDC_EXT_SHIPPING_DELIVERY
+    /** Allow the primary PDP fulfillment picker to host delivery-estimate presentation. */
+    enableDeliveryEstimatePresentation?: boolean;
+    // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
     // @sfdc-extension-block-start SFDC_EXT_RATINGS_REVIEWS
     /** Disable rating summary interactions (hover popover and review links) */
     disableRatingInteraction?: boolean;
@@ -164,6 +170,10 @@ export default function ProductInfo({
     hideActionIcons = false,
     headerAction,
     colorwaysIgnoreSelectedAttributes = false,
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+    enableDeliveryEstimatePresentation = false,
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
     // @sfdc-extension-line SFDC_EXT_RATINGS_REVIEWS
     disableRatingInteraction = false,
 }: ProductInfoProps): ReactElement {
@@ -835,6 +845,11 @@ export default function ProductInfo({
                     product={productForDeliveryOptions}
                     quantity={quantity}
                     deliveryAvailable={deliveryAvailabilityIsUnknown ? true : undefined}
+                    instanceId={`${product.id}-pdp-delivery-options`}
+                    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+                    // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+                    enableDeliveryEstimatePresentation={enableDeliveryEstimatePresentation}
+                    // @sfdc-extension-block-end SFDC_EXT_BOPIS
                     // @sfdc-extension-line SFDC_EXT_BOPIS
                     pickupLocation={basketPickupStore}
                     onSelectionChange={productView?.setFulfillmentSelection}

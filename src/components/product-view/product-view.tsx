@@ -233,6 +233,10 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
                         isVariantInventoryLoading={isVariantInventoryLoading}
                         isVariantInventoryLoadError={isVariantInventoryLoadError}
                         onRetryVariantInventory={() => void variantFetcher.load()}
+                        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+                        // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
+                        enableDeliveryEstimatePresentation
+                        // @sfdc-extension-block-end SFDC_EXT_BOPIS
                     />
                     <ProductCartActions product={product} />
                     <UITarget targetId="sfcc.pdp.returnsWarranty" />
