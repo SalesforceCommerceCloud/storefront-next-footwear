@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
@@ -839,6 +839,7 @@ describe('ProductInfo', () => {
         });
     });
 
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
     describe('delivery options', () => {
         // @sfdc-extension-block-start SFDC_EXT_BOPIS
         test('does not opt a reusable ProductInfo into estimate presentation by default', () => {
@@ -890,6 +891,7 @@ describe('ProductInfo', () => {
         });
         // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
     });
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
 
     describe('quantity selector', () => {
         test('should render quantity selector elements', () => {
@@ -988,6 +990,54 @@ describe('ProductInfo', () => {
 });
 
 describe('ProductInfo (footwear overlay)', () => {
+    describe('image swatches on non-color axes', () => {
+        test('renders image tiles and price-delta hints', () => {
+            const fabricProduct = {
+                ...mockProduct,
+                variationAttributes: [
+                    {
+                        id: 'fabric',
+                        name: 'Fabric',
+                        values: [
+                            { value: 'linen', name: 'Linen', orderable: true },
+                            { value: 'velvet', name: 'Velvet', orderable: true, description: '+US$200' },
+                        ],
+                    },
+                ],
+                imageGroups: [
+                    {
+                        viewType: 'swatch',
+                        variationAttributes: [{ id: 'fabric', values: [{ value: 'linen', name: 'Linen' }] }],
+                        images: [{ link: 'https://example.com/linen.jpg', alt: 'Linen fabric swatch' }],
+                    },
+                    {
+                        viewType: 'swatch',
+                        variationAttributes: [{ id: 'fabric', values: [{ value: 'velvet', name: 'Velvet' }] }],
+                        images: [{ link: 'https://example.com/velvet.jpg', alt: 'Velvet fabric swatch' }],
+                    },
+                ],
+                variants: [
+                    { productId: 'linen-variant', orderable: true, variationValues: { fabric: 'linen' } },
+                    { productId: 'velvet-variant', orderable: true, variationValues: { fabric: 'velvet' } },
+                ],
+            } as ShopperProducts.schemas['Product'];
+
+            renderProductInfo({ product: fabricProduct });
+
+            const linenSwatch = screen.getByRole('radio', { name: /linen/i });
+            expect(linenSwatch).toHaveAttribute('data-swatch-type', 'image');
+            expect(within(linenSwatch).getByRole('img', { name: 'Linen fabric swatch' })).toBeInTheDocument();
+            expect(linenSwatch).not.toHaveAttribute('aria-describedby');
+
+            const velvetSwatch = screen.getByRole('radio', { name: /velvet/i });
+            expect(velvetSwatch.querySelector('[data-slot="swatch-description"]')).toHaveTextContent('+US$200');
+            expect(velvetSwatch).toHaveAccessibleName('Velvet');
+            expect(velvetSwatch).not.toHaveAttribute('aria-disabled', 'true');
+            expect(velvetSwatch).toHaveAccessibleDescription('+US$200');
+            expect(velvetSwatch).toHaveAttribute('aria-describedby', 'swatch-25686395M-fabric-velvet-description');
+        });
+    });
+
     describe('Size Guide trigger and drawer', () => {
         test('renders a Size Guide trigger button', () => {
             renderProductInfo({ product: mockProduct });

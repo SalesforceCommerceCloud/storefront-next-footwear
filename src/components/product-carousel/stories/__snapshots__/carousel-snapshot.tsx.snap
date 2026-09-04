@@ -170,14 +170,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -188,7 +185,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -292,10 +289,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -308,7 +305,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -455,14 +452,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 2"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-1"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-1"
                       >
                         Laptop Briefcase with wheels (37L) 2
@@ -473,7 +467,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-1
                     </p>
                     <div
@@ -577,10 +571,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -593,7 +587,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -740,14 +734,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 3"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-2"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-2"
                       >
                         Laptop Briefcase with wheels (37L) 3
@@ -758,7 +749,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-2
                     </p>
                     <div
@@ -862,10 +853,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -878,7 +869,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -1025,14 +1016,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 4"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-3"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-3"
                       >
                         Laptop Briefcase with wheels (37L) 4
@@ -1043,7 +1031,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-3
                     </p>
                     <div
@@ -1147,10 +1135,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1163,7 +1151,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -1310,14 +1298,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 5"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-4"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-4"
                       >
                         Laptop Briefcase with wheels (37L) 5
@@ -1328,7 +1313,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-4
                     </p>
                     <div
@@ -1432,10 +1417,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1448,7 +1433,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -1595,14 +1580,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 6"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-5"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-5"
                       >
                         Laptop Briefcase with wheels (37L) 6
@@ -1613,7 +1595,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-5
                     </p>
                     <div
@@ -1717,10 +1699,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1733,7 +1715,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -1880,14 +1862,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 7"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-6"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-6"
                       >
                         Laptop Briefcase with wheels (37L) 7
@@ -1898,7 +1877,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-6
                     </p>
                     <div
@@ -2002,10 +1981,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2018,7 +1997,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -2165,14 +2144,11 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 8"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-7"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-7"
                       >
                         Laptop Briefcase with wheels (37L) 8
@@ -2183,7 +2159,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-7
                     </p>
                     <div
@@ -2287,10 +2263,10 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2303,7 +2279,7 @@ exports[`ProductCarousel stories snapshot > Default story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -2558,14 +2534,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -2576,7 +2549,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -2680,10 +2653,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2696,7 +2669,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -2843,14 +2816,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 2"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-1"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-1"
                       >
                         Laptop Briefcase with wheels (37L) 2
@@ -2861,7 +2831,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-1
                     </p>
                     <div
@@ -2965,10 +2935,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2981,7 +2951,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -3128,14 +3098,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 3"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-2"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-2"
                       >
                         Laptop Briefcase with wheels (37L) 3
@@ -3146,7 +3113,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-2
                     </p>
                     <div
@@ -3250,10 +3217,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -3266,7 +3233,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -3413,14 +3380,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 4"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-3"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-3"
                       >
                         Laptop Briefcase with wheels (37L) 4
@@ -3431,7 +3395,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-3
                     </p>
                     <div
@@ -3535,10 +3499,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -3551,7 +3515,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -3698,14 +3662,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 5"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-4"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-4"
                       >
                         Laptop Briefcase with wheels (37L) 5
@@ -3716,7 +3677,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-4
                     </p>
                     <div
@@ -3820,10 +3781,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -3836,7 +3797,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -3983,14 +3944,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 6"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-5"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-5"
                       >
                         Laptop Briefcase with wheels (37L) 6
@@ -4001,7 +3959,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-5
                     </p>
                     <div
@@ -4105,10 +4063,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -4121,7 +4079,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -4268,14 +4226,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 7"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-6"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-6"
                       >
                         Laptop Briefcase with wheels (37L) 7
@@ -4286,7 +4241,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-6
                     </p>
                     <div
@@ -4390,10 +4345,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -4406,7 +4361,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -4553,14 +4508,11 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 8"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-7"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-7"
                       >
                         Laptop Briefcase with wheels (37L) 8
@@ -4571,7 +4523,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-7
                     </p>
                     <div
@@ -4675,10 +4627,10 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -4691,7 +4643,7 @@ exports[`ProductCarousel stories snapshot > NoTitle story renders and matches sn
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -4944,14 +4896,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -4962,7 +4911,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -5066,10 +5015,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -5082,7 +5031,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -5229,14 +5178,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 2"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-1"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-1"
                       >
                         Laptop Briefcase with wheels (37L) 2
@@ -5247,7 +5193,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-1
                     </p>
                     <div
@@ -5351,10 +5297,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -5367,7 +5313,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -5514,14 +5460,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 3"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-2"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-2"
                       >
                         Laptop Briefcase with wheels (37L) 3
@@ -5532,7 +5475,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-2
                     </p>
                     <div
@@ -5636,10 +5579,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -5652,7 +5595,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -5799,14 +5742,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 4"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-3"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-3"
                       >
                         Laptop Briefcase with wheels (37L) 4
@@ -5817,7 +5757,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-3
                     </p>
                     <div
@@ -5921,10 +5861,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -5937,7 +5877,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -6084,14 +6024,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 5"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-4"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-4"
                       >
                         Laptop Briefcase with wheels (37L) 5
@@ -6102,7 +6039,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-4
                     </p>
                     <div
@@ -6206,10 +6143,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -6222,7 +6159,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -6369,14 +6306,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 6"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-5"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-5"
                       >
                         Laptop Briefcase with wheels (37L) 6
@@ -6387,7 +6321,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-5
                     </p>
                     <div
@@ -6491,10 +6425,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -6507,7 +6441,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -6654,14 +6588,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 7"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-6"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-6"
                       >
                         Laptop Briefcase with wheels (37L) 7
@@ -6672,7 +6603,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-6
                     </p>
                     <div
@@ -6776,10 +6707,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -6792,7 +6723,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -6939,14 +6870,11 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 8"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-7"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-7"
                       >
                         Laptop Briefcase with wheels (37L) 8
@@ -6957,7 +6885,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-7
                     </p>
                     <div
@@ -7061,10 +6989,10 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -7077,7 +7005,7 @@ exports[`ProductCarousel stories snapshot > PageDesignerMode story renders and m
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -7331,14 +7259,11 @@ exports[`ProductCarousel stories snapshot > SingleProduct story renders and matc
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -7349,7 +7274,7 @@ exports[`ProductCarousel stories snapshot > SingleProduct story renders and matc
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -7453,10 +7378,10 @@ exports[`ProductCarousel stories snapshot > SingleProduct story renders and matc
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -7469,7 +7394,7 @@ exports[`ProductCarousel stories snapshot > SingleProduct story renders and matc
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -7731,14 +7656,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -7749,7 +7671,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -7853,10 +7775,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -7869,7 +7791,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -8016,14 +7938,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 2"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-1"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-1"
                       >
                         Laptop Briefcase with wheels (37L) 2
@@ -8034,7 +7953,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-1
                     </p>
                     <div
@@ -8138,10 +8057,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -8154,7 +8073,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -8301,14 +8220,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 3"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-2"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-2"
                       >
                         Laptop Briefcase with wheels (37L) 3
@@ -8319,7 +8235,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-2
                     </p>
                     <div
@@ -8423,10 +8339,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -8439,7 +8355,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -8586,14 +8502,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 4"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-3"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-3"
                       >
                         Laptop Briefcase with wheels (37L) 4
@@ -8604,7 +8517,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-3
                     </p>
                     <div
@@ -8708,10 +8621,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -8724,7 +8637,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -8871,14 +8784,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 5"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-4"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-4"
                       >
                         Laptop Briefcase with wheels (37L) 5
@@ -8889,7 +8799,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-4
                     </p>
                     <div
@@ -8993,10 +8903,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -9009,7 +8919,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -9156,14 +9066,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 6"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-5"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-5"
                       >
                         Laptop Briefcase with wheels (37L) 6
@@ -9174,7 +9081,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-5
                     </p>
                     <div
@@ -9278,10 +9185,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -9294,7 +9201,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -9441,14 +9348,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 7"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-6"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-6"
                       >
                         Laptop Briefcase with wheels (37L) 7
@@ -9459,7 +9363,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-6
                     </p>
                     <div
@@ -9563,10 +9467,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -9579,7 +9483,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -9726,14 +9630,11 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 8"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-7"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-7"
                       >
                         Laptop Briefcase with wheels (37L) 8
@@ -9744,7 +9645,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-7
                     </p>
                     <div
@@ -9848,10 +9749,10 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -9864,7 +9765,7 @@ exports[`ProductCarousel stories snapshot > WithShopAllLink story renders and ma
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -10124,14 +10025,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -10142,7 +10040,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -10246,10 +10144,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -10262,7 +10160,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -10409,14 +10307,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 2"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-1"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-1"
                       >
                         Laptop Briefcase with wheels (37L) 2
@@ -10427,7 +10322,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-1
                     </p>
                     <div
@@ -10531,10 +10426,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -10547,7 +10442,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -10694,14 +10589,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 3"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-2"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-2"
                       >
                         Laptop Briefcase with wheels (37L) 3
@@ -10712,7 +10604,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-2
                     </p>
                     <div
@@ -10816,10 +10708,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -10832,7 +10724,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -10979,14 +10871,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 4"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-3"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-3"
                       >
                         Laptop Briefcase with wheels (37L) 4
@@ -10997,7 +10886,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-3
                     </p>
                     <div
@@ -11101,10 +10990,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -11117,7 +11006,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -11264,14 +11153,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 5"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-4"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-4"
                       >
                         Laptop Briefcase with wheels (37L) 5
@@ -11282,7 +11168,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-4
                     </p>
                     <div
@@ -11386,10 +11272,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -11402,7 +11288,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -11549,14 +11435,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 6"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-5"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-5"
                       >
                         Laptop Briefcase with wheels (37L) 6
@@ -11567,7 +11450,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-5
                     </p>
                     <div
@@ -11671,10 +11554,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -11687,7 +11570,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -11834,14 +11717,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 7"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-6"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-6"
                       >
                         Laptop Briefcase with wheels (37L) 7
@@ -11852,7 +11732,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-6
                     </p>
                     <div
@@ -11956,10 +11836,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -11972,7 +11852,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -12119,14 +11999,11 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 8"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-7"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-7"
                       >
                         Laptop Briefcase with wheels (37L) 8
@@ -12137,7 +12014,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-7
                     </p>
                     <div
@@ -12241,10 +12118,10 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -12257,7 +12134,7 @@ exports[`ProductCarousel stories snapshot > WithSubtitle story renders and match
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -12510,14 +12387,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 1"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-0"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-0"
                       >
                         Laptop Briefcase with wheels (37L) 1
@@ -12528,7 +12402,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-0
                     </p>
                     <div
@@ -12632,10 +12506,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -12648,7 +12522,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 1
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -12795,14 +12669,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 2"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-1"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-1"
                       >
                         Laptop Briefcase with wheels (37L) 2
@@ -12813,7 +12684,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-1
                     </p>
                     <div
@@ -12917,10 +12788,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -12933,7 +12804,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 2
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -13080,14 +12951,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 3"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-2"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-2"
                       >
                         Laptop Briefcase with wheels (37L) 3
@@ -13098,7 +12966,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-2
                     </p>
                     <div
@@ -13202,10 +13070,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -13218,7 +13086,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 3
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -13365,14 +13233,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 4"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-3"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-3"
                       >
                         Laptop Briefcase with wheels (37L) 4
@@ -13383,7 +13248,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-3
                     </p>
                     <div
@@ -13487,10 +13352,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -13503,7 +13368,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 4
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -13650,14 +13515,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 5"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-4"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-4"
                       >
                         Laptop Briefcase with wheels (37L) 5
@@ -13668,7 +13530,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-4
                     </p>
                     <div
@@ -13772,10 +13634,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -13788,7 +13650,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 5
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -13935,14 +13797,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 6"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-5"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-5"
                       >
                         Laptop Briefcase with wheels (37L) 6
@@ -13953,7 +13812,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-5
                     </p>
                     <div
@@ -14057,10 +13916,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -14073,7 +13932,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 6
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -14220,14 +14079,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 7"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-6"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-6"
                       >
                         Laptop Briefcase with wheels (37L) 7
@@ -14238,7 +14094,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-6
                     </p>
                     <div
@@ -14342,10 +14198,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -14358,7 +14214,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 7
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>
@@ -14505,14 +14361,11 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       Test Store
                     </p>
                     <h3
-                      aria-label="Laptop Briefcase with wheels (37L) 8"
                       class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
                     >
                       <a
-                        aria-hidden="true"
                         class="hover:underline"
                         href="/RefArchGlobal/en-GB/product/P0048M-7"
-                        tabindex="-1"
                         to="/RefArchGlobal/en-GB/product/P0048M-7"
                       >
                         Laptop Briefcase with wheels (37L) 8
@@ -14523,7 +14376,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                       data-testid="product-tile-sku"
                     >
                       SKU:
-                       
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                       P0048M-7
                     </p>
                     <div
@@ -14627,10 +14480,10 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           Current price: £63.99
                         </span>
-                         
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                         <span
                           aria-hidden="true"
                           class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -14643,7 +14496,7 @@ exports[`ProductCarousel stories snapshot > WithSuspenseWrapper story renders an
                           class="sr-only"
                         >
                           Laptop Briefcase with wheels (37L) 8
-                           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
                           List price: £67.99
                         </span>
                       </div>

@@ -389,8 +389,10 @@ describe('Footwear colorway gallery integration', () => {
 
         await waitFor(() => {
             expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+            // @sfdc-extension-block-start SFDC_EXT_BOPIS
             expect(screen.getByRole('radio', { name: 'Delivery' })).toBeEnabled();
             expect(screen.getByRole('radio', { name: 'Free pickup in' })).toBeEnabled();
+            // @sfdc-extension-block-end SFDC_EXT_BOPIS
         });
     });
 
@@ -474,8 +476,10 @@ describe('Footwear colorway gallery integration', () => {
             expect(size36).toHaveAttribute('aria-checked', 'false');
             expect(regularWidth).toHaveAttribute('aria-checked', 'false');
             expect(screen.getByTestId('add-to-cart')).toBeDisabled();
+            // @sfdc-extension-block-start SFDC_EXT_BOPIS
             expect(screen.getByRole('radio', { name: 'Delivery' })).toBeEnabled();
             expect(screen.getByRole('radio', { name: 'Free pickup in' })).toBeEnabled();
+            // @sfdc-extension-block-end SFDC_EXT_BOPIS
         });
 
         const size36 = screen.getAllByRole('radio').find((control) => control.textContent === '36');

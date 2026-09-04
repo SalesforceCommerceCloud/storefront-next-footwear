@@ -172,8 +172,10 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
             expect(screen.getByTestId('add-to-cart')).toBeDisabled();
             expect(screen.getByText('Out of stock')).toBeInTheDocument();
         });
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
         // The shared picker stays visible, but the selected SKU's unavailable site inventory disables delivery.
         expect(screen.getByRole('radio', { name: 'Delivery' })).toBeDisabled();
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
     });
 
     // @sfdc-extension-block-start SFDC_EXT_BOPIS

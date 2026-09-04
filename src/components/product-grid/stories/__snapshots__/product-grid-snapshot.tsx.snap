@@ -167,14 +167,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           Test Store
         </p>
         <h3
-          aria-label="Product 1"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId"
-            tabindex="-1"
           >
             Product 1
           </a>
@@ -184,7 +181,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-1
         </p>
         <div
@@ -288,10 +285,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 1
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £63.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -304,7 +301,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 1
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £67.99
             </span>
           </div>
@@ -442,20 +439,27 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            1 Colour
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 2"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=750518703077M"
-            tabindex="-1"
           >
             Product 2
           </a>
@@ -465,7 +469,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-2
         </p>
         <div
@@ -569,10 +573,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 2
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £191.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -585,7 +589,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 2
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £320.00
             </span>
           </div>
@@ -741,20 +745,27 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
             </a>
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 3"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=701642823919M"
-            tabindex="-1"
           >
             Product 3
           </a>
@@ -764,7 +775,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-3
         </p>
         <div
@@ -853,6 +864,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -868,33 +884,8 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 3
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £18.55
-            </span>
-             
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £31.36
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 3
-               
-              List price from £31.36
-            </span>
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              Buy one Long Center Seam Skirt and get 2 tops
             </span>
           </div>
         </div>
@@ -1050,20 +1041,27 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
             </a>
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 4"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=750518894461M"
-            tabindex="-1"
           >
             Product 4
           </a>
@@ -1073,7 +1071,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-4
         </p>
         <div
@@ -1162,6 +1160,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -1169,7 +1172,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               aria-hidden="true"
               class="[&:not(:first-child)]:mt-6 text-left text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground"
             >
-              £143.99 – £191.99
+              £143.99
             </span>
             <span
               aria-atomic="true"
@@ -1177,18 +1180,8 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 4
-               
-              Price range from £143.99 to £191.99
-            </span>
-             
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              25% off.
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              Current price: £143.99
             </span>
           </div>
         </div>
@@ -1316,14 +1309,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           Test Store
         </p>
         <h3
-          aria-label="Product 5"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId"
-            tabindex="-1"
           >
             Product 5
           </a>
@@ -1333,7 +1323,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-5
         </p>
         <div
@@ -1422,6 +1412,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -1429,7 +1424,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               aria-hidden="true"
               class="[&:not(:first-child)]:mt-6 text-left text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground"
             >
-              £52.16 – £71.03
+              £52.16
             </span>
             <span
               aria-atomic="true"
@@ -1437,8 +1432,8 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 5
-               
-              Price range from £52.16 to £71.03
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              Current price: £52.16
             </span>
           </div>
         </div>
@@ -1582,14 +1577,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           Test Store
         </p>
         <h3
-          aria-label="Product 6"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId"
-            tabindex="-1"
           >
             Product 6
           </a>
@@ -1599,7 +1591,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-6
         </p>
         <div
@@ -1703,10 +1695,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 6
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £63.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1719,7 +1711,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 6
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £67.99
             </span>
           </div>
@@ -1857,20 +1849,27 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            1 Colour
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 7"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=750518703077M"
-            tabindex="-1"
           >
             Product 7
           </a>
@@ -1880,7 +1879,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-7
         </p>
         <div
@@ -1984,10 +1983,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 7
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £191.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2000,7 +1999,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 7
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £320.00
             </span>
           </div>
@@ -2156,20 +2155,27 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
             </a>
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 8"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=701642823919M"
-            tabindex="-1"
           >
             Product 8
           </a>
@@ -2179,7 +2185,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-8
         </p>
         <div
@@ -2268,6 +2274,11 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -2283,33 +2294,8 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 8
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £18.55
-            </span>
-             
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £31.36
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 8
-               
-              List price from £31.36
-            </span>
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              Buy one Long Center Seam Skirt and get 2 tops
             </span>
           </div>
         </div>
@@ -2707,14 +2693,11 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           Test Store
         </p>
         <h3
-          aria-label="Product 1"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId"
-            tabindex="-1"
           >
             Product 1
           </a>
@@ -2724,7 +2707,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-1
         </p>
         <div
@@ -2828,10 +2811,10 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 1
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £63.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2844,7 +2827,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 1
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £67.99
             </span>
           </div>
@@ -3016,20 +2999,27 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            1 Colour
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 2"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=750518703077M"
-            tabindex="-1"
           >
             Product 2
           </a>
@@ -3039,7 +3029,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-2
         </p>
         <div
@@ -3143,10 +3133,10 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 2
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £191.99
             </span>
-             
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -3159,7 +3149,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 2
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               List price: £320.00
             </span>
           </div>
@@ -3349,20 +3339,27 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
             </a>
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 3"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=701642823919M"
-            tabindex="-1"
           >
             Product 3
           </a>
@@ -3372,7 +3369,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-3
         </p>
         <div
@@ -3461,6 +3458,11 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -3476,33 +3478,8 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 3
-               
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
               Current price: £18.55
-            </span>
-             
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £31.36
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 3
-               
-              List price from £31.36
-            </span>
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              Buy one Long Center Seam Skirt and get 2 tops
             </span>
           </div>
         </div>
@@ -3692,20 +3669,27 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
             </a>
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Product 4"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
             href="/product/:productId?pid=750518894461M"
-            tabindex="-1"
           >
             Product 4
           </a>
@@ -3715,7 +3699,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-           
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
           PROD-4
         </p>
         <div
@@ -3804,6 +3788,11 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -3811,7 +3800,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               aria-hidden="true"
               class="[&:not(:first-child)]:mt-6 text-left text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground"
             >
-              £143.99 – £191.99
+              £143.99
             </span>
             <span
               aria-atomic="true"
@@ -3819,18 +3808,8 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 4
-               
-              Price range from £143.99 to £191.99
-            </span>
-             
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              25% off.
+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+              Current price: £143.99
             </span>
           </div>
         </div>

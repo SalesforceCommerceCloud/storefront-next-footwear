@@ -745,7 +745,10 @@ export default function ProductInfo({
                 }
 
                 const swatches = swatchesToShow.map((value) => {
-                    const { href, name: valueName, image, value: swatchValue, orderable } = value;
+                    const { href, name: valueName, image, value: swatchValue, orderable, description } = value;
+                    const descriptionId = description
+                        ? `swatch-${encodeURIComponent(product.id)}-${encodeURIComponent(id)}-${encodeURIComponent(swatchValue)}-description`
+                        : undefined;
                     const isOrderableInCurrentSelection =
                         swatchMode === 'controlled'
                             ? isControlledVariantValueOrderable({
@@ -756,40 +759,58 @@ export default function ProductInfo({
                               })
                             : (orderable ?? true);
                     const swatchImageUrl = (image && toImageUrl({ image, config })) || '';
-                    const content = image ? (
+                    const isColorAxis = id === 'color';
+                    const swatchShape = isColorAxis ? 'color' : image ? 'image' : 'label';
+                    const content = (
                         <>
-                            <span
-                                data-slot="swatch-dot"
-                                className="bg-cover bg-center bg-no-repeat"
-                                style={{
-                                    width: 'var(--swatch-color-dot, 100%)',
-                                    height: 'var(--swatch-color-dot, 100%)',
-                                    backgroundColor: valueName?.toLowerCase(),
-                                    backgroundImage: swatchImageUrl ? `url(${swatchImageUrl})` : undefined,
-                                    border: 'var(--swatch-color-dot-border, none)',
-                                }}
-                                aria-label={image.alt || valueName}
-                            />
-                            <span
-                                data-slot="swatch-text"
-                                className="text-xs font-medium capitalize ml-1"
-                                style={{ display: 'var(--swatch-color-label)' }}>
-                                {valueName}
-                            </span>
+                            {image && isColorAxis ? (
+                                <>
+                                    <span
+                                        data-slot="swatch-dot"
+                                        className="bg-cover bg-center bg-no-repeat"
+                                        style={{
+                                            width: 'var(--swatch-color-dot, 100%)',
+                                            height: 'var(--swatch-color-dot, 100%)',
+                                            backgroundColor: valueName?.toLowerCase(),
+                                            backgroundImage: swatchImageUrl ? `url(${swatchImageUrl})` : undefined,
+                                            border: 'var(--swatch-color-dot-border, none)',
+                                        }}
+                                        aria-label={image.alt || valueName}
+                                    />
+                                    <span
+                                        data-slot="swatch-text"
+                                        className="text-xs font-medium capitalize ml-1"
+                                        style={{ display: 'var(--swatch-color-label)' }}>
+                                        {valueName}
+                                    </span>
+                                </>
+                            ) : image ? (
+                                <img
+                                    src={swatchImageUrl}
+                                    alt={image.alt || valueName}
+                                    className="absolute inset-0 h-full w-full object-cover"
+                                />
+                            ) : (
+                                <span className="text-xs font-medium">{valueName}</span>
+                            )}
+                            {description && (
+                                <span id={descriptionId} data-slot="swatch-description">
+                                    {description}
+                                </span>
+                            )}
                         </>
-                    ) : (
-                        <span className="text-xs font-medium">{valueName}</span>
                     );
 
                     return (
                         <Swatch
                             key={swatchValue}
+                            aria-describedby={descriptionId}
                             href={isControlledAttribute ? undefined : href}
                             // Disable when not orderable (out of stock)
                             disabled={!isOrderableInCurrentSelection}
                             value={swatchValue}
                             name={valueName}
-                            shape={id === 'color' ? 'color' : 'label'}
+                            shape={swatchShape}
                             labeled
                             outOfStockSuffix={t('outOfStockSuffix')}>
                             {content}
