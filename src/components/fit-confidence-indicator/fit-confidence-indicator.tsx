@@ -45,7 +45,10 @@ export function FitConfidenceIndicator({
 
     return (
         <div className="w-full">
-            <p className="mb-2 text-sm text-foreground">
+            <h3 className="text-sm font-medium text-foreground">
+                {t('sizeGuide.fitConfidence.heading', { defaultValue: 'Fit Confidence' })}
+            </h3>
+            <p className="mb-2 mt-1 text-sm text-foreground">
                 {t('sizeGuide.fitConfidence.summary', {
                     percent: Math.round(trueToSizePercent),
                     count: totalResponses,
@@ -59,9 +62,9 @@ export function FitConfidenceIndicator({
                 aria-valuenow={Math.round(trueToSizePercent)}
                 aria-label={t('sizeGuide.fitConfidence.trueToSize', { defaultValue: 'True to size' })}
                 className="flex h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div className="h-full bg-border-subtle" style={{ width: `${runsSmallPercent}%` }} />
-                <div className="h-full bg-primary" style={{ width: `${trueToSizePercent}%` }} />
-                <div className="h-full bg-tertiary" style={{ width: `${runsLargePercent}%` }} />
+                <div className="h-full bg-warning" style={{ width: `${runsSmallPercent}%` }} />
+                <div className="h-full bg-success" style={{ width: `${trueToSizePercent}%` }} />
+                <div className="h-full bg-warning" style={{ width: `${runsLargePercent}%` }} />
             </div>
             <div className="mt-1 flex justify-between text-xs text-muted-foreground">
                 <span

@@ -19,8 +19,12 @@ import type { Recommendation } from '@/hooks/recommenders/use-recommenders';
 import { fetchCarouselProducts } from '@/components/product-carousel/loaders';
 import { siteContext, type SiteContext } from '@salesforce/storefront-next-runtime/site-context';
 
-/** Catalog id of the top-level "activity" category (Running / Trail / Training / …). */
-const ACTIVITY_PARENT_CATEGORY_ID = 'activity';
+/**
+ * Catalog ids of the activity categories. Running/Trail/Training/Walking/Casual are flattened
+ * directly under `root` (no shared `activity` parent) — see the home route's activity discovery
+ * rail for the same catalog shape.
+ */
+const ACTIVITY_CATEGORY_IDS = new Set(['running', 'trail', 'training', 'walking', 'casual']);
 
 /** Custom attributes read directly off the product/hit — no BM refinement config assumed. */
 const PERFORMANCE_SPEC_ATTRIBUTES = ['c_terrain', 'c_cushioning', 'c_supportType'] as const;
@@ -30,22 +34,19 @@ type PerformanceSpecKey = (typeof PERFORMANCE_SPEC_ATTRIBUTES)[number];
 const CANDIDATE_POOL_SIZE = 48;
 
 /**
- * Finds the activity-level category id for a product by walking its primary category's
- * ancestor chain and returning the entry immediately under the catalog's `activity` parent.
- * Returns undefined for products outside the activity tree (e.g. accessories), so callers
- * can skip the rail rather than show unrelated recommendations.
+ * Finds the activity-level category id for a product: the entry in its primary category's
+ * ancestor chain (or the primary category itself) that is one of the top-level activity
+ * categories. Returns undefined for products outside the activity tree (e.g. accessories), so
+ * callers can skip the rail rather than show unrelated recommendations.
  */
 export function getActivityCategoryId(product: ShopperProducts.schemas['Product']): string | undefined {
     const primaryCategory = product.primaryCategory;
     if (!primaryCategory) return undefined;
 
-    const tree = primaryCategory.parentCategoryTree ?? [];
-    const activityIndex = tree.findIndex((entry) => entry.id === ACTIVITY_PARENT_CATEGORY_ID);
-    if (activityIndex === -1) return undefined;
+    if (primaryCategory.id && ACTIVITY_CATEGORY_IDS.has(primaryCategory.id)) return primaryCategory.id;
 
-    // `activity`'s immediate child is the next ancestor entry, unless `activity` is the direct
-    // parent of the primary category itself (nothing between them in the ancestor chain).
-    return activityIndex === tree.length - 1 ? primaryCategory.id : tree[activityIndex + 1]?.id;
+    const tree = primaryCategory.parentCategoryTree ?? [];
+    return tree.find((entry) => entry.id != null && ACTIVITY_CATEGORY_IDS.has(entry.id))?.id;
 }
 
 function normalizeSpecValues(value: unknown): string[] {
@@ -54,33 +55,12 @@ function normalizeSpecValues(value: unknown): string[] {
     return [];
 }
 
-/**
- * Reads one performance-spec attribute off a product or search hit, tolerating both shapes it can
- * arrive in: a flat `c_<name>` key — the raw Shopper Search/Products payload, where custom attributes
- * surface directly on the object under the `custom_properties` expansion — and a normalized
- * `customProperties: [{ id, value }]` array (the product-content adapter shape). The flat key is the
- * common path, so it wins; the array is consulted only when the flat key is absent, keeping the rail
- * matched even when a hit carries its specs in the array form instead.
- */
-function readSpecValues(source: Record<string, unknown>, key: PerformanceSpecKey): string[] {
-    const flat = normalizeSpecValues(source[key]);
-    if (flat.length) return flat;
-
-    const custom = source.customProperties;
-    if (Array.isArray(custom)) {
-        const entry = (custom as Array<{ id?: unknown; value?: unknown }>).find((prop) => prop?.id === key);
-        if (entry) return normalizeSpecValues(entry.value);
-    }
-
-    return [];
-}
-
 function readPerformanceSpecs(product: ShopperProducts.schemas['Product']): Map<PerformanceSpecKey, Set<string>> {
     const record = product as unknown as Record<string, unknown>;
     const specs = new Map<PerformanceSpecKey, Set<string>>();
 
     for (const key of PERFORMANCE_SPEC_ATTRIBUTES) {
-        const values = readSpecValues(record, key);
+        const values = normalizeSpecValues(record[key]);
         if (values.length) specs.set(key, new Set(values));
     }
 
@@ -92,10 +72,18 @@ function hasMatchingPerformanceSpec(
     productSpecs: Map<PerformanceSpecKey, Set<string>>
 ): boolean {
     const record = hit as unknown as Record<string, unknown>;
+    // Master/variation-group hits carry the matched variant's custom attributes on
+    // `representedProduct`, not the hit itself — same shape product-badges.ts relies on for c_isSale.
+    const represented = hit.representedProduct as unknown as Record<string, unknown> | undefined;
 
     for (const [key, values] of productSpecs) {
-        const hitValues = readSpecValues(record, key);
+        const hitValues = normalizeSpecValues(record[key]);
         if (hitValues.some((value) => values.has(value))) return true;
+
+        if (represented) {
+            const representedValues = normalizeSpecValues(represented[key]);
+            if (representedValues.some((value) => values.has(value))) return true;
+        }
     }
 
     return false;

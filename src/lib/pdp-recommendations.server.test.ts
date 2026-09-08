@@ -35,7 +35,7 @@ function buildProduct(overrides: Partial<ShopperProducts.schemas['Product']> = {
         id: 'current-product',
         primaryCategory: {
             id: 'trail-running',
-            parentCategoryTree: [{ id: 'activity' }, { id: 'running' }, { id: 'trail-running' }],
+            parentCategoryTree: [{ id: 'root' }, { id: 'running' }, { id: 'trail-running' }],
         },
         ...overrides,
     } as ShopperProducts.schemas['Product'];
@@ -46,26 +46,26 @@ function buildHit(overrides: Record<string, unknown> = {}): ShopperSearch.schema
 }
 
 describe('getActivityCategoryId', () => {
-    test('returns the activity category directly under the "activity" parent', () => {
+    test('returns the top-level activity category from the ancestor chain', () => {
         const product = buildProduct({
             primaryCategory: {
                 id: 'trail-running',
-                parentCategoryTree: [{ id: 'activity' }, { id: 'running' }, { id: 'trail-running' }],
+                parentCategoryTree: [{ id: 'root' }, { id: 'running' }, { id: 'trail-running' }],
             },
         });
         expect(getActivityCategoryId(product)).toBe('running');
     });
 
-    test("returns the product's own category id when 'activity' is its direct parent", () => {
+    test("returns the product's own category id when it is itself a top-level activity category", () => {
         const product = buildProduct({
-            primaryCategory: { id: 'running', parentCategoryTree: [{ id: 'activity' }, { id: 'running' }] },
+            primaryCategory: { id: 'running', parentCategoryTree: [{ id: 'root' }, { id: 'running' }] },
         });
         expect(getActivityCategoryId(product)).toBe('running');
     });
 
     test('returns undefined for products outside the activity tree', () => {
         const product = buildProduct({
-            primaryCategory: { id: 'accessories', parentCategoryTree: [{ id: 'accessories' }] },
+            primaryCategory: { id: 'accessories', parentCategoryTree: [{ id: 'root' }, { id: 'accessories' }] },
         });
         expect(getActivityCategoryId(product)).toBeUndefined();
     });
@@ -244,23 +244,18 @@ describe('derivePerformanceMatched', () => {
         expect(result).toEqual({});
     });
 
-    test('matches performance specs carried in the customProperties array shape', () => {
-        // Raw Shopper Search hits expose custom attributes as flat c_* keys, but the product-content
-        // adapter shape carries them as customProperties: [{ id, value }]. The read tolerates both, so
-        // a hit whose specs arrive in the array form still matches rather than emptying the rail.
-        const product = buildProduct({
-            customProperties: [{ id: 'c_terrain', value: ['trail'] }],
-        } as Partial<ShopperProducts.schemas['Product']>);
+    test('matches a master/variation-group hit whose spec value lives on representedProduct, not the hit itself', () => {
+        // Category search hits for grouped catalogs (master/variation-group) don't carry the matched
+        // variant's custom attributes on the hit — they live on representedProduct instead, same as
+        // c_isSale in product-badges.ts. Without checking representedProduct, these hits never match.
+        const product = buildProduct({ c_terrain: ['trail'] } as Partial<ShopperProducts.schemas['Product']>);
         const result = derivePerformanceMatched(
-            [
-                buildHit({ productId: 'array-shape', customProperties: [{ id: 'c_terrain', value: 'trail' }] }),
-                buildHit({ productId: 'no-overlap', customProperties: [{ id: 'c_terrain', value: 'road' }] }),
-            ],
+            [buildHit({ productId: 'master-456', representedProduct: { id: 'variant-456', c_terrain: ['trail'] } })],
             product
         );
 
         expect(result.recs).toHaveLength(1);
-        expect(result.recs?.[0].productId).toBe('array-shape');
+        expect(result.recs?.[0].productId).toBe('master-456');
     });
 
     test("excludes the current shoe's master hit on a variant PDP even when it shares a spec", () => {

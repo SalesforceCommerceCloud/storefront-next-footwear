@@ -17,9 +17,9 @@
 /**
  * Footwear home route overlay test (Rule 5: a route overlay copies the canonical route's sibling
  * test). The footwear overlay renders static marketing content and uses additive Page Designer slots.
- * It reuses the shared <PopularCategories> with the `activity` parent's children, left-aligned with a
- * "View all activities" shop-all link (the canonical home uses the `root` categories, centered, with
- * no shop-all link).
+ * It reuses the shared <PopularCategories> with `root`'s children, left-aligned with a
+ * "View all activities" shop-all link (the canonical home also uses the `root` categories, but
+ * centered, with no shop-all link).
  */
 
 import { render, screen, waitFor, within } from '@testing-library/react';
@@ -285,7 +285,7 @@ const renderComponent = (loaderDataOverrides?: Partial<HomePageData>) => {
         },
         searchResult: Promise.resolve(mockSearchResult),
         categories: Promise.resolve(mockCategories),
-
+        rootCategoryId: 'root',
         pageUrl: 'http://localhost/',
         ogImageUrl: 'http://localhost/__ASSET_MOCK__',
     };
@@ -301,7 +301,9 @@ describe('Footwear HomePage overlay', () => {
             ...createMockPage([]),
             componentData: {},
         });
-        vi.mocked(getConfig).mockReturnValue({ pages: { home: { featuredProductsCount: 8 } } } as AppConfig);
+        vi.mocked(getConfig).mockReturnValue({
+            pages: { home: { featuredProductsCount: 8 }, navigation: { rootCategoryId: 'root', maxDepth: 1 } },
+        } as AppConfig);
     });
 
     describe('Basic Rendering', () => {
@@ -324,15 +326,15 @@ describe('Footwear HomePage overlay', () => {
             }
         });
 
-        test('points every hero CTA at the activity hub, not the apparel root category', () => {
+        test('points every hero CTA at the activity hub', () => {
             renderComponent();
-            // The hero slides replaced apparel slides whose CTAs all pointed at /category/root. The
-            // footwear catalog browses by activity, so every hero CTA must point at the activity hub.
+            // The five activity categories (running, trail, training, walking, casual) are flattened
+            // directly under `root` in the catalog — there is no standalone `activity` category — so
+            // every hero CTA points at `/category/root`.
             const heroLinks = within(screen.getByTestId('hero-carousel')).getAllByRole('link');
             expect(heroLinks).toHaveLength(4);
             for (const link of heroLinks) {
-                expect(link).toHaveAttribute('href', '/category/activity');
-                expect(link.getAttribute('href')).not.toContain('/category/root');
+                expect(link).toHaveAttribute('href', '/category/root');
             }
         });
 
@@ -350,8 +352,8 @@ describe('Footwear HomePage overlay', () => {
             expect(rail).toHaveAttribute('data-title-align', 'left');
             expect(screen.getByRole('heading', { name: 'Shop by Activity' })).toBeInTheDocument();
             const viewAll = screen.getByRole('link', { name: 'View all activities' });
-            // Links to the activity landing PLP (the parent category of the activity children).
-            expect(viewAll).toHaveAttribute('href', expect.stringContaining('/category/activity'));
+            // Links to `root`, whose direct children are the five activity categories.
+            expect(viewAll).toHaveAttribute('href', expect.stringContaining('/category/root'));
         });
 
         test('stacks authored Page Designer content on top of the static marketing sections', async () => {
@@ -474,9 +476,9 @@ describe('Footwear HomePage overlay', () => {
             expect(result.categories).toBeInstanceOf(Promise);
         });
 
-        test('fetches the children of the `activity` parent category for the rail', async () => {
+        test('fetches the children of `root` for the rail', async () => {
             await loader(baseLoaderArgs);
-            expect(vi.mocked(fetchCategories)).toHaveBeenCalledWith(mockContext, 'activity', 1);
+            expect(vi.mocked(fetchCategories)).toHaveBeenCalledWith(mockContext, 'root', 1);
         });
 
         test('loader propagates page API errors', async () => {

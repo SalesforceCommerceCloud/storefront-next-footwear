@@ -244,12 +244,12 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
         aria-label="Red"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -264,7 +264,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
       <button
         aria-checked="true"
         aria-label="Blue"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
         role="radio"
         tabindex="0"
         type="button"
@@ -279,7 +279,7 @@ exports[`ProductInfo stories snapshot > ControlledSwatchMode story renders and m
       <button
         aria-checked="false"
         aria-label="Green"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -792,12 +792,12 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
         aria-label="Red"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="0"
         type="button"
@@ -812,7 +812,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
       <button
         aria-checked="false"
         aria-label="Blue"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -827,7 +827,7 @@ exports[`ProductInfo stories snapshot > FocusOrderActionIcons story renders and 
       <button
         aria-checked="false"
         aria-label="Green"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -1854,12 +1854,12 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
         aria-label="Red"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="0"
         type="button"
@@ -1874,7 +1874,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
       <button
         aria-checked="false"
         aria-label="Blue"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -1889,7 +1889,7 @@ exports[`ProductInfo stories snapshot > OutOfStockStatus story renders and match
       <button
         aria-checked="false"
         aria-label="Green"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -2404,12 +2404,12 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
         aria-label="Red"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="0"
         type="button"
@@ -2424,7 +2424,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Blue"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -2439,7 +2439,7 @@ exports[`ProductInfo stories snapshot > Playground story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Green"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -2932,12 +2932,12 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
       data-slot="colorway-strip-list"
       data-testid="colorway-strip-list"
       role="radiogroup"
-      style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+      style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
     >
       <button
         aria-checked="false"
         aria-label="Red"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="0"
         type="button"
@@ -2952,7 +2952,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
       <button
         aria-checked="false"
         aria-label="Blue"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -2968,7 +2968,7 @@ exports[`ProductInfo stories snapshot > WithDisabledVariants story renders and m
         aria-checked="false"
         aria-disabled="true"
         aria-label="Green (out of stock)"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
         role="radio"
         tabindex="-1"
         type="button"

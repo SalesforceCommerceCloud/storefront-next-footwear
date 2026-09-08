@@ -2114,6 +2114,7 @@
                 "step4": "Match your measurement to the CM column in the size chart."
             },
             "fitConfidence": {
+                "heading": "Fit Confidence",
                 "summary": "{{percent}}% say true to size ({{count}} responses)",
                 "runsSmall": "Runs small",
                 "trueToSize": "True to size",

@@ -27,12 +27,12 @@ exports[`ColorwayStrip stories snapshot > Default story renders and matches snap
     data-slot="colorway-strip-list"
     data-testid="colorway-strip-list"
     role="radiogroup"
-    style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
   >
     <button
       aria-checked="true"
       aria-label="University Blue / White / Black"
-      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+      class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
       role="radio"
       tabindex="0"
       type="button"
@@ -52,7 +52,7 @@ exports[`ColorwayStrip stories snapshot > Default story renders and matches snap
     <button
       aria-checked="false"
       aria-label="Triple Black"
-      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+      class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
       role="radio"
       tabindex="-1"
       type="button"
@@ -73,7 +73,7 @@ exports[`ColorwayStrip stories snapshot > Default story renders and matches snap
       aria-checked="false"
       aria-disabled="true"
       aria-label="Crimson Red (out of stock)"
-      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
+      class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
       role="radio"
       tabindex="-1"
       type="button"
@@ -121,12 +121,12 @@ exports[`ColorwayStrip stories snapshot > KeyboardNavigation story renders and m
     data-slot="colorway-strip-list"
     data-testid="colorway-strip-list"
     role="radiogroup"
-    style="--colorway-mobile-visible: 4; --colorway-desktop-visible: 8;"
+    style="--colorway-mobile-visible: 3; --colorway-desktop-visible: 3;"
   >
     <button
       aria-checked="true"
       aria-label="University Blue / White / Black"
-      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+      class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
       role="radio"
       tabindex="0"
       type="button"
@@ -146,7 +146,7 @@ exports[`ColorwayStrip stories snapshot > KeyboardNavigation story renders and m
     <button
       aria-checked="false"
       aria-label="Triple Black"
-      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+      class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
       role="radio"
       tabindex="-1"
       type="button"
@@ -167,7 +167,7 @@ exports[`ColorwayStrip stories snapshot > KeyboardNavigation story renders and m
       aria-checked="false"
       aria-disabled="true"
       aria-label="Crimson Red (out of stock)"
-      class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
+      class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border cursor-not-allowed opacity-50"
       role="radio"
       tabindex="-1"
       type="button"
@@ -223,7 +223,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="true"
         aria-label="Colorway 1"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-primary"
         role="radio"
         tabindex="0"
         type="button"
@@ -243,7 +243,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 2"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -263,7 +263,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 3"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -283,7 +283,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 4"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -303,7 +303,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 5"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -323,7 +323,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 6"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -343,7 +343,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 7"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -363,7 +363,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 8"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"
@@ -383,7 +383,7 @@ exports[`ColorwayStrip stories snapshot > Overflow story renders and matches sna
       <button
         aria-checked="false"
         aria-label="Colorway 9"
-        class="size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
+        class="size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent hover:border-border"
         role="radio"
         tabindex="-1"
         type="button"

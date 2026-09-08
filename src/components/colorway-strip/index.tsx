@@ -32,10 +32,17 @@ interface ColorwayStripProps {
     maxVisible?: number;
 }
 
-const colorwayStripVisibleCount = (maxVisible: number) => ({
-    mobile: Math.min(maxVisible, 4),
-    desktop: maxVisible,
-});
+// Reserves grid width for the smaller of maxVisible and the actual colorway count, so a product
+// with fewer colorways than maxVisible doesn't get a track sized for slots that don't exist —
+// which left big empty gaps between swatches. Products at or above maxVisible are unaffected;
+// the container still reserves exactly maxVisible slots and overflows the rest into horizontal scroll.
+const colorwayStripVisibleCount = (maxVisible: number, colorwayCount: number) => {
+    const visible = Math.min(maxVisible, colorwayCount);
+    return {
+        mobile: Math.min(visible, 4),
+        desktop: visible,
+    };
+};
 
 /**
  * Footwear PDP color selector. Product thumbnails expose the complete colorway before selection;
@@ -46,7 +53,7 @@ export function ColorwayStrip({ colorways, selectedColorwayId, onColorwayChange,
     // Appended to the accessible name of unavailable colorways so screen-reader users hear the
     // out-of-stock state, matching the sibling size and width selectors.
     const outOfStockSuffix = t('outOfStockSuffix', { defaultValue: '(out of stock)' });
-    const visibleCount = colorwayStripVisibleCount(maxVisible);
+    const visibleCount = colorwayStripVisibleCount(maxVisible, colorways.length);
     const labelId = useId();
     const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
     const selectedIndex = colorways.findIndex(({ colorwayId }) => colorwayId === selectedColorwayId);
@@ -134,7 +141,7 @@ export function ColorwayStrip({ colorways, selectedColorwayId, onColorwayChange,
                             aria-disabled={!colorway.available || undefined}
                             tabIndex={index === focusableIndex ? 0 : -1}
                             className={cn(
-                                'size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                                'size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                                 selected ? 'border-primary' : 'border-transparent hover:border-border',
                                 !colorway.available && 'cursor-not-allowed opacity-50'
                             )}
