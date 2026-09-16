@@ -57,7 +57,8 @@ import { SeoMeta } from '@/components/seo-meta';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { useTranslation } from 'react-i18next';
 import type { NormalizedApiError } from '@/lib/api/normalized-api-error';
-import { routes, routeHref } from '@/route-paths';
+import { createCategoryUrlFromLegacyPath } from '@/route-paths';
+import { useSeoUrlContext } from '@/hooks/use-seo-url-context';
 
 export { shouldRevalidate } from '@/lib/revalidation/routes/home';
 
@@ -171,7 +172,11 @@ export async function loader(args: Route.LoaderArgs): Promise<HomePageData> {
  */
 export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
     const { t } = useTranslation('home');
-    const rootCategoryUrl = routeHref(routes.category, { categoryId: loaderData.rootCategoryId });
+    const seoUrlContext = useSeoUrlContext();
+    const rootCategoryUrl = createCategoryUrlFromLegacyPath(
+        `/category/${encodeURIComponent(loaderData.rootCategoryId)}`,
+        seoUrlContext
+    );
 
     const heroSlides: HeroSlide[] = [
         {
@@ -281,7 +286,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                             imageAlt={t('featuredContent.running.imageAlt')}
                             buttonText={t('featuredContent.running.ctaText')}
                             buttonAriaLabel={t('featuredContent.running.ctaAriaLabel')}
-                            buttonLink={routeHref(routes.category, { categoryId: 'running' })}
+                            buttonLink={createCategoryUrlFromLegacyPath('/category/running', seoUrlContext)}
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"
@@ -293,7 +298,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                             imageAlt={t('featuredContent.casual.imageAlt')}
                             buttonText={t('featuredContent.casual.ctaText')}
                             buttonAriaLabel={t('featuredContent.casual.ctaAriaLabel')}
-                            buttonLink={routeHref(routes.category, { categoryId: 'casual' })}
+                            buttonLink={createCategoryUrlFromLegacyPath('/category/casual', seoUrlContext)}
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"

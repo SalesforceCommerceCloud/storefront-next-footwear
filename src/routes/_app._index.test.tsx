@@ -35,6 +35,10 @@ import { getConfig } from '@salesforce/storefront-next-runtime/config';
 import type { AppConfig } from '@/types/config';
 import { getRegionDefinitions } from '@/lib/decorators/region-definition';
 
+vi.mock('@/hooks/use-seo-url-context', () => ({
+    useSeoUrlContext: () => ({ siteId: 'RefArchGlobal' }),
+}));
+
 const { t } = getTranslation();
 
 // Mock data
