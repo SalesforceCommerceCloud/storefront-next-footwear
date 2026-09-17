@@ -189,7 +189,7 @@ exports[`ProductTile stories snapshot > Default story renders and matches snapsh
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         25686571M
       </p>
       <div
@@ -298,7 +298,7 @@ exports[`ProductTile stories snapshot > Default story renders and matches snapsh
             class="sr-only"
           >
             Charcoal Single Pleat Wool Suit
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Current price: £143.99
           </span>
         </div>
@@ -503,7 +503,7 @@ exports[`ProductTile stories snapshot > OutOfStock story renders and matches sna
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         25686571M
       </p>
       <div
@@ -612,7 +612,7 @@ exports[`ProductTile stories snapshot > OutOfStock story renders and matches sna
             class="sr-only"
           >
             Charcoal Single Pleat Wool Suit
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Current price: £143.99
           </span>
         </div>
@@ -859,7 +859,7 @@ exports[`ProductTile stories snapshot > Playground story renders and matches sna
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         25518101M
       </p>
       <div
@@ -968,7 +968,7 @@ exports[`ProductTile stories snapshot > Playground story renders and matches sna
             class="sr-only"
           >
             Long Sleeve Embellished Boat Neck Top
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Current price: £18.55
           </span>
         </div>
@@ -1121,7 +1121,7 @@ exports[`ProductTile stories snapshot > ProductSetWithPriceRange story renders a
         data-testid="product-tile-sku"
       >
         SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20
+         
         winter-lookM
       </p>
       <div
@@ -1230,7 +1230,7 @@ exports[`ProductTile stories snapshot > ProductSetWithPriceRange story renders a
             class="sr-only"
           >
             Winter Look
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             Current price: £40.16
           </span>
         </div>

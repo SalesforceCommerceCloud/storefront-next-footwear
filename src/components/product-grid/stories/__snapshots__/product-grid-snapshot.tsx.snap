@@ -181,7 +181,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-1
         </p>
         <div
@@ -285,10 +285,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 1
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £63.99
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -301,7 +301,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 1
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £67.99
             </span>
           </div>
@@ -469,7 +469,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-2
         </p>
         <div
@@ -573,10 +573,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 2
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £191.99
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -589,7 +589,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 2
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £320.00
             </span>
           </div>
@@ -775,7 +775,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-3
         </p>
         <div
@@ -884,7 +884,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 3
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £18.55
             </span>
           </div>
@@ -1071,7 +1071,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-4
         </p>
         <div
@@ -1180,7 +1180,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 4
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £143.99
             </span>
           </div>
@@ -1323,7 +1323,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-5
         </p>
         <div
@@ -1432,7 +1432,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 5
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £52.16
             </span>
           </div>
@@ -1591,7 +1591,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-6
         </p>
         <div
@@ -1695,10 +1695,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 6
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £63.99
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1711,7 +1711,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 6
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £67.99
             </span>
           </div>
@@ -1879,7 +1879,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-7
         </p>
         <div
@@ -1983,10 +1983,10 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 7
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £191.99
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -1999,7 +1999,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 7
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £320.00
             </span>
           </div>
@@ -2185,7 +2185,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-8
         </p>
         <div
@@ -2294,7 +2294,7 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               class="sr-only"
             >
               Product 8
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £18.55
             </span>
           </div>
@@ -2707,7 +2707,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-1
         </p>
         <div
@@ -2811,10 +2811,10 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 1
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £63.99
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -2827,7 +2827,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 1
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £67.99
             </span>
           </div>
@@ -3029,7 +3029,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-2
         </p>
         <div
@@ -3133,10 +3133,10 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 2
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £191.99
             </span>
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+             
             <span
               aria-hidden="true"
               class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
@@ -3149,7 +3149,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 2
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               List price: £320.00
             </span>
           </div>
@@ -3369,7 +3369,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-3
         </p>
         <div
@@ -3478,7 +3478,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 3
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £18.55
             </span>
           </div>
@@ -3699,7 +3699,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
           data-testid="product-tile-sku"
         >
           SKU:
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+           
           PROD-4
         </p>
         <div
@@ -3808,7 +3808,7 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               class="sr-only"
             >
               Product 4
-\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+               
               Current price: £143.99
             </span>
           </div>

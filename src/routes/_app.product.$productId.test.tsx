@@ -26,6 +26,32 @@ import { use } from 'react';
 import type { ShopperProducts } from '@/scapi';
 import { type ProductPageData } from './_app.product.$productId';
 
+const { mockFetchProductById, mockAttemptRouteSeoFallback } = vi.hoisted(() => ({
+    mockFetchProductById: vi.fn(),
+    mockAttemptRouteSeoFallback: vi.fn(),
+}));
+
+vi.mock('@/lib/api/products.server', () => ({ fetchProductById: mockFetchProductById }));
+vi.mock('@/lib/seo/route-fallback.server', () => ({ attemptRouteSeoFallback: mockAttemptRouteSeoFallback }));
+vi.mock('@/lib/page-designer/page-loader.server', () => ({
+    fetchPageWithComponentData: vi.fn(() => Promise.resolve({ id: 'pdp', regions: [] })),
+}));
+vi.mock('@/lib/pdp-recommendations.server', () => ({
+    fetchActivityCandidatePool: vi.fn(() => Promise.resolve([])),
+    deriveActivityMatched: vi.fn(),
+    derivePerformanceMatched: vi.fn(),
+}));
+vi.mock('@/extensions/ratings-reviews/lib/api/reviews.server', () => ({
+    getReviewsSummary: vi.fn(() => Promise.resolve({ totalCount: 0 })),
+    getReviews: vi.fn(() => Promise.resolve({ reviews: [] })),
+    getWriteReviewForm: vi.fn(() => Promise.resolve({})),
+}));
+vi.mock('@/extensions/product-content/lib/api/product-content.server', () => ({
+    getReturnsAndWarranty: vi.fn(() => Promise.resolve({})),
+    pdpSectionApi: {},
+}));
+vi.mock('@/extensions/product-content/lib/pdp-sections', () => ({ resolvePdpSections: vi.fn(() => []) }));
+
 // ProductPage reads `nonce` from the root loader. Tests render the page outside
 // a real data router, so stub `useRouteLoaderData` with a deterministic value.
 vi.mock('react-router', async (importOriginal) => {
@@ -527,3 +553,66 @@ describe('Product Detail Route', () => {
         });
     });
 });
+
+describe('Footwear product route loader fallback', () => {
+    const invoke = async (path: string) => {
+        const { siteContext } = await import('@salesforce/storefront-next-runtime/site-context');
+        const { loader } = await import('./_app.product.$productId');
+        const context = {
+            get: vi.fn((key) => {
+                if (key === siteContext) {
+                    return { currency: 'USD', site: { id: 'test-site' }, locale: { id: 'en-US' } };
+                }
+                return undefined;
+            }),
+        } as any;
+        const request = new Request(`https://example.com/product/${path}`);
+        return loader({
+            request,
+            params: { siteId: 'test-site', localeId: 'en-US', productId: path },
+            context,
+            url: new URL(request.url),
+            pattern: '',
+        });
+    };
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+        mockAttemptRouteSeoFallback.mockResolvedValue(undefined);
+    });
+
+    test('uses the unchanged .html path ID without fallback on primary success', async () => {
+        mockFetchProductById.mockResolvedValue({ id: 'legacy.html', primaryCategoryId: 'category' });
+        await invoke('legacy.html');
+        expect(mockFetchProductById.mock.calls[0][1]).toBe('legacy.html');
+        expect(mockAttemptRouteSeoFallback).not.toHaveBeenCalled();
+    });
+
+    test('attempts fallback once only for an authoritative path 404', async () => {
+        mockFetchProductById.mockRejectedValue(await normalizedLoaderError(404));
+        await expect(invoke('missing')).rejects.toBeInstanceOf(Response);
+        expect(mockAttemptRouteSeoFallback).toHaveBeenCalledOnce();
+    });
+
+    test('does not attempt fallback for a non-404 failure', async () => {
+        mockFetchProductById.mockRejectedValue(await normalizedLoaderError(500));
+        await expect(invoke('failure')).rejects.toBeInstanceOf(Response);
+        expect(mockAttemptRouteSeoFallback).not.toHaveBeenCalled();
+    });
+});
+
+async function normalizedLoaderError(status: number) {
+    const { NormalizedApiError: CurrentNormalizedApiError } = await import('@/lib/api/normalized-api-error');
+    const { ApiError: CurrentApiError } = await import('@/scapi');
+    return new CurrentNormalizedApiError(
+        new CurrentApiError({
+            status,
+            statusText: 'Failure',
+            headers: new Headers(),
+            body: { type: 'Failure', title: 'Failure', detail: 'failure' },
+            rawBody: '{}',
+            url: 'https://api.example.com/products/failure',
+            method: 'GET',
+        })
+    );
+}
