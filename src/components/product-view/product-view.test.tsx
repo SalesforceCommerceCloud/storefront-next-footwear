@@ -160,7 +160,7 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
             expect(screen.getAllByTestId('delivery-estimate')).toHaveLength(1);
         });
         expect(capturedProductInfoProps.last).toEqual(
-            expect.objectContaining({ enableDeliveryEstimatePresentation: true, showQuantityPicker: false })
+            expect.objectContaining({ enableDeliveryEstimatePresentation: true, showQuantityPicker: true })
         );
     });
     // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
