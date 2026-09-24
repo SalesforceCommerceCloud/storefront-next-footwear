@@ -57,6 +57,8 @@ type ProductInfoBaseProps = {
     currentVariantOverride?: ShopperProducts.schemas['Variant'];
     /** Whether selected variant inventory is currently being fetched */
     isVariantInventoryLoading?: boolean;
+    /** Show the quantity picker (default true). Set false when it is inline with Add to Cart. */
+    showQuantityPicker?: boolean;
     /** Whether the selected variant inventory request failed. */
     isVariantInventoryLoadError?: boolean;
     /** Retries a failed selected-variant inventory request. */
@@ -165,6 +167,7 @@ export default function ProductInfo({
     showQuantityInEditMode = false,
     currentVariantOverride,
     isVariantInventoryLoading = false,
+    showQuantityPicker = true,
     isVariantInventoryLoadError = false,
     onRetryVariantInventory,
     hideActionIcons = false,
@@ -330,7 +333,8 @@ export default function ProductInfo({
     const { t } = useTranslation('product');
 
     const isCompactStyle = variantStyle === 'compact';
-    const showQuantity = !isProductASet && !isProductABundle && (mode !== 'edit' || showQuantityInEditMode);
+    const showQuantity =
+        showQuantityPicker && !isProductASet && !isProductABundle && (mode !== 'edit' || showQuantityInEditMode);
 
     // In compact mode, sort variation attributes by priority order
     const COMPACT_ATTRIBUTE_ORDER = ['size', 'width', 'color'];

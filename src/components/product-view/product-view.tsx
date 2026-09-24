@@ -15,7 +15,7 @@
  */
 import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import type { ShopperProducts } from '@/scapi';
-import ImageGallery from '@/components/image-gallery';
+import ProductZoomGallery from '@/components/product-zoom-gallery';
 import ProductInfo from './product-info';
 import ProductCartActions from '@/components/product-cart-actions';
 import ProductViewProvider from '@/providers/product-view';
@@ -27,6 +27,7 @@ import { useScapiFetcher } from '@/hooks/use-scapi-fetcher';
 import { useStoreLocator } from '@/extensions/store-locator/providers/store-locator';
 // @sfdc-extension-block-end SFDC_EXT_BOPIS
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
+import { usesInlineAddToCartQuantity } from '@/lib/product/add-to-cart-quantity-mode';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
 import { UITarget } from '@/targets/ui-target';
@@ -201,7 +202,7 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
             isVariantInventoryLoading={isVariantInventoryLoading}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
                 <div className="order-1">
-                    <ImageGallery
+                    <ProductZoomGallery
                         key={product.id}
                         images={galleryImages}
                         eager={!isProductASet && !isProductABundle}
@@ -224,6 +225,7 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
                 <div className="order-2">
                     <ProductInfo
                         product={product}
+                        showQuantityPicker={!usesInlineAddToCartQuantity()}
                         swatchMode="controlled"
                         variationValues={variationValues}
                         controlledAttributeIds={['color']}
@@ -238,7 +240,10 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
                         enableDeliveryEstimatePresentation
                         // @sfdc-extension-block-end SFDC_EXT_BOPIS
                     />
-                    <ProductCartActions product={product} />
+                    <ProductCartActions
+                        product={product}
+                        showInlineCartQuantity={!isProductASet && !isProductABundle && usesInlineAddToCartQuantity()}
+                    />
                     <UITarget targetId="sfcc.pdp.returnsWarranty" />
                     <UITarget targetId="sfcc.pdp.collapsibles" />
                 </div>

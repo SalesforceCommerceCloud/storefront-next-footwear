@@ -40,9 +40,13 @@ let variantStoreInventories: ShopperProducts.schemas['Inventory'][] | null;
 // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
 const capturedProductInfoProps: { last: Record<string, unknown> | null } = { last: null };
 // @sfdc-extension-block-end SFDC_EXT_BOPIS
+const capturedProductZoomGalleryProps: { last: Record<string, unknown> | null } = { last: null };
 
-vi.mock('@/components/image-gallery', () => ({
-    default: () => <div data-testid="image-gallery" />,
+vi.mock('@/components/product-zoom-gallery', () => ({
+    default: (props: Record<string, unknown>) => {
+        capturedProductZoomGalleryProps.last = props;
+        return <div data-testid="image-gallery" />;
+    },
 }));
 
 // @sfdc-extension-block-start SFDC_EXT_BOPIS
@@ -137,6 +141,7 @@ const renderOverlay = () => {
 
 describe('Footwear PDP selected-variant inventory fallback', () => {
     beforeEach(() => {
+        capturedProductZoomGalleryProps.last = null;
         // @sfdc-extension-block-start SFDC_EXT_BOPIS
         // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
         capturedProductInfoProps.last = null;
@@ -155,7 +160,7 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
             expect(screen.getAllByTestId('delivery-estimate')).toHaveLength(1);
         });
         expect(capturedProductInfoProps.last).toEqual(
-            expect.objectContaining({ enableDeliveryEstimatePresentation: true })
+            expect.objectContaining({ enableDeliveryEstimatePresentation: true, showQuantityPicker: false })
         );
     });
     // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
@@ -176,6 +181,14 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
         // The shared picker stays visible, but the selected SKU's unavailable site inventory disables delivery.
         expect(screen.getByRole('radio', { name: 'Delivery' })).toBeDisabled();
         // @sfdc-extension-block-end SFDC_EXT_BOPIS
+    });
+
+    test('uses the PDP-only zoom gallery for the controlled-colorway PDP', () => {
+        renderOverlay();
+
+        expect(capturedProductZoomGalleryProps.last).toEqual(
+            expect.objectContaining({ showNavigationArrows: true, navigationArrowSize: 'lg' })
+        );
     });
 
     // @sfdc-extension-block-start SFDC_EXT_BOPIS

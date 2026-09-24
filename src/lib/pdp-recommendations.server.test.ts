@@ -111,6 +111,21 @@ describe('fetchActivityCandidatePool', () => {
 
         expect(hits).toEqual([]);
     });
+
+    test('degrades to an empty pool instead of hanging when the search outlasts the timeout budget', async () => {
+        vi.useFakeTimers();
+        try {
+            // Simulate a slow/cold-cache SCAPI search that never resolves on its own.
+            mockFetchCarouselProducts.mockReturnValue(new Promise(() => {}));
+
+            const hitsPromise = fetchActivityCandidatePool(createTestContext(), buildProduct());
+            await vi.advanceTimersByTimeAsync(3_000); // mirrors CANDIDATE_POOL_TIMEOUT_MS
+
+            expect(await hitsPromise).toEqual([]);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
 });
 
 describe('deriveActivityMatched', () => {

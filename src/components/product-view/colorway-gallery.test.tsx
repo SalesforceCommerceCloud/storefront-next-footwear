@@ -33,7 +33,7 @@ const hydratedVariantInventories = new Map<string, ShopperProducts.schemas['Inve
 let requestedInventoryIds: string[] | undefined;
 let requestedVariantId: string | undefined;
 
-vi.mock('@/components/image-gallery', () => ({
+vi.mock('@/components/product-zoom-gallery', () => ({
     default: ({ images }: { images: Array<{ src: string }> }) => {
         galleryProps.images = images;
         return <div data-testid="image-gallery" />;

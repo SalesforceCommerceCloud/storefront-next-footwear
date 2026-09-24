@@ -915,6 +915,17 @@ describe('ProductInfo', () => {
             ).toBeInTheDocument();
         });
 
+        test('does not render the pre-add quantity selector when rendered inline with Add to Cart', () => {
+            const simpleProduct = {
+                ...mockProduct,
+                variationAttributes: [],
+            };
+
+            renderProductInfo({ product: simpleProduct, showQuantityPicker: false });
+
+            expect(screen.queryByLabelText(t('quantitySelector:quantity'))).not.toBeInTheDocument();
+        });
+
         test('should not render quantity selector for product sets', () => {
             const productSet = { ...mockProduct, type: { set: true } };
             renderProductInfo({ product: productSet });

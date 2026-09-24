@@ -18,6 +18,7 @@ import type { ShopperProducts, ShopperSearch } from '@/scapi';
 import type { Recommendation } from '@/hooks/recommenders/use-recommenders';
 import { fetchCarouselProducts } from '@/components/product-carousel/loaders';
 import { siteContext, type SiteContext } from '@salesforce/storefront-next-runtime/site-context';
+import { streamTimeout } from '@/entry.server';
 
 /**
  * Catalog ids of the activity categories. Running/Trail/Training/Walking/Casual are flattened
@@ -32,6 +33,31 @@ type PerformanceSpecKey = (typeof PERFORMANCE_SPEC_ATTRIBUTES)[number];
 
 /** Wide enough candidate pool to survive self-exclusion + spec filtering without a second round-trip. */
 const CANDIDATE_POOL_SIZE = 48;
+
+/**
+ * Hard cap on how long the candidate-pool search is allowed to take. `entry.server.tsx` aborts
+ * the whole SSR stream at `streamTimeout` (5s) + 1s; a slow/cold-cache SCAPI category search here
+ * could otherwise still be in flight when that fires, which forces React Router to reject this
+ * deferred value with an uncaught `Server Timeout` and crash the entire PDP instead of just this
+ * rail. Racing against a local timeout keeps the degrade-to-empty behavior in our own hands.
+ *
+ * The search route's non-critical results (`_app.search.tsx`) guard the same stream-timeout crash
+ * differently, by observing the promise instead of racing it, because that path wants the real
+ * result to still stream through `<Await>` rather than degrade to empty.
+ *
+ * Asserted against the real `streamTimeout` below (rather than left as a comment-only invariant)
+ * so lowering `streamTimeout` in `entry.server.tsx` fails loudly here instead of quietly
+ * reopening the crash this timeout exists to prevent.
+ */
+const CANDIDATE_POOL_TIMEOUT_MS = 3_000;
+
+if (import.meta.env.DEV && CANDIDATE_POOL_TIMEOUT_MS >= streamTimeout) {
+    throw new Error(
+        `CANDIDATE_POOL_TIMEOUT_MS (${CANDIDATE_POOL_TIMEOUT_MS}) must stay below entry.server.tsx's ` +
+            `streamTimeout (${streamTimeout}), or this rail's local timeout can no longer win the race ` +
+            'before the SSR stream aborts.'
+    );
+}
 
 /**
  * Finds the activity-level category id for a product: the entry in its primary category's
@@ -139,13 +165,23 @@ export async function fetchActivityCandidatePool(
     if (!activityCategoryId) return [];
 
     const { currency } = context.get(siteContext) as SiteContext;
-    const result = await fetchCarouselProducts(context, {
+    const searchPromise = fetchCarouselProducts(context, {
         categoryId: activityCategoryId,
         limit: CANDIDATE_POOL_SIZE,
         currency: currency ?? undefined,
     }).catch(() => null);
 
-    return result?.hits ?? [];
+    let timeoutId!: ReturnType<typeof setTimeout>;
+    const timeoutPromise = new Promise<null>((resolve) => {
+        timeoutId = setTimeout(() => resolve(null), CANDIDATE_POOL_TIMEOUT_MS);
+    });
+
+    try {
+        const result = await Promise.race([searchPromise, timeoutPromise]);
+        return result?.hits ?? [];
+    } finally {
+        clearTimeout(timeoutId);
+    }
 }
 
 /**
