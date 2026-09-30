@@ -24,7 +24,7 @@ import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { use } from 'react';
 import type { ShopperProducts } from '@/scapi';
-import { type ProductPageData } from './_app.product.$productId';
+import { type ProductPageData } from './_app.p.$';
 
 const { mockFetchProductById, mockAttemptRouteSeoFallback } = vi.hoisted(() => ({
     mockFetchProductById: vi.fn(),
@@ -206,7 +206,7 @@ describe('Product Detail Route', () => {
         // Reset modules to ensure fresh import and createPage call
         vi.resetModules();
         // Import the route module to trigger createPage call with mocks in place
-        await import('./_app.product.$productId');
+        await import('./_app.p.$');
     });
     const mockProduct: ShopperProducts.schemas['Product'] = {
         id: 'test-product-123',
@@ -301,7 +301,7 @@ describe('Product Detail Route', () => {
         // src/lib/revalidation/routes/product.test.ts. Here we only assert the route wires up that
         // exact function, so the behavior isn't re-tested at the route.
         test('re-exports the shared product revalidation policy', async () => {
-            const { shouldRevalidate: shouldRevalidateRoute } = await import('./_app.product.$productId');
+            const { shouldRevalidate: shouldRevalidateRoute } = await import('./_app.p.$');
             const { shouldRevalidate: shouldRevalidateProduct } = await import('@/lib/revalidation/routes/product');
             expect(shouldRevalidateRoute).toBe(shouldRevalidateProduct);
         });
@@ -353,7 +353,7 @@ describe('Product Detail Route', () => {
                 shortDescription: undefined,
             };
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: productWithoutDescription,
                 page: mockPage,
@@ -379,7 +379,7 @@ describe('Product Detail Route', () => {
                 shortDescription: 'Test description',
             };
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: productWithDescription,
                 page: mockPage,
@@ -400,7 +400,7 @@ describe('Product Detail Route', () => {
             vi.mocked(isProductSet).mockReturnValue(true);
             vi.mocked(isProductBundle).mockReturnValue(false);
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: mockProduct,
                 page: mockPage,
@@ -418,7 +418,7 @@ describe('Product Detail Route', () => {
             vi.mocked(isProductSet).mockReturnValue(false);
             vi.mocked(isProductBundle).mockReturnValue(true);
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: mockProduct,
                 page: mockPage,
@@ -437,7 +437,7 @@ describe('Product Detail Route', () => {
         test('should include ProductRecommendations component integration', async () => {
             // This test verifies that the ProductRecommendations component is properly integrated
             // The actual rendering with Suspense and async data is handled by React and tested in integration tests
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
 
             // Verify the page component can be imported and has the correct structure
             expect(ProductPage).toBeDefined();
@@ -481,7 +481,7 @@ describe('Product Detail Route', () => {
             vi.mocked(isProductSet).mockReturnValue(false);
             vi.mocked(isProductBundle).mockReturnValue(false);
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: mockProduct,
                 page: mockPage,
@@ -503,7 +503,7 @@ describe('Product Detail Route', () => {
             vi.mocked(isProductSet).mockReturnValue(false);
             vi.mocked(isProductBundle).mockReturnValue(false);
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: mockProduct,
                 page: mockPage,
@@ -535,7 +535,7 @@ describe('Product Detail Route', () => {
             vi.mocked(isProductSet).mockReturnValue(false);
             vi.mocked(isProductBundle).mockReturnValue(false);
 
-            const { default: ProductPage } = await import('./_app.product.$productId');
+            const { default: ProductPage } = await import('./_app.p.$');
             const mockLoaderData: ProductPageData = {
                 product: {
                     ...mockProduct,
@@ -555,30 +555,77 @@ describe('Product Detail Route', () => {
 });
 
 describe('Footwear product route loader fallback', () => {
+    let activeAppConfig: object = {};
     const invoke = async (path: string) => {
+        const { appConfigContext } = await import('@salesforce/storefront-next-runtime/config');
         const { siteContext } = await import('@salesforce/storefront-next-runtime/site-context');
-        const { loader } = await import('./_app.product.$productId');
+        const { loader } = await import('./_app.p.$');
         const context = {
             get: vi.fn((key) => {
                 if (key === siteContext) {
                     return { currency: 'USD', site: { id: 'test-site' }, locale: { id: 'en-US' } };
                 }
+                if (key === appConfigContext) {
+                    return activeAppConfig;
+                }
                 return undefined;
             }),
         } as any;
-        const request = new Request(`https://example.com/product/${path}`);
+        const request = new Request(`https://example.com/p/${path}`);
         return loader({
             request,
-            params: { siteId: 'test-site', localeId: 'en-US', productId: path },
+            params: { siteId: 'test-site', localeId: 'en-US', '*': path },
             context,
             url: new URL(request.url),
-            pattern: '',
+            pattern: '/p/*',
         });
     };
 
     beforeEach(() => {
         vi.clearAllMocks();
+        activeAppConfig = {};
         mockAttemptRouteSeoFallback.mockResolvedValue(undefined);
+    });
+
+    test('301-redirects a stale slug from the existing product lookup', async () => {
+        activeAppConfig = {
+            url: {
+                seoRoutes: {
+                    'test-site': {
+                        product: { prefix: 'p' },
+                        category: { prefix: 'c', mode: 'id-suffix' },
+                    },
+                },
+            },
+        };
+        mockFetchProductById.mockResolvedValueOnce({ id: 'shoe-123', slug: 'current café' });
+        const { loader } = await import('./_app.p.$');
+        const { appConfigContext } = await import('@salesforce/storefront-next-runtime/config');
+        const { siteContext } = await import('@salesforce/storefront-next-runtime/site-context');
+        const context = {
+            get: vi.fn((key) => {
+                if (key === siteContext) return { currency: 'USD', site: { id: 'test-site' }, locale: { id: 'en-US' } };
+                if (key === appConfigContext) return activeAppConfig;
+                return undefined;
+            }),
+        } as any;
+        const request = new Request('https://example.com/p/old-slug/shoe-123?color=blue');
+
+        const response = await loader({
+            request,
+            params: { siteId: 'test-site', localeId: 'en-US', '*': 'stale-route-param' },
+            context,
+            url: new URL(request.url),
+            pattern: '/p/*',
+        }).then(
+            () => undefined,
+            (error: unknown) => error as Response
+        );
+
+        expect(response?.status).toBe(301);
+        expect(response?.headers.get('Location')).toBe('/p/current%20caf%C3%A9/shoe-123?color=blue');
+        expect(mockFetchProductById).toHaveBeenCalledOnce();
+        expect(mockAttemptRouteSeoFallback).not.toHaveBeenCalled();
     });
 
     test('uses the unchanged .html path ID without fallback on primary success', async () => {
