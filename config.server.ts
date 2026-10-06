@@ -15,7 +15,7 @@
  */
 
 import { defineConfig } from '@salesforce/storefront-next-runtime/config';
-import baseConfig, { protectedConfigPaths } from './config.server.base';
+import baseConfig, { defaultSeoRoute, protectedConfigPaths } from './config.server.base';
 
 export default defineConfig(
     {
@@ -40,6 +40,13 @@ export default defineConfig(
             },
             defaultSiteId: 'Footwear',
             siteAliasMap: { Footwear: 'Footwear' },
+            url: {
+                ...baseConfig?.app?.url,
+                seoRoutes: {
+                    ...baseConfig?.app?.url?.seoRoutes,
+                    Footwear: defaultSeoRoute,
+                },
+            },
         },
     },
     { protectedPaths: protectedConfigPaths }
