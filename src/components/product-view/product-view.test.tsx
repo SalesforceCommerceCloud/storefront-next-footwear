@@ -73,6 +73,19 @@ vi.mock('@/extensions/shipping-delivery/components/target/delivery-estimate-summ
 }));
 // @sfdc-extension-block-end SFDC_EXT_SHIPPING_DELIVERY
 
+// The inline stepper is opt-in (`addToCartQuantityMode: 'inline'`). Capture the `loading` prop the PDP
+// hands it so the "Adding to Cart..." label can be asserted without the cart controller.
+const inlineAddToCart = vi.hoisted(() => ({ enabled: false, lastLoading: null as boolean | null }));
+vi.mock('@/lib/product/add-to-cart-quantity-mode', () => ({
+    usesInlineAddToCartQuantity: () => inlineAddToCart.enabled,
+}));
+vi.mock('@/components/inline-add-to-cart/connected', () => ({
+    default: ({ loading }: { loading?: boolean }) => {
+        inlineAddToCart.lastLoading = loading ?? false;
+        return <div data-testid="inline-add-to-cart-stub" />;
+    },
+}));
+
 vi.mock('@/hooks/use-scapi-fetcher', () => ({
     useScapiFetcher: (_client: string, _method: string, options: { params: { path: { id: string } } }) => {
         const variantId = options.params.path.id;
@@ -125,7 +138,7 @@ const product = {
     ],
 } as ShopperProducts.schemas['Product'];
 
-const renderOverlay = () => {
+const renderOverlay = (search = '?color=BLUE&size=038&width=S') => {
     const overlay = <ProductView product={product} />;
     const router = createMemoryRouter(
         [
@@ -134,7 +147,7 @@ const renderOverlay = () => {
                 element: <AllProvidersWrapper>{overlay}</AllProvidersWrapper>,
             },
         ],
-        { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
+        { initialEntries: [`/global/en-GB/product/test-product${search}`] }
     );
     return render(<RouterProvider router={router} />);
 };
@@ -149,6 +162,8 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
         // Default: SKU is fully in stock at the site (store record left to each test).
         variantSiteInventory = { ats: 50, id: 'blue-site-inventory', orderable: true, stockLevel: 50 };
         variantStoreInventories = null;
+        inlineAddToCart.enabled = false;
+        inlineAddToCart.lastLoading = null;
     });
 
     // @sfdc-extension-block-start SFDC_EXT_BOPIS
@@ -181,6 +196,16 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
         // The shared picker stays visible, but the selected SKU's unavailable site inventory disables delivery.
         expect(screen.getByRole('radio', { name: 'Delivery' })).toBeDisabled();
         // @sfdc-extension-block-end SFDC_EXT_BOPIS
+    });
+
+    // W-24459266: with no size/color chosen there is no variant to hydrate, so the inline button must not be loading.
+    test('does not show the inline add-to-cart as busy before a variant is selected', async () => {
+        inlineAddToCart.enabled = true;
+
+        renderOverlay('');
+
+        await screen.findByTestId('inline-add-to-cart-stub');
+        expect(inlineAddToCart.lastLoading).toBe(false);
     });
 
     test('uses the PDP-only zoom gallery for the controlled-colorway PDP', () => {

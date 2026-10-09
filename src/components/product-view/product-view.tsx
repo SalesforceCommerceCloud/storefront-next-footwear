@@ -99,7 +99,9 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
         },
     });
     const hasSelectedVariantInventory = variantFetcher.success && variantFetcher.data?.id === selectedVariantId;
-    const isVariantInventoryLoading = hasVariantSelection && !hasSelectedVariantInventory;
+    // Pending only once a variant is selected. With nothing selected there is no inventory to wait for,
+    // and reporting "loading" would show the add-to-cart button's busy label ("Adding to Cart...").
+    const isVariantInventoryLoading = hasVariantSelection && selectedVariantId != null && !hasSelectedVariantInventory;
     const isVariantInventoryLoadError = Boolean(variantFetcher.errors);
 
     useEffect(() => {
