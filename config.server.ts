@@ -37,6 +37,7 @@ export default defineConfig(
                         supportedCurrencies: ['USD', 'GBP'],
                     },
                 ],
+                perCurrencyShippingMethodIds: true,
             },
             defaultSiteId: 'Footwear',
             siteAliasMap: { Footwear: 'Footwear' },
