@@ -141,7 +141,7 @@ export function ColorwayStrip({ colorways, selectedColorwayId, onColorwayChange,
                             aria-disabled={!colorway.available || undefined}
                             tabIndex={index === focusableIndex ? 0 : -1}
                             className={cn(
-                                'size-16 shrink-0 overflow-hidden border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                                'size-16 shrink-0 overflow-hidden rounded-ui border-2 bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                                 selected ? 'border-primary' : 'border-transparent hover:border-border',
                                 !colorway.available && 'cursor-not-allowed opacity-50'
                             )}

@@ -25,7 +25,9 @@
  *
  * The existing `headerbanner` and `main` slots remain intact so merchant-authored content stays compatible
  * with the deployed Page Designer metadata. The activity rail reuses the shared curated-category component
- * with the `activity` parent id and footwear-specific heading and CTA copy.
+ * with the `root` parent id (the five activity categories — running, trail, training, walking, casual — are
+ * flattened directly under root in the catalog, there is no longer a standalone `activity` category) and
+ * footwear-specific heading and CTA copy.
  */
 import { Suspense } from 'react';
 import { Await, redirect, useAsyncError } from 'react-router';
@@ -55,7 +57,8 @@ import { SeoMeta } from '@/components/seo-meta';
 import { buildCanonicalUrl } from '@/utils/canonical-url';
 import { useTranslation } from 'react-i18next';
 import type { NormalizedApiError } from '@/lib/api/normalized-api-error';
-import { routes, routeHref } from '@/route-paths';
+import { createCategoryUrlFromLegacyPath } from '@/route-paths';
+import { useSeoUrlContext } from '@/hooks/use-seo-url-context';
 
 export { shouldRevalidate } from '@/lib/revalidation/routes/home';
 
@@ -99,8 +102,9 @@ function FeaturedProductsError() {
 export type HomePageData = {
     page: Awaited<ReturnType<typeof fetchPageWithComponentData>>;
     searchResult: Promise<ShopperSearch.schemas['ProductSearchResult']>;
-    /** Children of the `activity` parent category — the activity discovery rail (PopularCategories). */
+    /** Children of `root` — the activity discovery rail (PopularCategories). */
     categories: Promise<ShopperProducts.schemas['Category'][]>;
+    rootCategoryId: string;
     pageUrl: string;
     ogImageUrl: string;
 };
@@ -131,20 +135,22 @@ export async function loader(args: Route.LoaderArgs): Promise<HomePageData> {
     }
 
     const currency = (args.context.get(siteContext) as SiteContext).currency;
+    const rootCategoryId = config.pages.navigation.rootCategoryId;
     const pageUrl = buildCanonicalUrl(requestUrl.origin, requestUrl.pathname, requestUrl.search);
 
     const page = fetchPageWithComponentData(args, {
         pageId: 'homepage',
     });
     const searchResult = fetchCarouselProducts(args.context, {
-        categoryId: 'root',
+        categoryId: rootCategoryId,
         limit: config.pages.home.featuredProductsCount,
         currency: currency ?? undefined,
     });
-    // Activity discovery rail — the children of the `activity` parent category (footwear browses
-    // by activity, not the `root` categories the canonical home uses). Non-critical (below the
-    // fold), so returned as an unresolved promise and resolved inside <PopularCategories>.
-    const categories = fetchCategories(args.context, 'activity', 1);
+    // Activity discovery rail — the five activity categories (running, trail, training, walking,
+    // casual) are flattened directly under `root` in the catalog, so this fetches root's children
+    // rather than a dedicated `activity` parent. Non-critical (below the fold), so returned as an
+    // unresolved promise and resolved inside <PopularCategories>.
+    const categories = fetchCategories(args.context, rootCategoryId, 1);
 
     // These requests remain deferred, but must be observed if the blocking page request rejects.
     void Promise.allSettled([searchResult, categories]);
@@ -153,6 +159,7 @@ export async function loader(args: Route.LoaderArgs): Promise<HomePageData> {
         page: await page,
         searchResult,
         categories,
+        rootCategoryId,
         pageUrl,
         ogImageUrl: new URL(hero01, requestUrl.origin).href,
     };
@@ -165,6 +172,11 @@ export async function loader(args: Route.LoaderArgs): Promise<HomePageData> {
  */
 export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
     const { t } = useTranslation('home');
+    const seoUrlContext = useSeoUrlContext();
+    const rootCategoryUrl = createCategoryUrlFromLegacyPath(
+        `/category/${encodeURIComponent(loaderData.rootCategoryId)}`,
+        seoUrlContext
+    );
 
     const heroSlides: HeroSlide[] = [
         {
@@ -174,7 +186,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero01,
             imageAlt: t('hero.slide1.imageAlt'),
             ctaText: t('hero.slide1.ctaText'),
-            ctaLink: '/category/activity',
+            ctaLink: rootCategoryUrl,
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -185,7 +197,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero02,
             imageAlt: t('hero.slide2.imageAlt'),
             ctaText: t('hero.slide2.ctaText'),
-            ctaLink: '/category/activity',
+            ctaLink: rootCategoryUrl,
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -196,7 +208,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero03,
             imageAlt: t('hero.slide3.imageAlt'),
             ctaText: t('hero.slide3.ctaText'),
-            ctaLink: '/category/activity',
+            ctaLink: rootCategoryUrl,
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -207,7 +219,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             imageUrl: hero04,
             imageAlt: t('hero.slide4.imageAlt'),
             ctaText: t('hero.slide4.ctaText'),
-            ctaLink: '/category/activity',
+            ctaLink: rootCategoryUrl,
             overlayPosition: 'Middle Center',
             overlayAlignment: 'center',
         },
@@ -245,7 +257,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                         <ProductCarouselWithData
                             data={searchResult}
                             title={t('featuredProducts.title')}
-                            shopAllUrl="/category/root"
+                            shopAllUrl={rootCategoryUrl}
                             shopAllText={t('featuredProducts.shopAll')}
                         />
                     )}
@@ -261,7 +273,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                 title={t('activityDiscovery.title')}
                 subtitle={t('activityDiscovery.subtitle')}
                 shopAllText={t('activityDiscovery.viewAll')}
-                shopAllUrl={routeHref(routes.category, { categoryId: 'activity' })}
+                shopAllUrl={rootCategoryUrl}
             />
 
             <div className="pt-16">
@@ -274,7 +286,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                             imageAlt={t('featuredContent.running.imageAlt')}
                             buttonText={t('featuredContent.running.ctaText')}
                             buttonAriaLabel={t('featuredContent.running.ctaAriaLabel')}
-                            buttonLink={routeHref(routes.category, { categoryId: 'running' })}
+                            buttonLink={createCategoryUrlFromLegacyPath('/category/running', seoUrlContext)}
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"
@@ -286,7 +298,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
                             imageAlt={t('featuredContent.casual.imageAlt')}
                             buttonText={t('featuredContent.casual.ctaText')}
                             buttonAriaLabel={t('featuredContent.casual.ctaAriaLabel')}
-                            buttonLink={routeHref(routes.category, { categoryId: 'casual' })}
+                            buttonLink={createCategoryUrlFromLegacyPath('/category/casual', seoUrlContext)}
                             showBackground={false}
                             showBorder={false}
                             loading="lazy"

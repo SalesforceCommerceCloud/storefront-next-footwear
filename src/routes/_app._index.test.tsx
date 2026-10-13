@@ -17,12 +17,13 @@
 /**
  * Footwear home route overlay test (Rule 5: a route overlay copies the canonical route's sibling
  * test). The footwear overlay renders static marketing content and uses additive Page Designer slots.
- * It reuses the shared <PopularCategories> with the `activity` parent's children, left-aligned with a
- * "View all activities" shop-all link (the canonical home uses the `root` categories, centered, with
- * no shop-all link).
+ * It reuses the shared <PopularCategories> with `root`'s children, left-aligned with a
+ * "View all activities" shop-all link (the canonical home also uses the `root` categories, but
+ * centered, with no shop-all link).
  */
 
 import { render, screen, waitFor, within } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import type { ShopperExperience, ShopperProducts, ShopperSearch } from '@/scapi';
 import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
@@ -31,11 +32,40 @@ import { createTestContext } from '@/lib/test-utils';
 import { fetchPageWithComponentData } from '@/lib/page-designer/page-loader.server';
 import { fetchSearchProducts } from '@/lib/api/search.server';
 import { fetchCategories } from '@/lib/api/categories.server';
-import { getConfig } from '@salesforce/storefront-next-runtime/config';
+import { ConfigProvider, getConfig } from '@salesforce/storefront-next-runtime/config';
+import { SiteProvider } from '@salesforce/storefront-next-runtime/site-context';
 import type { AppConfig } from '@/types/config';
 import { getRegionDefinitions } from '@/lib/decorators/region-definition';
+import { mockConfig, mockLocale, mockSiteObject } from '@/test-utils/config';
 
 const { t } = getTranslation();
+
+const testConfig: AppConfig = {
+    ...mockConfig,
+    url: {
+        ...mockConfig.url,
+        seoRoutes: {
+            [mockSiteObject.id]: {
+                product: { prefix: 'p' },
+                category: { prefix: 'c', mode: 'id-suffix' },
+            },
+        },
+    },
+};
+
+function HomePageProviders({ children }: { children: ReactNode }) {
+    return (
+        <ConfigProvider config={testConfig}>
+            <SiteProvider
+                site={mockSiteObject}
+                locale={mockLocale}
+                language={mockSiteObject.defaultLocale}
+                currency={mockSiteObject.defaultCurrency}>
+                {children}
+            </SiteProvider>
+        </ConfigProvider>
+    );
+}
 
 // Mock data
 const mockSearchResult = {
@@ -285,12 +315,12 @@ const renderComponent = (loaderDataOverrides?: Partial<HomePageData>) => {
         },
         searchResult: Promise.resolve(mockSearchResult),
         categories: Promise.resolve(mockCategories),
-
+        rootCategoryId: 'root',
         pageUrl: 'http://localhost/',
         ogImageUrl: 'http://localhost/__ASSET_MOCK__',
     };
     const data = { ...defaultData, ...loaderDataOverrides };
-    return render(<HomePage loaderData={data} />);
+    return render(<HomePage loaderData={data} />, { wrapper: HomePageProviders });
 };
 
 describe('Footwear HomePage overlay', () => {
@@ -301,7 +331,9 @@ describe('Footwear HomePage overlay', () => {
             ...createMockPage([]),
             componentData: {},
         });
-        vi.mocked(getConfig).mockReturnValue({ pages: { home: { featuredProductsCount: 8 } } } as AppConfig);
+        vi.mocked(getConfig).mockReturnValue({
+            pages: { home: { featuredProductsCount: 8 }, navigation: { rootCategoryId: 'root', maxDepth: 1 } },
+        } as AppConfig);
     });
 
     describe('Basic Rendering', () => {
@@ -313,9 +345,9 @@ describe('Footwear HomePage overlay', () => {
             // The spotlights must point at categories that exist in the footwear catalog. They replaced
             // apparel women/men cards that linked to /category/womens and /category/mens (both 404 here).
             const running = screen.getByRole('link', { name: 'Shop running shoes' });
-            expect(running).toHaveAttribute('href', expect.stringContaining('/category/running'));
+            expect(running).toHaveAttribute('href', expect.stringContaining('/c/running'));
             const casual = screen.getByRole('link', { name: 'Shop casual shoes' });
-            expect(casual).toHaveAttribute('href', expect.stringContaining('/category/casual'));
+            expect(casual).toHaveAttribute('href', expect.stringContaining('/c/casual'));
 
             // No card links to the gender categories the footwear catalog does not have.
             for (const link of screen.getAllByRole('link')) {
@@ -324,16 +356,22 @@ describe('Footwear HomePage overlay', () => {
             }
         });
 
-        test('points every hero CTA at the activity hub, not the apparel root category', () => {
+        test('points every hero CTA at the activity hub', () => {
             renderComponent();
-            // The hero slides replaced apparel slides whose CTAs all pointed at /category/root. The
-            // footwear catalog browses by activity, so every hero CTA must point at the activity hub.
+            // The five activity categories (running, trail, training, walking, casual) are flattened
+            // directly under `root` in the catalog — there is no standalone `activity` category — so
+            // every hero CTA points at `/category/root`.
             const heroLinks = within(screen.getByTestId('hero-carousel')).getAllByRole('link');
             expect(heroLinks).toHaveLength(4);
             for (const link of heroLinks) {
-                expect(link).toHaveAttribute('href', '/category/activity');
-                expect(link.getAttribute('href')).not.toContain('/category/root');
+                expect(link).toHaveAttribute('href', '/c/root');
             }
+        });
+
+        test('uses the configured SEO category prefix for the activity hub', () => {
+            renderComponent();
+
+            expect(screen.getByRole('link', { name: 'View all activities' })).toHaveAttribute('href', '/c/root');
         });
 
         test('renders the activity rail as static content', async () => {
@@ -350,8 +388,8 @@ describe('Footwear HomePage overlay', () => {
             expect(rail).toHaveAttribute('data-title-align', 'left');
             expect(screen.getByRole('heading', { name: 'Shop by Activity' })).toBeInTheDocument();
             const viewAll = screen.getByRole('link', { name: 'View all activities' });
-            // Links to the activity landing PLP (the parent category of the activity children).
-            expect(viewAll).toHaveAttribute('href', expect.stringContaining('/category/activity'));
+            // Links to `root`, whose direct children are the five activity categories.
+            expect(viewAll).toHaveAttribute('href', expect.stringContaining('/c/root'));
         });
 
         test('stacks authored Page Designer content on top of the static marketing sections', async () => {
@@ -474,9 +512,9 @@ describe('Footwear HomePage overlay', () => {
             expect(result.categories).toBeInstanceOf(Promise);
         });
 
-        test('fetches the children of the `activity` parent category for the rail', async () => {
+        test('fetches the children of `root` for the rail', async () => {
             await loader(baseLoaderArgs);
-            expect(vi.mocked(fetchCategories)).toHaveBeenCalledWith(mockContext, 'activity', 1);
+            expect(vi.mocked(fetchCategories)).toHaveBeenCalledWith(mockContext, 'root', 1);
         });
 
         test('loader propagates page API errors', async () => {

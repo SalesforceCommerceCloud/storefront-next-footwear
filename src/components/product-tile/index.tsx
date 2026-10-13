@@ -43,7 +43,7 @@ import { usePageDesignerMode } from '@salesforce/storefront-next-runtime/design/
 
 import { cn, resolveAssetUrl } from '@/lib/utils';
 import {
-    createProductUrl,
+    createProductUrlFromAttributes,
     getDecoratedVariationAttributes,
     type DecoratedVariationAttributeValue,
 } from '@/lib/product/product-utils';
@@ -236,11 +236,23 @@ const getPageDesignerStyleClasses = ({
     }
 
     if (padding && padding !== '0') {
-        classes.push(`p-${padding}`);
+        const paddingMap: Record<string, string> = {
+            '2': 'p-2',
+            '4': 'p-4',
+            '6': 'p-6',
+            '8': 'p-8',
+        };
+        classes.push(paddingMap[padding]);
     }
 
     if (margin && margin !== '0') {
-        classes.push(`m-${margin}`);
+        const marginMap: Record<string, string> = {
+            '2': 'm-2',
+            '4': 'm-4',
+            '6': 'm-6',
+            '8': 'm-8',
+        };
+        classes.push(marginMap[margin]);
     }
 
     if (fontWeight) {
@@ -367,7 +379,7 @@ const ProductTile = memo(
             // Prioritize loader data (Page Designer) over prop (programmatic use)
             const product = (data as ShopperSearch.schemas['ProductSearchHit'] | undefined) || productProp;
 
-            const { config, t, currency, getBadges } = useProductTileContext();
+            const { config, t, currency, seoUrlContext, getBadges } = useProductTileContext();
             const { t: tProduct } = useTranslation('product');
             const { t: tCommon } = useTranslation('common');
             const { isDesignMode } = usePageDesignerMode();
@@ -421,8 +433,8 @@ const ProductTile = memo(
             }, [representedVariant, selectedAttributeValue]);
 
             const variationAttributes = useMemo(
-                () => (product ? getDecoratedVariationAttributes(product) : []),
-                [product]
+                () => (product ? getDecoratedVariationAttributes(product, { seoUrlContext }) : []),
+                [product, seoUrlContext]
             );
             const colorAttributes = variationAttributes.filter(({ id }) => PRODUCT_TILE_SELECTABLE_ATTRIBUTE_ID === id);
             const colorValues = (colorAttributes[0]?.values?.slice(0, maxSwatches) ??
@@ -484,7 +496,16 @@ const ProductTile = memo(
                 setTileEngaged(true);
             }, [loadWishlist]);
 
-            const productUrl = createProductUrl(product?.productId ?? '', null, 'color', defaultVariantPid);
+            const productUrl = createProductUrlFromAttributes(
+                product?.productId ?? '',
+                null,
+                'color',
+                defaultVariantPid,
+                {
+                    context: seoUrlContext,
+                    slug: product?.slug,
+                }
+            );
             const productName = product?.productName ?? '';
 
             const pageDesignerStyles = getPageDesignerStyleClasses({
@@ -620,6 +641,7 @@ const ProductTile = memo(
                                 imgAspectRatio={effectiveImgAspectRatio}
                                 className="w-full aspect-square [&_img]:object-cover! [&_img]:h-full! [&_img]:max-w-full! [&_img]:mx-auto!"
                                 handleProductClick={handleProductClick}
+                                seoUrlContext={seoUrlContext}
                             />
                             <UITarget targetId="sfcc.plp.shipping.deliveryEstimate" />
 
@@ -695,6 +717,7 @@ const ProductTile = memo(
                                     <QuickAddButton
                                         productId={product.productId ?? ''}
                                         productName={productName}
+                                        productSlug={product.slug}
                                         selectedColorValue={selectedAttributeValue}
                                         initialVariantSelections={initialVariantSelections}
                                         label={quickAddLabel ?? t('quickAdd')}
@@ -829,6 +852,7 @@ const ProductTile = memo(
                                 <QuickAddButton
                                     productId={product.productId ?? ''}
                                     productName={productName}
+                                    productSlug={product.slug}
                                     selectedColorValue={selectedAttributeValue}
                                     initialVariantSelections={initialVariantSelections}
                                     label={quickAddLabel ?? t('quickAdd')}

@@ -35,7 +35,7 @@ function buildProduct(overrides: Partial<ShopperProducts.schemas['Product']> = {
         id: 'current-product',
         primaryCategory: {
             id: 'trail-running',
-            parentCategoryTree: [{ id: 'activity' }, { id: 'running' }, { id: 'trail-running' }],
+            parentCategoryTree: [{ id: 'root' }, { id: 'running' }, { id: 'trail-running' }],
         },
         ...overrides,
     } as ShopperProducts.schemas['Product'];
@@ -46,26 +46,26 @@ function buildHit(overrides: Record<string, unknown> = {}): ShopperSearch.schema
 }
 
 describe('getActivityCategoryId', () => {
-    test('returns the activity category directly under the "activity" parent', () => {
+    test('returns the top-level activity category from the ancestor chain', () => {
         const product = buildProduct({
             primaryCategory: {
                 id: 'trail-running',
-                parentCategoryTree: [{ id: 'activity' }, { id: 'running' }, { id: 'trail-running' }],
+                parentCategoryTree: [{ id: 'root' }, { id: 'running' }, { id: 'trail-running' }],
             },
         });
         expect(getActivityCategoryId(product)).toBe('running');
     });
 
-    test("returns the product's own category id when 'activity' is its direct parent", () => {
+    test("returns the product's own category id when it is itself a top-level activity category", () => {
         const product = buildProduct({
-            primaryCategory: { id: 'running', parentCategoryTree: [{ id: 'activity' }, { id: 'running' }] },
+            primaryCategory: { id: 'running', parentCategoryTree: [{ id: 'root' }, { id: 'running' }] },
         });
         expect(getActivityCategoryId(product)).toBe('running');
     });
 
     test('returns undefined for products outside the activity tree', () => {
         const product = buildProduct({
-            primaryCategory: { id: 'accessories', parentCategoryTree: [{ id: 'accessories' }] },
+            primaryCategory: { id: 'accessories', parentCategoryTree: [{ id: 'root' }, { id: 'accessories' }] },
         });
         expect(getActivityCategoryId(product)).toBeUndefined();
     });
@@ -110,6 +110,21 @@ describe('fetchActivityCandidatePool', () => {
         const hits = await fetchActivityCandidatePool(createTestContext(), buildProduct());
 
         expect(hits).toEqual([]);
+    });
+
+    test('degrades to an empty pool instead of hanging when the search outlasts the timeout budget', async () => {
+        vi.useFakeTimers();
+        try {
+            // Simulate a slow/cold-cache SCAPI search that never resolves on its own.
+            mockFetchCarouselProducts.mockReturnValue(new Promise(() => {}));
+
+            const hitsPromise = fetchActivityCandidatePool(createTestContext(), buildProduct());
+            await vi.advanceTimersByTimeAsync(3_000); // mirrors CANDIDATE_POOL_TIMEOUT_MS
+
+            expect(await hitsPromise).toEqual([]);
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });
 

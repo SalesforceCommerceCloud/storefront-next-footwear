@@ -17,7 +17,7 @@ import { type ReactElement, useCallback, useId, useMemo, useState } from 'react'
 import { useLocation, useNavigation } from 'react-router';
 import { useNavigate } from '@/hooks/use-navigate';
 
-import type { ShopperSearch } from '@/scapi';
+import type { ShopperProducts, ShopperSearch } from '@/scapi';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Plus, Minus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +30,7 @@ import RefineColor from '@/components/category-refinements/refine-color';
 import RefineSize from '@/components/category-refinements/refine-size';
 import RefinePrice from '@/components/category-refinements/refine-price';
 import RefineCategory from '@/components/category-refinements/refine-cgid';
+import { useCategoryNavigation } from '@/components/category-refinements/use-category-navigation';
 // @sfdc-extension-line SFDC_EXT_BOPIS
 import RefineInventory from '@/extensions/bopis/components/refine-inventory';
 import RefineCushioning from './refine-cushioning';
@@ -51,15 +52,18 @@ import RefineTerrain from './refine-terrain';
 export default function CategoryRefinements({
     result,
     refine = [],
+    category,
 }: {
     result: ShopperSearch.schemas['ProductSearchResult'];
     refine: string[];
+    category?: ShopperProducts.schemas['Category'];
 }): ReactElement {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
     const navigation = useNavigation();
     const isPending = navigation.state !== 'idle';
+    const resolveCategoryNavigation = useCategoryNavigation(category);
 
     const effectiveRefines = navigation.location
         ? new URLSearchParams(navigation.location.search).getAll('refine')
@@ -82,6 +86,10 @@ export default function CategoryRefinements({
     const toggleFilter = useCallback(
         (attributeId: string, value: string) => {
             const params = new URLSearchParams(location.search);
+            if (attributeId === 'cgid') {
+                resolveCategoryNavigation(value, params)?.();
+                return;
+            }
             const refines = params.getAll('refine');
             const refinePair = `${attributeId}=${value}`;
 
@@ -91,7 +99,6 @@ export default function CategoryRefinements({
             } else {
                 const exclusiveRefinements = [
                     'price',
-                    'cgid',
                     // @sfdc-extension-line SFDC_EXT_BOPIS
                     'ilids',
                 ];
@@ -113,7 +120,7 @@ export default function CategoryRefinements({
                 search: nextSearch,
             });
         },
-        [location, navigate]
+        [location.pathname, location.search, navigate, resolveCategoryNavigation]
     );
 
     const isFilterSelected = useCallback(
@@ -142,7 +149,15 @@ export default function CategoryRefinements({
             case 'price':
                 return <RefinePrice {...refinementProps} result={result} />;
             case 'cgid':
-                return <RefineCategory {...refinementProps} label={refinement.label} />;
+                return (
+                    <RefineCategory
+                        {...refinementProps}
+                        label={refinement.label}
+                        isValueDisabled={(value) =>
+                            !resolveCategoryNavigation(value, new URLSearchParams(location.search))
+                        }
+                    />
+                );
             case 'c_cushioning':
                 return <RefineCushioning {...refinementProps} />;
             case 'c_supportType':

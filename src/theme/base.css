@@ -119,3 +119,55 @@
     }
 }
 
+/* Product-gallery rounding — the shared ImageGallery carries no shape-token
+   classes (rounding it inline would leak into every vertical), so round the
+   hero + thumbnails here via the gallery data hooks, scoped to footwear only.
+   Thumb buttons keep overflow:visible so the selected border-2 stroke is not
+   clipped by overflow:hidden + border-radius; round the media child instead. */
+[data-gallery-hero] {
+    border-radius: var(--ui-radius);
+    overflow: hidden;
+}
+
+[data-gallery-thumbs] button,
+[data-gallery-strip] button {
+    border-radius: var(--ui-radius);
+    overflow: visible;
+}
+
+[data-gallery-thumbs] button > *,
+[data-gallery-strip] button > * {
+    border-radius: calc(var(--ui-radius) - 2px);
+    overflow: hidden;
+}
+
+/* Product-tile image rounding — shared ProductTile image wrapper is square. */
+.product-card .product-image > div {
+    border-radius: var(--ui-radius);
+    overflow: hidden;
+}
+
+/* Dialog / quick-add galleries sit outside the main PDP scope — same radius. */
+[data-slot='dialog-content'] [data-gallery-hero] {
+    border-radius: var(--ui-radius);
+    overflow: hidden;
+}
+
+[data-slot='dialog-content'] [data-gallery-thumbs] button,
+[data-slot='dialog-content'] [data-gallery-strip] button {
+    border-radius: var(--ui-radius);
+    overflow: visible;
+}
+
+[data-slot='dialog-content'] [data-gallery-thumbs] button > *,
+[data-slot='dialog-content'] [data-gallery-strip] button > * {
+    border-radius: calc(var(--ui-radius) - 2px);
+    overflow: hidden;
+}
+
+/* Review photo thumbs ship without a corner token. */
+[data-testid='review-card'] button:has(> img),
+[data-testid='review-card'] button:has(> img) > img {
+    border-radius: var(--ui-radius);
+}
+

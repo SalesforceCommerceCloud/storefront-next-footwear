@@ -18,9 +18,14 @@ import type { ShopperProducts, ShopperSearch } from '@/scapi';
 import type { Recommendation } from '@/hooks/recommenders/use-recommenders';
 import { fetchCarouselProducts } from '@/components/product-carousel/loaders';
 import { siteContext, type SiteContext } from '@salesforce/storefront-next-runtime/site-context';
+import { streamTimeout } from '@/entry.server';
 
-/** Catalog id of the top-level "activity" category (Running / Trail / Training / …). */
-const ACTIVITY_PARENT_CATEGORY_ID = 'activity';
+/**
+ * Catalog ids of the activity categories. Running/Trail/Training/Walking/Casual are flattened
+ * directly under `root` (no shared `activity` parent) — see the home route's activity discovery
+ * rail for the same catalog shape.
+ */
+const ACTIVITY_CATEGORY_IDS = new Set(['running', 'trail', 'training', 'walking', 'casual']);
 
 /** Custom attributes read directly off the product/hit — no BM refinement config assumed. */
 const PERFORMANCE_SPEC_ATTRIBUTES = ['c_terrain', 'c_cushioning', 'c_supportType'] as const;
@@ -30,22 +35,44 @@ type PerformanceSpecKey = (typeof PERFORMANCE_SPEC_ATTRIBUTES)[number];
 const CANDIDATE_POOL_SIZE = 48;
 
 /**
- * Finds the activity-level category id for a product by walking its primary category's
- * ancestor chain and returning the entry immediately under the catalog's `activity` parent.
- * Returns undefined for products outside the activity tree (e.g. accessories), so callers
- * can skip the rail rather than show unrelated recommendations.
+ * Hard cap on how long the candidate-pool search is allowed to take. `entry.server.tsx` aborts
+ * the whole SSR stream at `streamTimeout` (5s) + 1s; a slow/cold-cache SCAPI category search here
+ * could otherwise still be in flight when that fires, which forces React Router to reject this
+ * deferred value with an uncaught `Server Timeout` and crash the entire PDP instead of just this
+ * rail. Racing against a local timeout keeps the degrade-to-empty behavior in our own hands.
+ *
+ * The search route's non-critical results (`_app.search.tsx`) guard the same stream-timeout crash
+ * differently, by observing the promise instead of racing it, because that path wants the real
+ * result to still stream through `<Await>` rather than degrade to empty.
+ *
+ * Asserted against the real `streamTimeout` below (rather than left as a comment-only invariant)
+ * so lowering `streamTimeout` in `entry.server.tsx` fails loudly here instead of quietly
+ * reopening the crash this timeout exists to prevent.
+ */
+const CANDIDATE_POOL_TIMEOUT_MS = 3_000;
+
+if (import.meta.env.DEV && CANDIDATE_POOL_TIMEOUT_MS >= streamTimeout) {
+    throw new Error(
+        `CANDIDATE_POOL_TIMEOUT_MS (${CANDIDATE_POOL_TIMEOUT_MS}) must stay below entry.server.tsx's ` +
+            `streamTimeout (${streamTimeout}), or this rail's local timeout can no longer win the race ` +
+            'before the SSR stream aborts.'
+    );
+}
+
+/**
+ * Finds the activity-level category id for a product: the entry in its primary category's
+ * ancestor chain (or the primary category itself) that is one of the top-level activity
+ * categories. Returns undefined for products outside the activity tree (e.g. accessories), so
+ * callers can skip the rail rather than show unrelated recommendations.
  */
 export function getActivityCategoryId(product: ShopperProducts.schemas['Product']): string | undefined {
     const primaryCategory = product.primaryCategory;
     if (!primaryCategory) return undefined;
 
-    const tree = primaryCategory.parentCategoryTree ?? [];
-    const activityIndex = tree.findIndex((entry) => entry.id === ACTIVITY_PARENT_CATEGORY_ID);
-    if (activityIndex === -1) return undefined;
+    if (primaryCategory.id && ACTIVITY_CATEGORY_IDS.has(primaryCategory.id)) return primaryCategory.id;
 
-    // `activity`'s immediate child is the next ancestor entry, unless `activity` is the direct
-    // parent of the primary category itself (nothing between them in the ancestor chain).
-    return activityIndex === tree.length - 1 ? primaryCategory.id : tree[activityIndex + 1]?.id;
+    const tree = primaryCategory.parentCategoryTree ?? [];
+    return tree.find((entry) => entry.id != null && ACTIVITY_CATEGORY_IDS.has(entry.id))?.id;
 }
 
 function normalizeSpecValues(value: unknown): string[] {
@@ -138,13 +165,23 @@ export async function fetchActivityCandidatePool(
     if (!activityCategoryId) return [];
 
     const { currency } = context.get(siteContext) as SiteContext;
-    const result = await fetchCarouselProducts(context, {
+    const searchPromise = fetchCarouselProducts(context, {
         categoryId: activityCategoryId,
         limit: CANDIDATE_POOL_SIZE,
         currency: currency ?? undefined,
     }).catch(() => null);
 
-    return result?.hits ?? [];
+    let timeoutId!: ReturnType<typeof setTimeout>;
+    const timeoutPromise = new Promise<null>((resolve) => {
+        timeoutId = setTimeout(() => resolve(null), CANDIDATE_POOL_TIMEOUT_MS);
+    });
+
+    try {
+        const result = await Promise.race([searchPromise, timeoutPromise]);
+        return result?.hits ?? [];
+    } finally {
+        clearTimeout(timeoutId);
+    }
 }
 
 /**

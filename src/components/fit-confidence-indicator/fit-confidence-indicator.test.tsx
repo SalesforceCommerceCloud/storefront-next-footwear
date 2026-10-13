@@ -24,6 +24,7 @@ import type { FitFeedback } from './fit-feedback-data';
 vi.mock('react-i18next', async () => {
     const actual: any = await vi.importActual('react-i18next');
     const translations: Record<string, string> = {
+        'sizeGuide.fitConfidence.heading': 'Fit Confidence',
         'sizeGuide.fitConfidence.summary': '{{percent}}% of {{count}} reviewers say this fits true to size',
         'sizeGuide.fitConfidence.trueToSize': 'True to size',
         'sizeGuide.fitConfidence.runsSmall': 'Runs small',

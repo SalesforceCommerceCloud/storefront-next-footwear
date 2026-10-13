@@ -27,7 +27,7 @@ import ProductView from '@/components/product-view';
 import { AllProvidersWrapper } from '@/test-utils/context-provider';
 import { masterProduct } from '@/components/__mocks__/master-variant-product';
 
-vi.mock('@/components/image-gallery', () => ({
+vi.mock('@/components/product-zoom-gallery', () => ({
     default: () => <div data-testid="image-gallery" />,
 }));
 

@@ -14,8 +14,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
     </h2>
     <a
       class="shrink-0 text-sm font-medium hover:underline"
-      href="/RefArchGlobal/en-GB/category/root"
-      to="/RefArchGlobal/en-GB/category/root"
+      href="/RefArchGlobal/en-GB/c/root"
+      to="/RefArchGlobal/en-GB/c/root"
     >
       Shop all furniture
     </a>
@@ -41,9 +41,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-1"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-1"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-1"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-1"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -92,8 +92,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 1"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-1"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-1"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-1"
           />
           <div
             class="absolute top-2 left-2 flex flex-col items-start gap-1 z-20"
@@ -165,15 +165,12 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           Test Store
         </p>
         <h3
-          aria-label="Featured product 1"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-1"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-1"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-1"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-1"
           >
             Featured product 1
           </a>
@@ -326,9 +323,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-2?color=JJ908XX"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-2?color=JJ908XX"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-2?color=JJ908XX"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-2?color=JJ908XX"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -377,8 +374,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 2"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-2?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-2?pid=701642823919M"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -446,21 +443,28 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Featured product 2"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-2?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-2?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-2?pid=701642823919M"
           >
             Featured product 2
           </a>
@@ -559,6 +563,11 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -576,31 +585,6 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               Featured product 2
                
               Current price: £18.55
-            </span>
-             
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £31.36
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Featured product 2
-               
-              List price from £31.36
-            </span>
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              Buy one Long Center Seam Skirt and get 2 tops
             </span>
           </div>
         </div>
@@ -622,9 +606,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-3?color=CHARCWL"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-3?color=CHARCWL"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-3?color=CHARCWL"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-3?color=CHARCWL"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -673,8 +657,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 3"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-3?pid=750518894461M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-3?pid=750518894461M"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -742,21 +726,28 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Featured product 3"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-3?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-3?pid=750518894461M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-3?pid=750518894461M"
           >
             Featured product 3
           </a>
@@ -855,6 +846,11 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -862,7 +858,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               aria-hidden="true"
               class="[&:not(:first-child)]:mt-6 text-left text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground"
             >
-              £143.99 – £191.99
+              £143.99
             </span>
             <span
               aria-atomic="true"
@@ -871,17 +867,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             >
               Featured product 3
                
-              Price range from £143.99 to £191.99
-            </span>
-             
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              25% off.
+              Current price: £143.99
             </span>
           </div>
         </div>
@@ -903,9 +889,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-4"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-4"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-4"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-4"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -954,8 +940,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 4"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-4"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-4"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-4"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-4"
           />
           <div
             class="absolute top-2 left-2 flex flex-col items-start gap-1 z-20"
@@ -1027,15 +1013,12 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           Test Store
         </p>
         <h3
-          aria-label="Featured product 4"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-4"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-4"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-4"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-4"
           >
             Featured product 4
           </a>
@@ -1188,9 +1171,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-5?color=JJ908XX"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-5?color=JJ908XX"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-5?color=JJ908XX"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-5?color=JJ908XX"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -1239,8 +1222,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 5"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-5?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-5?pid=701642823919M"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -1308,21 +1291,28 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Featured product 5"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-5?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-5?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-5?pid=701642823919M"
           >
             Featured product 5
           </a>
@@ -1421,6 +1411,11 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -1438,31 +1433,6 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               Featured product 5
                
               Current price: £18.55
-            </span>
-             
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £31.36
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Featured product 5
-               
-              List price from £31.36
-            </span>
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              Buy one Long Center Seam Skirt and get 2 tops
             </span>
           </div>
         </div>
@@ -1484,9 +1454,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-6?color=CHARCWL"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-6?color=CHARCWL"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-6?color=CHARCWL"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-6?color=CHARCWL"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -1535,8 +1505,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 6"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-6?pid=750518894461M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-6?pid=750518894461M"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -1604,21 +1574,28 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Featured product 6"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-6?pid=750518894461M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-6?pid=750518894461M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-6?pid=750518894461M"
           >
             Featured product 6
           </a>
@@ -1717,6 +1694,11 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -1724,7 +1706,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               aria-hidden="true"
               class="[&:not(:first-child)]:mt-6 text-left text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground"
             >
-              £143.99 – £191.99
+              £143.99
             </span>
             <span
               aria-atomic="true"
@@ -1733,17 +1715,7 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             >
               Featured product 6
                
-              Price range from £143.99 to £191.99
-            </span>
-             
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              25% off.
+              Current price: £143.99
             </span>
           </div>
         </div>
@@ -1765,9 +1737,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-7"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-7"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-7"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-7"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -1816,8 +1788,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 7"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-7"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-7"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-7"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-7"
           />
           <div
             class="absolute top-2 left-2 flex flex-col items-start gap-1 z-20"
@@ -1889,15 +1861,12 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           Test Store
         </p>
         <h3
-          aria-label="Featured product 7"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-7"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-7"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-7"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-7"
           >
             Featured product 7
           </a>
@@ -2050,9 +2019,9 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             <a
               aria-hidden="true"
               class="block w-full h-full flex-1"
-              href="/RefArchGlobal/en-GB/product/merchandising-grid-8?color=JJ908XX"
+              href="/RefArchGlobal/en-GB/p/merchandising-grid-8?color=JJ908XX"
               tabindex="-1"
-              to="/RefArchGlobal/en-GB/product/merchandising-grid-8?color=JJ908XX"
+              to="/RefArchGlobal/en-GB/p/merchandising-grid-8?color=JJ908XX"
             >
               <div
                 class="w-full h-full object-cover transition-all duration-200 group-hover:scale-105"
@@ -2101,8 +2070,8 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           <a
             aria-label="Featured product 8"
             class="absolute inset-0 z-[1] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-8?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-8?pid=701642823919M"
           />
           <div
             class="absolute top-2 right-2 flex flex-col items-end gap-2 z-20"
@@ -2170,21 +2139,28 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
             />
           </div>
         </div>
+        <div
+          class="flex flex-wrap gap-1 mb-2"
+        >
+          <span
+            class="px-2 py-0.5 text-xs font-medium leading-none rounded-ui border border-border text-muted-foreground bg-transparent"
+            data-slot="badge"
+          >
+            2 Colours
+          </span>
+        </div>
         <p
           class="text-sm font-normal leading-normal text-muted-foreground mb-1"
         >
           Test Store
         </p>
         <h3
-          aria-label="Featured product 8"
           class="text-lg font-semibold leading-[120%] tracking-[-0.45px] text-card-foreground mb-2"
         >
           <a
-            aria-hidden="true"
             class="hover:underline"
-            href="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
-            tabindex="-1"
-            to="/RefArchGlobal/en-GB/product/merchandising-grid-8?pid=701642823919M"
+            href="/RefArchGlobal/en-GB/p/merchandising-grid-8?pid=701642823919M"
+            to="/RefArchGlobal/en-GB/p/merchandising-grid-8?pid=701642823919M"
           >
             Featured product 8
           </a>
@@ -2283,6 +2259,11 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
           </div>
         </div>
         <div>
+          <p
+            class="text-xs text-muted-foreground mb-0.5"
+          >
+            Starting at
+          </p>
           <div
             class="items-center gap-2 text-sm"
           >
@@ -2300,31 +2281,6 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               Featured product 8
                
               Current price: £18.55
-            </span>
-             
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £31.36
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Featured product 8
-               
-              List price from £31.36
-            </span>
-          </div>
-          <div
-            class="items-center gap-2 text-xs text-active-foreground mt-1"
-          >
-            <span
-              class="line-clamp-2 text-[inherit] font-medium"
-            >
-              Buy one Long Center Seam Skirt and get 2 tops
             </span>
           </div>
         </div>
