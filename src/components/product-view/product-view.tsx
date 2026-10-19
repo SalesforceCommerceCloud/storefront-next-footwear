@@ -30,7 +30,10 @@ import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import { usesInlineAddToCartQuantity } from '@/lib/product/add-to-cart-quantity-mode';
 import CollapsibleHtmlSection from '@/components/collapsible-section/collapsible-html-section';
 import { useTranslation } from 'react-i18next';
+import { useRouteLoaderData } from 'react-router';
 import { UITarget } from '@/targets/ui-target';
+import EmbeddedAgentWidget, { isEmbeddedAgentConfigured, parsePdpQuestions } from '@/components/embedded-agent';
+import type { loader as rootLoader } from '@/root';
 
 interface ProductViewProps {
     product: ShopperProducts.schemas['Product'];
@@ -194,6 +197,9 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
         selectedAttributes: selectedColorway ? undefined : variationValues,
     });
     const { t } = useTranslation('product');
+    const rootData = useRouteLoaderData<typeof rootLoader>('root');
+    const embeddedAgent = rootData?.appConfig?.commerce?.embeddedAgent;
+    const pdpQuestions = parsePdpQuestions((product as unknown as { c_pdpQuestions?: unknown }).c_pdpQuestions);
 
     return (
         <ProductViewProvider
@@ -246,6 +252,15 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
                         product={product}
                         showInlineCartQuantity={!isProductASet && !isProductABundle && usesInlineAddToCartQuantity()}
                     />
+                    {isEmbeddedAgentConfigured(embeddedAgent) && !isProductASet && !isProductABundle && (
+                        <div className="mt-6">
+                            <EmbeddedAgentWidget
+                                config={embeddedAgent}
+                                pdpQuestions={pdpQuestions}
+                                productName={product.name}
+                            />
+                        </div>
+                    )}
                     <UITarget targetId="sfcc.pdp.returnsWarranty" />
                     <UITarget targetId="sfcc.pdp.collapsibles" />
                 </div>
