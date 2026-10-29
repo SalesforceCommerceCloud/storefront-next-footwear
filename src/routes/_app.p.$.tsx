@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useEffect, useMemo, useRef, Suspense, Fragment } from 'react';
+import { useMemo, Suspense, Fragment } from 'react';
 import { Await, useRouteLoaderData } from 'react-router';
 import type { loader as rootLoader } from '@/root';
 import { shouldRevalidate as shouldRevalidateProduct } from '@/lib/revalidation/routes/product';
@@ -39,7 +39,7 @@ import {
     derivePerformanceMatched,
 } from '@/lib/pdp-recommendations.server';
 import { useTranslation } from 'react-i18next';
-import { useAnalytics } from '@/hooks/use-analytics';
+import { useProductViewTracking } from '@/hooks/product/use-product-view-tracking';
 import { Region } from '@/components/region';
 import { ProductProvider } from '@/providers/product-context';
 import { PageType } from '@/lib/decorators/page-type';
@@ -340,23 +340,11 @@ function ProductContent({
     pdpCollapsiblesPromise: Promise<Array<HtmlContent | null>>;
     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
 }) {
-    const analytics = useAnalytics();
-    const lastTrackedProductIdRef = useRef<string | null>(null);
+    useProductViewTracking(product);
 
     const primaryImage =
         product.imageGroups?.find((g) => g.viewType === 'large')?.images?.[0]?.link ??
         product.imageGroups?.[0]?.images?.[0]?.link;
-
-    // Track product view on mount and whenever productData changes
-    useEffect(() => {
-        // Only track if we haven't already tracked this product
-        if (product.id !== lastTrackedProductIdRef.current) {
-            void analytics.trackViewProduct({
-                product,
-            });
-            lastTrackedProductIdRef.current = product.id;
-        }
-    }, [analytics, product]);
 
     const isProductASet = isProductSet(product);
     const isProductABundle = isProductBundle(product);

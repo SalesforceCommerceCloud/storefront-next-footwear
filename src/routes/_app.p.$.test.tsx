@@ -21,10 +21,16 @@
  */
 
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { use } from 'react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import { use, StrictMode } from 'react';
 import type { ShopperProducts } from '@/scapi';
 import { type ProductPageData } from './_app.p.$';
+
+const tracking = vi.hoisted(() => ({ consentKey: 'accepted', trackViewProduct: vi.fn().mockResolvedValue(true) }));
+vi.mock('@salesforce/storefront-next-runtime/site-context', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('@salesforce/storefront-next-runtime/site-context')>()),
+    useSite: () => ({ site: { id: 'test-site' }, locale: { id: 'en-US' } }),
+}));
 
 const { mockFetchProductById, mockAttemptRouteSeoFallback } = vi.hoisted(() => ({
     mockFetchProductById: vi.fn(),
@@ -59,6 +65,8 @@ vi.mock('react-router', async (importOriginal) => {
     return {
         ...actual,
         useRouteLoaderData: (id: string) => (id === 'root' ? { nonce: undefined } : undefined),
+        useLocation: () => ({ pathname: '/p/test-product-123', search: '', hash: '', key: 'default' }),
+        useNavigation: () => ({ state: 'idle' }),
     };
 });
 
@@ -148,7 +156,8 @@ vi.mock('@/components/product-recommendations', () => ({
 
 vi.mock('@/hooks/use-analytics', () => ({
     useAnalytics: () => ({
-        trackViewProduct: vi.fn(),
+        consentKey: tracking.consentKey,
+        trackViewProduct: tracking.trackViewProduct,
     }),
 }));
 
@@ -203,6 +212,8 @@ import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 describe('Product Detail Route', () => {
     beforeEach(async () => {
         vi.clearAllMocks();
+        tracking.consentKey = 'accepted';
+        tracking.trackViewProduct.mockReset().mockResolvedValue(true);
         // Reset modules to ensure fresh import and createPage call
         vi.resetModules();
         // Import the route module to trigger createPage call with mocks in place
@@ -305,6 +316,53 @@ describe('Product Detail Route', () => {
             const { shouldRevalidate: shouldRevalidateProduct } = await import('@/lib/revalidation/routes/product');
             expect(shouldRevalidateRoute).toBe(shouldRevalidateProduct);
         });
+    });
+
+    test('recovers the current product after consent, deduplicates Strict Mode, and aborts on unmount', async () => {
+        const { default: ProductPage } = await import('./_app.p.$');
+        const data: ProductPageData = {
+            product: mockProduct,
+            page: mockPage,
+            pageKey: mockProduct.id,
+            pageUrl: '/p/test-product-123',
+            productSchema: Promise.resolve(null),
+            ...mockExtensionLoaderData,
+        };
+        tracking.consentKey = 'unknown';
+        tracking.trackViewProduct.mockResolvedValueOnce(false);
+        const view = render(
+            <StrictMode>
+                <ProductPage loaderData={data} />
+            </StrictMode>
+        );
+        await act(async () => {});
+        expect(tracking.trackViewProduct).toHaveBeenCalledTimes(1);
+        tracking.consentKey = 'accepted';
+        view.rerender(
+            <StrictMode>
+                <ProductPage loaderData={data} />
+            </StrictMode>
+        );
+        await act(async () => {});
+        expect(tracking.trackViewProduct).toHaveBeenCalledTimes(2);
+        view.rerender(
+            <StrictMode>
+                <ProductPage loaderData={{ ...data, product: { ...mockProduct } }} />
+            </StrictMode>
+        );
+        await act(async () => {});
+        expect(tracking.trackViewProduct).toHaveBeenCalledTimes(2);
+        tracking.trackViewProduct.mockImplementationOnce(() => new Promise<boolean>(() => {}));
+        view.rerender(
+            <StrictMode>
+                <ProductPage loaderData={{ ...data, product: { ...mockProduct, id: 'variant' } }} />
+            </StrictMode>
+        );
+        await act(async () => {});
+        const signal = tracking.trackViewProduct.mock.calls[2][1] as AbortSignal;
+        expect(signal.aborted).toBe(false);
+        view.unmount();
+        expect(signal.aborted).toBe(true);
     });
 
     describe('ProductDetailView component', () => {
