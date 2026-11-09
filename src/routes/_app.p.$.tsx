@@ -83,7 +83,7 @@ import {
     getReturnsAndWarranty,
     pdpSectionApi,
     type ReturnsAndWarrantyData,
-    type HtmlContent,
+    type SectionContent,
 } from '@/extensions/product-content/lib/api/product-content.server';
 import { resolvePdpSections } from '@/extensions/product-content/lib/pdp-sections';
 import { ProductContentDataProvider } from '@/extensions/product-content/context/product-content-data-context';
@@ -134,7 +134,7 @@ export type ProductPageData = {
     // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
     // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
     returnsWarranty: Promise<ReturnsAndWarrantyData>;
-    pdpCollapsibles: Promise<Array<HtmlContent | null>>;
+    pdpCollapsibles: Promise<Array<SectionContent | null>>;
     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
 };
 
@@ -303,7 +303,16 @@ export async function loader(args: Route.LoaderArgs): Promise<ProductPageData> {
         returnsWarranty: getReturnsAndWarranty(productLookupId),
         pdpCollapsibles: Promise.all(
             resolvePdpSections(product).map((section) =>
-                pdpSectionApi[section.apiMethod](productLookupId).catch(() => null)
+                Promise.resolve()
+                    .then(() =>
+                        'resolve' in section
+                            ? section.resolve(product)
+                            : pdpSectionApi[section.apiMethod](productLookupId)
+                    )
+                    .catch((error) => {
+                        logger.error('Error resolving PDP section in loader', { error, labelKey: section.labelKey });
+                        return null;
+                    })
             )
         ),
         // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
@@ -337,7 +346,7 @@ function ProductContent({
     // @sfdc-extension-block-end SFDC_EXT_RATINGS_REVIEWS
     // @sfdc-extension-block-start SFDC_EXT_PRODUCT_CONTENT
     returnsWarrantyPromise: Promise<ReturnsAndWarrantyData>;
-    pdpCollapsiblesPromise: Promise<Array<HtmlContent | null>>;
+    pdpCollapsiblesPromise: Promise<Array<SectionContent | null>>;
     // @sfdc-extension-block-end SFDC_EXT_PRODUCT_CONTENT
 }) {
     const analytics = useAnalytics();
