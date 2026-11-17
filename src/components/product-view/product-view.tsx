@@ -25,6 +25,7 @@ import { useCurrentVariant } from '@/hooks/product/use-current-variant';
 import { useScapiFetcher } from '@/hooks/use-scapi-fetcher';
 // @sfdc-extension-block-start SFDC_EXT_BOPIS
 import { useStoreLocator } from '@/extensions/store-locator/providers/store-locator';
+import { usePickupInventory } from '@/extensions/bopis/context/pickup-inventory';
 // @sfdc-extension-block-end SFDC_EXT_BOPIS
 import { isProductSet, isProductBundle } from '@/lib/product/product-utils';
 import { usesInlineAddToCartQuantity } from '@/lib/product/add-to-cart-quantity-mode';
@@ -86,6 +87,11 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
     }, [urlVariationValues, selectedColorway]);
     const selectedVariant = useCurrentVariant({ product, selectionsOverride: variationValues });
     const selectedVariantId = selectedVariant?.productId;
+    const initialSku = useRef({ product, id: selectedVariantId, changed: false });
+    if (initialSku.current.product !== product) initialSku.current = { product, id: selectedVariantId, changed: false };
+    if (initialSku.current.id !== selectedVariantId) initialSku.current.changed = true;
+    // @sfdc-extension-line SFDC_EXT_BOPIS
+    const streamed = usePickupInventory(selectedVariantId ?? product.id);
     const hasVariantSelection = product.type?.master === true && (product.variants?.length ?? 0) > 0;
     // @sfdc-extension-block-start SFDC_EXT_BOPIS
     const inventoryIds = selectedStoreInfo?.inventoryId ? [selectedStoreInfo.inventoryId] : undefined;
@@ -101,15 +107,25 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
             },
         },
     });
-    const hasSelectedVariantInventory = variantFetcher.success && variantFetcher.data?.id === selectedVariantId;
-    // Pending only once a variant is selected. With nothing selected there is no inventory to wait for,
-    // and reporting "loading" would show the add-to-cart button's busy label ("Adding to Cart...").
+    const variantData = { value: variantFetcher.success ? variantFetcher.data : undefined };
+    const initialSkuInventory = (selectedVariant as { inventory?: ShopperProducts.schemas['Inventory'] } | undefined)
+        ?.inventory;
+    if (!variantData.value && !initialSku.current.changed && selectedVariantId && initialSkuInventory)
+        variantData.value = { id: selectedVariantId, inventory: initialSkuInventory };
+    // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    if (!(variantFetcher.success && variantFetcher.data?.id === selectedVariantId) && streamed.product)
+        variantData.value = { ...product, ...streamed.product };
+    // @sfdc-extension-block-end SFDC_EXT_BOPIS
+    const hasSelectedVariantInventory = variantData.value?.id === selectedVariantId;
+    // Pending only once a variant is selected; with nothing selected there is no inventory to wait for.
     const isVariantInventoryLoading = hasVariantSelection && selectedVariantId != null && !hasSelectedVariantInventory;
     const isVariantInventoryLoadError = Boolean(variantFetcher.errors);
 
     useEffect(() => {
         if (
             selectedVariantId &&
+            // @sfdc-extension-line SFDC_EXT_BOPIS
+            !(streamed.active && streamed.isInitialSelection && (streamed.status === 'pending' || streamed.product)) &&
             isVariantInventoryLoading &&
             variantFetcher.state === 'idle' &&
             !variantFetcher.errors &&
@@ -117,19 +133,31 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
         ) {
             void variantFetcher.load();
         }
-    }, [isVariantInventoryLoading, selectedVariantId, variantFetcher]);
+    }, [
+        isVariantInventoryLoading,
+        selectedVariantId,
+        variantFetcher,
+        // @sfdc-extension-line SFDC_EXT_BOPIS
+        streamed.active,
+        // @sfdc-extension-line SFDC_EXT_BOPIS
+        streamed.isInitialSelection,
+        // @sfdc-extension-line SFDC_EXT_BOPIS
+        streamed.status,
+        // @sfdc-extension-line SFDC_EXT_BOPIS
+        streamed.product,
+    ]);
 
     const currentVariant = useMemo(() => {
         if (!selectedVariant) return undefined;
-        if (!hasSelectedVariantInventory || !variantFetcher.data) return selectedVariant;
+        if (!hasSelectedVariantInventory || !variantData.value) return selectedVariant;
 
         // This overlay fetches the selected SKU's authoritative availability itself, so a 200 that
         // omits the site inventory or the requested store means "no record for this SKU there" --
         // not "borrow the master product's numbers". Stamp explicit unavailable records for the
         // gaps so getEffectiveInventory / isSiteOutOfStock can't fall back to the master and wrongly
         // re-enable delivery, pickup, or Add to Cart for a SKU that has no inventory at all.
-        const fetchedInventory = variantFetcher.data.inventory;
-        const fetchedInventories = variantFetcher.data.inventories ?? [];
+        const fetchedInventory = variantData.value.inventory;
+        const fetchedInventories = variantData.value.inventories ?? [];
 
         const siteInventory: ShopperProducts.schemas['Inventory'] = fetchedInventory ?? {
             id: UNAVAILABLE_INVENTORY_ID,
@@ -157,7 +185,7 @@ export default function ProductView({ product }: ProductViewProps): ReactElement
     }, [
         selectedVariant,
         hasSelectedVariantInventory,
-        variantFetcher.data,
+        variantData.value,
         // @sfdc-extension-block-start SFDC_EXT_BOPIS
         selectedStoreInfo?.inventoryId,
         // @sfdc-extension-block-end SFDC_EXT_BOPIS

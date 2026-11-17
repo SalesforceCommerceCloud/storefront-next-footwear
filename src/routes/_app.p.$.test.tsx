@@ -198,6 +198,9 @@ vi.mock('@/extensions/ratings-reviews/components/target/reviews-summary-target',
 vi.mock('@/extensions/store-locator/middlewares/selected-store.server', () => ({
     selectedStoreContext: { id: 'selectedStoreContext' },
 }));
+vi.mock('@/extensions/store-locator/lib/resolve-selected-store.server', () => ({
+    resolveSelectedStore: vi.fn(() => Promise.resolve({ selectedStoreInfo: null, store: null, error: null })),
+}));
 
 vi.mock('@/extensions/bopis/context/pickup-context', () => ({
     default: ({ children }: any) => <div data-testid="pickup-provider">{children}</div>,

@@ -19,7 +19,8 @@
 // the requested store when the SKU has no record there. These tests lock the rule that such gaps are
 // treated as "unavailable for this SKU" and never silently borrow the master product's availability,
 // which would re-enable delivery, pickup, or Add to Cart for a SKU with no inventory.
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import type { ShopperProducts } from '@/scapi';
@@ -28,6 +29,8 @@ import { AllProvidersWrapper } from '@/test-utils/context-provider';
 import { masterProduct } from '@/components/__mocks__/master-variant-product';
 // @sfdc-extension-block-start SFDC_EXT_BOPIS
 import StoreLocatorProvider from '@/extensions/store-locator/providers/store-locator';
+import { PickupInventoryProvider } from '@/extensions/bopis/context/pickup-inventory';
+import type { PdpPickupInventory } from '@/extensions/bopis/lib/pdp-pickup-inventory.server';
 // @sfdc-extension-block-end SFDC_EXT_BOPIS
 
 const SELECTED_STORE_INVENTORY_ID = 'store-a-inventory';
@@ -36,6 +39,8 @@ const SELECTED_STORE_INVENTORY_ID = 'store-a-inventory';
 // SCAPI drops `inventory` / `inventories` when the SKU has no record at the site or requested store.
 let variantSiteInventory: ShopperProducts.schemas['Inventory'] | null;
 let variantStoreInventories: ShopperProducts.schemas['Inventory'][] | null;
+let fetchSuccess = true;
+const loadVariant = vi.fn();
 // @sfdc-extension-block-start SFDC_EXT_BOPIS
 // @sfdc-extension-line SFDC_EXT_SHIPPING_DELIVERY
 const capturedProductInfoProps: { last: Record<string, unknown> | null } = { last: null };
@@ -93,11 +98,11 @@ vi.mock('@/hooks/use-scapi-fetcher', () => ({
         if (variantSiteInventory !== null) data.inventory = variantSiteInventory;
         if (variantStoreInventories !== null) data.inventories = variantStoreInventories;
         return {
-            data,
+            data: fetchSuccess ? data : undefined,
             errors: undefined,
-            load: vi.fn(),
+            load: loadVariant,
             state: 'idle',
-            success: true,
+            success: fetchSuccess,
         };
     },
 }));
@@ -129,6 +134,12 @@ const product = {
     ],
     variants: [
         ...(masterProduct.variants ?? []),
+        {
+            productId: 'charcoal-variant',
+            orderable: true,
+            price: 299.99,
+            variationValues: { color: 'CHARCWL', size: '038', width: 'S' },
+        },
         {
             productId: 'blue-variant',
             orderable: true,
@@ -164,6 +175,8 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
         variantStoreInventories = null;
         inlineAddToCart.enabled = false;
         inlineAddToCart.lastLoading = null;
+        fetchSuccess = true;
+        loadVariant.mockClear();
     });
 
     // @sfdc-extension-block-start SFDC_EXT_BOPIS
@@ -217,6 +230,195 @@ describe('Footwear PDP selected-variant inventory fallback', () => {
     });
 
     // @sfdc-extension-block-start SFDC_EXT_BOPIS
+    test('hydrates a changed SKU before initial store resolution and keeps it after the old seed arrives', async () => {
+        fetchSuccess = false;
+        let release!: (result: PdpPickupInventory) => void;
+        const inventory = new Promise<PdpPickupInventory>((resolve) => {
+            release = resolve;
+        });
+        const selection = new Promise<
+            import('@/extensions/store-locator/providers/store-locator').SelectedStoreResolution
+        >(() => {});
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/:siteId/:localeId/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <StoreLocatorProvider selectedStoreResolution={selection}>
+                                <PickupInventoryProvider promise={inventory}>
+                                    <ProductView product={product} />
+                                </PickupInventoryProvider>
+                            </StoreLocatorProvider>
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/global/en-GB/product/test-product?color=CHARCWL&size=038&width=S'] }
+        );
+        render(<RouterProvider router={router} />);
+        expect(loadVariant).not.toHaveBeenCalled();
+        await userEvent.setup().click(screen.getByRole('radio', { name: 'Blue' }));
+        expect(loadVariant).toHaveBeenCalledTimes(1);
+        fetchSuccess = true;
+        await act(async () => {
+            await router.revalidate();
+        });
+        expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        await act(async () => {
+            release({
+                status: 'resolved',
+                products: [{ id: 'old-A', inventory: { id: 'site-A', ats: 0, orderable: false } }],
+            });
+            await inventory;
+        });
+        expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        expect(screen.getByRole('radio', { name: 'Blue' })).toBeChecked();
+    });
+    test('returning to the initial SKU uses interaction inventory instead of its late seed', async () => {
+        fetchSuccess = false;
+        let release!: (result: PdpPickupInventory) => void;
+        const inventory = new Promise<PdpPickupInventory>((resolve) => {
+            release = resolve;
+        });
+        const selection = new Promise<
+            import('@/extensions/store-locator/providers/store-locator').SelectedStoreResolution
+        >(() => {});
+        const initial = product.variants?.find(
+            (variant) =>
+                variant.variationValues?.color === 'CHARCWL' &&
+                variant.variationValues.size === '038' &&
+                variant.variationValues.width === 'S'
+        );
+        expect(initial).toBeDefined();
+        if (!initial) throw new Error('Missing initial SKU fixture');
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/:siteId/:localeId/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <StoreLocatorProvider selectedStoreResolution={selection}>
+                                <PickupInventoryProvider promise={inventory}>
+                                    <ProductView product={product} />
+                                </PickupInventoryProvider>
+                            </StoreLocatorProvider>
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/global/en-GB/product/test-product?color=CHARCWL&size=038&width=S'] }
+        );
+        render(<RouterProvider router={router} />);
+        const user = userEvent.setup();
+        await user.click(screen.getByRole('radio', { name: 'Blue' }));
+        expect(loadVariant).toHaveBeenCalledTimes(1);
+        fetchSuccess = true;
+        await act(async () => {
+            await router.revalidate();
+        });
+        expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        fetchSuccess = false;
+        await user.click(screen.getByRole('radio', { name: 'Charcoal' }));
+        expect(loadVariant).toHaveBeenCalledTimes(2);
+        fetchSuccess = true;
+        await act(async () => {
+            await router.revalidate();
+        });
+        expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        await act(async () => {
+            release({
+                status: 'resolved',
+                products: [{ id: initial.productId, inventory: { id: 'old-site-A', ats: 0, orderable: false } }],
+            });
+            await inventory;
+        });
+        expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        expect(screen.getByRole('radio', { name: 'Charcoal' })).toBeChecked();
+    });
+    test('initial server-selected SKU permits delivery purchase while store inventory is held, without a mount load', async () => {
+        fetchSuccess = false;
+        const inventory = new Promise<PdpPickupInventory>(() => {});
+        const seededProduct = {
+            ...product,
+            variants: product.variants?.map((variant) =>
+                variant.productId === 'blue-variant' ? { ...variant, inventory: variantSiteInventory } : variant
+            ),
+        };
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/:siteId/:localeId/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <StoreLocatorProvider selectedStoreResolution={new Promise(() => {})}>
+                                <PickupInventoryProvider promise={inventory}>
+                                    <ProductView product={seededProduct} />
+                                </PickupInventoryProvider>
+                            </StoreLocatorProvider>
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
+        );
+        render(<RouterProvider router={router} />);
+        await userEvent.setup().click(screen.getByRole('radio', { name: 'Delivery' }));
+        expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        expect(screen.getByRole('radio', { name: /Pickup/i })).toBeDisabled();
+        expect(loadVariant).not.toHaveBeenCalled();
+    });
+    test.each([
+        true,
+        false,
+    ])('local exact-SKU store inventory permits pickup purchase only with its own record (%s)', async (hasSkuStore) => {
+        variantStoreInventories = hasSkuStore
+            ? [{ id: SELECTED_STORE_INVENTORY_ID, ats: 7, stockLevel: 7, orderable: true }]
+            : null;
+        const selection = Promise.resolve({
+            selectedStoreInfo: { id: 'store-a', inventoryId: SELECTED_STORE_INVENTORY_ID },
+            error: null,
+        });
+        const inventory = Promise.resolve<PdpPickupInventory>({
+            status: 'resolved',
+            storeId: 'store-a',
+            inventoryId: SELECTED_STORE_INVENTORY_ID,
+            products: [],
+        });
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/:siteId/:localeId/product/:productId',
+                    element: (
+                        <AllProvidersWrapper>
+                            <StoreLocatorProvider selectedStoreResolution={selection}>
+                                <PickupInventoryProvider promise={inventory}>
+                                    <ProductView
+                                        product={{ ...product, inventories: hasSkuStore ? [] : product.inventories }}
+                                    />
+                                </PickupInventoryProvider>
+                            </StoreLocatorProvider>
+                        </AllProvidersWrapper>
+                    ),
+                },
+            ],
+            { initialEntries: ['/global/en-GB/product/test-product?color=BLUE&size=038&width=S'] }
+        );
+        render(<RouterProvider router={router} />);
+        await act(async () => {
+            await inventory;
+        });
+        const pickup = screen.getByRole('radio', { name: /Pickup/i });
+        if (hasSkuStore) {
+            await userEvent.setup().click(pickup);
+            expect(pickup).toBeChecked();
+            expect(screen.getByTestId('add-to-cart')).toBeEnabled();
+        } else {
+            expect(pickup).toBeDisabled();
+            await userEvent.setup().click(pickup);
+            expect(pickup).not.toBeChecked();
+        }
+    });
     test('disables pickup when the SKU fetch omits the selected store (does not borrow the master store)', async () => {
         // Site inventory present (delivery works), but the SKU has no record at the selected store.
         variantStoreInventories = null;
