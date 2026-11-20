@@ -191,6 +191,113 @@ describe('ProductInfo', () => {
         });
     });
 
+    describe('qualified selected-SKU pricing', () => {
+        test('uses the selected SKU amount without inheriting the master range or promotional price', () => {
+            renderProductInfo({
+                product: {
+                    ...mockProduct,
+                    price: 39.99,
+                    priceMax: 59.9,
+                    productPromotions: [
+                        { promotionId: 'parent-offer', promotionalPrice: 1, calloutMsg: 'Native parent offer' },
+                    ],
+                },
+                currentVariantOverride: { productId: 'selected-sku', price: 49.99 },
+            });
+
+            expect(screen.getByText('Current price: $49.99', { exact: false })).toBeInTheDocument();
+            expect(screen.queryByText(/Price range from/)).not.toBeInTheDocument();
+            expect(screen.queryByText(/Current price: \$1\.00/)).not.toBeInTheDocument();
+            expect(screen.getByText('Native parent offer')).toBeInTheDocument();
+        });
+
+        test('retains qualified offers from the full response for the same selected SKU', () => {
+            renderProductInfo({
+                product: {
+                    ...mockProduct,
+                    id: 'qualified-sku',
+                    price: 1,
+                    productPromotions: [
+                        { promotionId: 'group-offer', promotionalPrice: 0.85, calloutMsg: 'Qualified group offer' },
+                    ],
+                },
+                currentVariantOverride: { productId: 'qualified-sku', price: 1 },
+            });
+
+            expect(screen.getByText('Current price: $0.85', { exact: false })).toBeInTheDocument();
+            expect(screen.getByText('List price: $1.00', { exact: false })).toBeInTheDocument();
+            expect(screen.getAllByText('Qualified group offer')).toHaveLength(1);
+            expect(screen.queryByText(/Price range from/)).not.toBeInTheDocument();
+        });
+
+        test('prefers offers supplied by an enriched selected SKU over the full product response', () => {
+            renderProductInfo({
+                product: {
+                    ...mockProduct,
+                    id: 'qualified-sku',
+                    price: 1,
+                    productPromotions: [
+                        { promotionId: 'prior-offer', promotionalPrice: 0.85, calloutMsg: 'Prior SKU offer' },
+                    ],
+                },
+                currentVariantOverride: {
+                    productId: 'qualified-sku',
+                    price: 1,
+                    productPromotions: [],
+                } as ShopperProducts.schemas['Variant'],
+            });
+
+            expect(screen.getByText('Current price: $1.00', { exact: false })).toBeInTheDocument();
+            expect(screen.queryByText(/Current price: \$0\.85/)).not.toBeInTheDocument();
+            expect(screen.queryByText('Prior SKU offer')).not.toBeInTheDocument();
+        });
+
+        test('does not merge an older same-SKU callout into a replacement native offer list', () => {
+            renderProductInfo({
+                product: {
+                    ...mockProduct,
+                    id: 'qualified-sku',
+                    price: 1,
+                    productPromotions: [
+                        { promotionId: 'prior-offer', promotionalPrice: 0.85, calloutMsg: 'Prior SKU offer' },
+                    ],
+                },
+                currentVariantOverride: {
+                    productId: 'qualified-sku',
+                    price: 1,
+                    productPromotions: [
+                        { promotionId: 'current-offer', promotionalPrice: 0.72, calloutMsg: 'Current SKU offer' },
+                    ],
+                } as ShopperProducts.schemas['Variant'],
+            });
+            expect(screen.getByText('Current price: $0.72', { exact: false })).toBeInTheDocument();
+            expect(screen.getByText('Current SKU offer')).toBeInTheDocument();
+            expect(screen.queryByText('Prior SKU offer')).not.toBeInTheDocument();
+        });
+
+        test('does not substitute the master amount when the selected SKU has no qualified price', () => {
+            renderProductInfo({
+                product: { ...mockProduct, price: 39.99, priceMax: 59.9 },
+                currentVariantOverride: { productId: 'unpriced-sku' },
+            });
+
+            expect(
+                screen.getByText(t('product:price.unavailable'), { selector: '[aria-hidden="true"]' })
+            ).toBeInTheDocument();
+            expect(screen.queryByText(/Current price:/)).not.toBeInTheDocument();
+        });
+
+        test('preserves an explicitly free selected SKU without a master range', () => {
+            renderProductInfo({
+                product: { ...mockProduct, price: 39.99, priceMax: 59.9 },
+                currentVariantOverride: { productId: 'free-sku', price: 0 },
+            });
+
+            expect(screen.getByText('Current price: $0.00', { exact: false })).toBeInTheDocument();
+            expect(screen.queryByText(/Price range from/)).not.toBeInTheDocument();
+        });
+    });
+
     describe('variant selection', () => {
         test('should render colorway radiogroup when color variation exists', () => {
             renderProductInfo({ product: mockProduct });

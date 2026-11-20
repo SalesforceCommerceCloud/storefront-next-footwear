@@ -288,21 +288,6 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               Current price: £63.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £67.99
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Featured product 1
-               
-              List price: £67.99
-            </span>
           </div>
         </div>
       </div>
@@ -1136,21 +1121,6 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               Current price: £63.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £67.99
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Featured product 4
-               
-              List price: £67.99
-            </span>
           </div>
         </div>
       </div>
@@ -1984,21 +1954,6 @@ exports[`ProductMerchandisingGrid stories snapshot > Playground story renders an
               Current price: £63.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £67.99
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Featured product 7
-               
-              List price: £67.99
-            </span>
           </div>
         </div>
       </div>

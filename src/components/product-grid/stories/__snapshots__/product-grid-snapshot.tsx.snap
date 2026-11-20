@@ -289,21 +289,6 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               Current price: £63.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £67.99
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 1
-               
-              List price: £67.99
-            </span>
           </div>
         </div>
       </div>
@@ -577,21 +562,6 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               Current price: £191.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £320.00
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 2
-               
-              List price: £320.00
-            </span>
           </div>
         </div>
       </div>
@@ -1699,21 +1669,6 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               Current price: £63.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £67.99
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 6
-               
-              List price: £67.99
-            </span>
           </div>
         </div>
       </div>
@@ -1987,21 +1942,6 @@ exports[`ProductGrid stories snapshot > FullyFeatured story renders and matches 
               Current price: £191.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £320.00
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 7
-               
-              List price: £320.00
-            </span>
           </div>
         </div>
       </div>
@@ -2815,21 +2755,6 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               Current price: £63.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £67.99
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 1
-               
-              List price: £67.99
-            </span>
           </div>
         </div>
       </div>
@@ -3137,21 +3062,6 @@ exports[`ProductGrid stories snapshot > WithPickupAvailable story renders and ma
               Current price: £191.99
             </span>
              
-            <span
-              aria-hidden="true"
-              class="font-medium text-left text-muted-foreground text-sm leading-none line-through"
-            >
-              £320.00
-            </span>
-            <span
-              aria-atomic="true"
-              aria-live="polite"
-              class="sr-only"
-            >
-              Product 2
-               
-              List price: £320.00
-            </span>
           </div>
         </div>
       </div>
