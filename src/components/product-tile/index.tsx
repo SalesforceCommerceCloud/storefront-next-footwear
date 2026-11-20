@@ -289,6 +289,8 @@ const getPageDesignerStyleClasses = ({
 };
 
 export interface ProductTileProps extends ComponentProps<'div'> {
+    /** Shared collection API; this vertical retains its own tile presentation. */
+    variant?: 'default' | 'compact';
     product?: ShopperSearch.schemas['ProductSearchHit'];
     productId?: string;
     maxSwatches?: number;
@@ -306,7 +308,7 @@ export interface ProductTileProps extends ComponentProps<'div'> {
      * over the image; `'inline'` renders it in-flow at the bottom of the info section (always visible,
      * full-width). Backward-safe — omitting it keeps the overlay.
      */
-    quickAddPlacement?: 'overlay' | 'inline';
+    quickAddPlacement?: 'overlay' | 'inline' | 'corner';
     /** Top-level navigation category name shown below swatches (e.g. "Men", "Women") */
     topCategoryName?: string;
     /** Accepted for API compatibility; has no effect */
@@ -346,6 +348,7 @@ const ProductTile = memo(
         (
             {
                 className,
+                variant: _variant,
                 product: productProp,
                 productId: _productId,
                 maxSwatches = PRODUCT_TILE_MAX_SWATCHES,
@@ -712,7 +715,7 @@ const ProductTile = memo(
                                 tab order, so it is announced on every resting tile (WCAG 1.3.1).
                                 Rendered here only for the default overlay placement; the `inline`
                                 placement renders it in-flow at the bottom of the info section below. */}
-                            {quickAddPlacement === 'overlay' && (
+                            {quickAddPlacement !== 'inline' && (
                                 <div className="absolute bottom-4 left-0 right-0 px-4 invisible opacity-0 transition-[opacity,visibility] duration-300 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 z-20">
                                     <QuickAddButton
                                         productId={product.productId ?? ''}
