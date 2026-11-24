@@ -47,6 +47,7 @@ import { fetchPageWithComponentData } from '@/lib/page-designer/page-loader.serv
 import { getLogger } from '@/lib/logger.server';
 
 import hero01 from '/images/hero-01.webp';
+import hero01Mobile from '/images/hero-01-mobile.webp';
 import hero02 from '/images/hero-02.webp';
 import hero03 from '/images/hero-03.webp';
 import hero04 from '/images/hero-04.webp';
@@ -184,6 +185,7 @@ export default function HomePage({ loaderData }: { loaderData: HomePageData }) {
             title: t('hero.slide1.title'),
             subtitle: t('hero.slide1.subtitle'),
             imageUrl: hero01,
+            mobileImageUrl: hero01Mobile,
             imageAlt: t('hero.slide1.imageAlt'),
             ctaText: t('hero.slide1.ctaText'),
             ctaLink: rootCategoryUrl,
