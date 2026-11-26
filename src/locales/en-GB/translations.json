@@ -12,6 +12,7 @@
     },
     "common": {
         "defaultSiteName": "Footwear Next",
+        "seoDescriptionFallback": "Shop {{name}} at {{siteName}}.",
         "loading": "Loading",
         "loadingMore": "Loading more...",
         "product": "the product",
